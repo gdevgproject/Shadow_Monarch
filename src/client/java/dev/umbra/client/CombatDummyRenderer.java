@@ -5,12 +5,13 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.Identifier;
 
 /**
  * Client-only renderer for the Combat Training Dummy.
- * Uses raw types to bypass complex type bounds introduced in Minecraft 1.21.
+ * Uses HumanoidRenderState to prevent ClassCastException in HumanoidModel rendering.
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class CombatDummyRenderer extends MobRenderer {
@@ -21,8 +22,8 @@ public class CombatDummyRenderer extends MobRenderer {
     }
 
     @Override
-    public LivingEntityRenderState createRenderState() {
-        return new LivingEntityRenderState();
+    public HumanoidRenderState createRenderState() {
+        return new HumanoidRenderState();
     }
 
     @Override
