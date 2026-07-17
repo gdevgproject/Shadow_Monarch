@@ -3,6 +3,41 @@ plugins {
     id 'maven-publish'
 }
 
+def formatIncludes = [
+    'build.gradle',
+    'settings.gradle',
+    'gradle.properties',
+    'development/IMPLEMENTATION_STATUS.md',
+    'development/LOCAL_VERIFICATION.md',
+    'src/**/*.java',
+    'src/**/*.json',
+    'src/**/*.properties'
+]
+
+def formatTargets = providers.provider {
+    fileTree(projectDir) {
+        include formatIncludes
+        exclude '.gradle/**', 'build/**', 'run/**', 'runClient/**', 'runGameTestServer/**', 'runServer/**'
+    }.files.sort { left, right -> left.path <=> right.path }
+}
+
+String normalizedFormatting(String source) {
+    def lineEnding = source.contains('\r\n') ? '\r\n' : '\n'
+    def normalized = source
+        .replace('\r\n', '\n')
+        .replace('\r', '\n')
+        .replaceAll(/[ \t]+(?=\n)/, '')
+
+    while (normalized.endsWith('\n\n')) {
+        normalized = normalized.substring(0, normalized.length() - 1)
+    }
+    if (!normalized.endsWith('\n')) {
+        normalized += '\n'
+    }
+
+    return lineEnding == '\n' ? normalized : normalized.replace('\n', lineEnding)
+}
+
 version = project.mod_version
 group = project.maven_group
 
@@ -43,6 +78,50 @@ java {
     withSourcesJar()
     sourceCompatibility = JavaVersion.VERSION_25
     targetCompatibility = JavaVersion.VERSION_25
+}
+
+tasks.register('format') {
+    group = 'formatting'
+    description = 'Normalizes trailing whitespace and final newlines in covered project text sources.'
+
+    doLast {
+        def formattedCount = 0
+        formatTargets.get().each { target ->
+            def original = target.getText('UTF-8')
+            def normalized = normalizedFormatting(original)
+            if (original != normalized) {
+                target.setText(normalized, 'UTF-8')
+                formattedCount++
+            }
+        }
+        logger.lifecycle("Formatted ${formattedCount} file(s).")
+    }
+}
+
+def formatCheck = tasks.register('formatCheck') {
+    group = 'verification'
+    description = 'Fails when covered project text sources need the local formatter.'
+
+    doLast {
+        def violations = formatTargets.get().findAll { target ->
+            target.getText('UTF-8') != normalizedFormatting(target.getText('UTF-8'))
+        }
+        if (!violations.isEmpty()) {
+            throw new GradleException("Formatting is required for:\n" + violations.collect { project.relativePath(it) }.join('\n'))
+        }
+    }
+}
+
+tasks.register('verify') {
+    group = 'verification'
+    description = 'Runs the local format, test, and package verification gate.'
+    dependsOn(formatCheck, tasks.named('build'))
+}
+
+tasks.register('localCi') {
+    group = 'verification'
+    description = 'Alias for the clean-checkout local verification gate.'
+    dependsOn(tasks.named('verify'))
 }
 
 publishing {
