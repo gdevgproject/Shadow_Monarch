@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "umbra-test",
+  "version": "0.0.1",
+  "name": "UMBRA Game Tests",
+  "description": "Automated game tests for UMBRA.",
+  "authors": [
+    "UMBRA Team"
+  ],
+  "license": "All Rights Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-gametest": [
+      "dev.umbra.gametest.UmbraSmokeGameTest"
+    ]
+  },
+  "depends": {
+    "umbra": "*"
+  }
+}

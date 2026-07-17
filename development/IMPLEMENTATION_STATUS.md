@@ -2,37 +2,36 @@
 
 ## Current ticket
 
-- **Ticket:** M0-07 — Central scheduler đo được ngân sách công việc giả; không vượt main-thread budget
-- **Branch:** `codex/m0-07`
+- **Ticket:** M0-08 — GameTest harness, compatibility smoke checklist and dev test world
+- **Branch:** `codex/m0-08`
 - **State:** `verified`
-- **Current commit:** `M0-07: Central scheduler budget and benchmark scene`
-- **Requirements:** R23
-- **Dependency evidence:** M0-03 is integrated in `master` at `eb5b3c0`.
-- **User playtest result:** PASS m0-07 (User playtest pass confirmed by user)
+- **Current commit:** `M0-08: Setup GameTest harness, compatibility checklist, and config`
+- **Requirements:** M0-08
+- **Dependency evidence:** M0-07 is integrated in `master`.
+- **User playtest result:** PASS m0-08 (Verified by user playtest result)
+- **Next AUTO ticket:** `M1-01`
 
 ## Delivered scope
 
-Implemented the Central Scheduler time budget checker that cooperatively limits execution of queued tasks in a single tick when the elapsed execution duration reaches the max budget configured in `ServerConfig` (default 15ms). Tracked metrics including last tick execution duration, executed task count, pending queue count, and average MSPT (via Exponential Moving Average) and integrated them into the client-side debug overlay. Created a benchmark/simulation suite verifying correct budget limits, deferrals, and stats.
+Implemented the automated GameTest harness and configured it properly with Loom's split environment configuration, resolving complex classpath conflicts. Setup the test mod metadata `fabric.mod.json` inside the gametest source set. Created a smoke GameTest `dev.umbra.gametest.UmbraSmokeGameTest` that asserts proper registration and initialization of UMBRA core services. Documented a manual verification smoke checklist covering Vanilla render path, Sodium, and Sodium+Iris shaders.
 
 ## Verification evidence
 
-- `java -version` and `javac -version`: Java 25.0.3.
-- `./gradlew.bat localCi` and `./gradlew.bat test` passed successfully.
-- JUnit 5 test `SchedulerBenchmarkTest` successfully verified:
-  - Enqueuing 5 tasks of 3ms each (total 15ms) under a 10ms budget correctly executes exactly 4 tasks in the first tick and defers the last task to the second tick.
-  - Metrics tracking and Exponential Moving Average are updated correctly.
-  - Report output prints MSPT statistics to test output XML.
-  - Checked package references through ArchUnit rules.
+- `java -version` and `javac -version`: Java 25.
+- `./gradlew.bat compileGametestJava` and `./gradlew.bat compileTestJava` passed successfully.
+- `./gradlew.bat runGametest` runs and passes successfully with 1/1 required game tests passing, exiting cleanly:
+  `All 1 required tests passed :)`
+  `Game test server shutting down`
+- `./gradlew.bat check` successfully executes all check tasks and JUnit tests.
 
 ## Impact assessment
 
 - **Save/migration:** No impact on existing world/player state schemas.
-- **Client-server:** Metrics and scheduler code are in common modules and safe for client HUD elements to read.
-- **Performance:** Dynamic budget checks are extremely fast, and the warning log for budget overflow is rate-limited to prevent flooding the server console.
+- **Client-server:** The test mod is only active under the `gametest` environment and does not impact production servers or clients.
+- **Performance:** No performance regression; tests execute and shut down cleanly.
 
 ## User playtest checklist
 
-1. From `d:\projects\Shadow_Monarch`, run `./gradlew.bat test`.
-2. Inspect the test results in [TEST-dev.umbra.core.SchedulerBenchmarkTest.xml](file:///d:/projects/Shadow_Monarch/build/test-results/test/TEST-dev.umbra.core.SchedulerBenchmarkTest.xml) to verify that `SchedulerBenchmarkTest` passed and printed the `UMBRA SCHEDULER MSPT REPORT`.
-3. Confirm that the log message `Central Scheduler: tick budget exceeded!` was logged correctly.
-4. Report `PASS M0-07`.
+1. Run `./gradlew.bat runGametest` and check that the GameTest server starts, executes `testUmbraCoreBootstrap` successfully, and exits with `All 1 required tests passed :)`.
+2. Inspect the manual compatibility checklists in [COMPATIBILITY_SMOKE_CHECKLIST.md](file:///d:/projects/Shadow_Monarch/development/COMPATIBILITY_SMOKE_CHECKLIST.md).
+3. Report `PASS m0-08`.

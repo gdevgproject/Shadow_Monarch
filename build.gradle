@@ -45,6 +45,10 @@ base {
     archivesName = project.archive_base_name
 }
 
+sourceSets {
+    gametest
+}
+
 loom {
     splitEnvironmentSourceSets()
 
@@ -52,7 +56,15 @@ loom {
         "umbra" {
             sourceSet sourceSets.main
             sourceSet sourceSets.client
+            sourceSet sourceSets.gametest
         }
+    }
+}
+
+fabricApi {
+    configureTests {
+        createSourceSet = false
+        modId = "umbra-test"
     }
 }
 
@@ -75,11 +87,15 @@ configurations {
 sourceSets {
     client {
         compileClasspath = sourceSets.main.output + configurations.clientCompileClasspath
-        runtimeClasspath = sourceSets.main.output + configurations.clientRuntimeClasspath
+        runtimeClasspath = sourceSets.client.output + sourceSets.main.output + configurations.clientRuntimeClasspath
     }
     test {
         compileClasspath += sourceSets.main.compileClasspath + sourceSets.client.output + configurations.clientCompileClasspath
         runtimeClasspath += sourceSets.main.runtimeClasspath + sourceSets.client.output + configurations.clientRuntimeClasspath
+    }
+    gametest {
+        compileClasspath += sourceSets.main.output + sourceSets.client.output + sourceSets.main.compileClasspath + configurations.clientCompileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.client.output + sourceSets.main.runtimeClasspath + configurations.clientRuntimeClasspath
     }
 }
 
@@ -97,6 +113,15 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
     options.release = 25
+}
+
+afterEvaluate {
+    tasks.named('compileGametestJava', JavaCompile).configure {
+        classpath = classpath + files({ tasks.named('compileJava').get().classpath }) + files({ tasks.named('compileClientJava').get().classpath })
+    }
+    tasks.named('compileTestJava', JavaCompile).configure {
+        classpath = classpath + files({ tasks.named('compileJava').get().classpath }) + files({ tasks.named('compileClientJava').get().classpath })
+    }
 }
 
 java {
@@ -151,10 +176,8 @@ tasks.register('localCi') {
 
 tasks.register('printClientClasspath') {
     doLast {
-        println "--- compileClientJava Classpath ---"
-        tasks.named('compileClientJava').get().classpath.each { println it }
-        println "--- clientCompileClasspath Configuration ---"
-        configurations.clientCompileClasspath.each { println it }
+        println "--- minecraftCommonNamedCompile ---"
+        configurations.minecraftCommonNamedCompile.each { println it }
     }
 }
 
