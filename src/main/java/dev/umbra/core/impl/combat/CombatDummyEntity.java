@@ -66,13 +66,16 @@ public class CombatDummyEntity extends Mob {
         float armorMit,
         float finalDmg
     ) {
+        float nextHealth = Math.max(0.0f, this.getHealth() - finalDmg);
         String report = String.format(
             "§d§l[UMBRA COMBAT REPORT]§r\n" +
-            " §7• §fTarget: §bCombat Dummy §8(Armor: %.1f | Mit: %.1f%%)\n" +
+            " §7• §fTarget: §bCombat Dummy §8(HP: %.1f/%.1f | Armor: %.1f | Mit: %.1f%%)\n" +
             " §7• §fBase Damage: §e%.2f §8(Weapon + STR)\n" +
             " §7• §fCombo Meter: §a%d §8(Mult: %.2fx)\n" +
             " §7• §fCritical: %s §8(Mult: %.2fx)\n" +
             " §7• §6§lFinal Damage: %.2f§r",
+            nextHealth,
+            this.getMaxHealth(),
             armor,
             armorMit * 100.0f,
             baseDmg,

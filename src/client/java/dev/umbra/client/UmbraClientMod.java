@@ -59,6 +59,11 @@ public final class UmbraClientMod implements ClientModInitializer {
             }
         );
 
+        // Reset client combat state on disconnect
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
+            ClientCombatStateTracker.update(false, 0);
+        });
+
         // Register Combat Dummy entity renderer
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
             UmbraMod.COMBAT_DUMMY,

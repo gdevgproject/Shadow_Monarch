@@ -257,13 +257,21 @@ public final class UmbraCommand {
                         .executes(context -> {
                             net.minecraft.server.level.ServerLevel level = context.getSource().getLevel();
                             net.minecraft.world.phys.Vec3 pos = context.getSource().getPosition();
+                            ServerPlayer player = context.getSource().getPlayer();
+                            if (player != null) {
+                                net.minecraft.world.phys.Vec3 lookVec = player.getLookAngle();
+                                pos = player.position().add(lookVec.x * 2.0, 0.0, lookVec.z * 2.0);
+                            }
                             dev.umbra.core.impl.combat.CombatDummyEntity dummy = new dev.umbra.core.impl.combat.CombatDummyEntity(UmbraMod.COMBAT_DUMMY, level);
                             dummy.setPos(pos.x, pos.y, pos.z);
-                            dummy.setYRot(context.getSource().getRotation().y);
+                            dummy.setYRot(context.getSource().getRotation().y + 180.0F);
                             dummy.setXRot(0.0F);
                             level.addFreshEntity(dummy);
+                            final double xVal = pos.x;
+                            final double yVal = pos.y;
+                            final double zVal = pos.z;
                             context.getSource().sendSuccess(
-                                () -> Component.literal("Spawned Combat Dummy at " + String.format("%.2f, %.2f, %.2f", pos.x, pos.y, pos.z)),
+                                () -> Component.literal("Spawned Combat Dummy at " + String.format("%.2f, %.2f, %.2f", xVal, yVal, zVal)),
                                 true
                             );
                             return 1;

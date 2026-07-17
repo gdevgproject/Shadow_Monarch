@@ -64,7 +64,7 @@ public final class UmbraDebugOverlay implements HudElement {
 
         boolean inCombat = ClientCombatStateTracker.isInCombatStance();
         int combo = ClientCombatStateTracker.getComboCount();
-        String combatText = inCombat ? "Stance: COMBAT | Combo: " + combo : "Stance: OUT OF COMBAT";
+        String combatText = inCombat ? "Stance: IN | Combo: " + combo : "Stance: OUT | Combo: 0";
         int combatColor = inCombat ? 0xFFFF5555 : 0x88FFFFFF;
         drawContext.text(font, combatText, 5, y, combatColor, false);
         y += 10;
