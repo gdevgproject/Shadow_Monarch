@@ -39,6 +39,12 @@ public interface CombatService {
      */
     void registerDamage(ServerPlayer player);
 
+    /** Validates and starts a dodge from a client action intent. */
+    boolean requestDodge(ServerPlayer player, DodgeDirection direction);
+
+    /** Absorbs an incoming combat hit during an active dodge. */
+    boolean tryAbsorbDodgeDamage(ServerPlayer player);
+
     /**
      * Computes final damage according to the UMBRA damage pipeline.
      */

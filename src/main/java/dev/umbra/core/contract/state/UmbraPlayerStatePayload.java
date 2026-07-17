@@ -11,7 +11,8 @@ import net.minecraft.resources.Identifier;
 public record UmbraPlayerStatePayload(
     int level, int shadowXp, String rank,
     int strength, int agility, int vitality, int intelligence, int perception,
-    int statPoints, int essence, boolean jobChanged, long lastRespecTime
+    int statPoints, int essence, boolean jobChanged, long lastRespecTime,
+    float currentMana, float currentFocus, int fatigue
 ) implements CustomPacketPayload {
     public static final Identifier ID = Identifier.fromNamespaceAndPath("umbra", "player_state_sync");
     public static final CustomPacketPayload.Type<UmbraPlayerStatePayload> TYPE = new CustomPacketPayload.Type<>(ID);
@@ -30,6 +31,9 @@ public record UmbraPlayerStatePayload(
             buf.writeInt(value.essence());
             buf.writeBoolean(value.jobChanged());
             buf.writeLong(value.lastRespecTime());
+            buf.writeFloat(value.currentMana());
+            buf.writeFloat(value.currentFocus());
+            buf.writeVarInt(value.fatigue());
         },
         buf -> new UmbraPlayerStatePayload(
             buf.readInt(),
@@ -43,7 +47,10 @@ public record UmbraPlayerStatePayload(
             buf.readInt(),
             buf.readInt(),
             buf.readBoolean(),
-            buf.readLong()
+            buf.readLong(),
+            buf.readFloat(),
+            buf.readFloat(),
+            buf.readVarInt()
         )
     );
 

@@ -68,6 +68,7 @@ umbra-core            — hạt nhân: registry, event bus nội bộ, data load
 - Single-player vẫn chạy mô hình client–server nội bộ của MC → thiết kế *đúng ngay từ đầu*: mọi quyết định logic ở server thread; client nhận **gói trạng thái gọn** (delta, không full snapshot mỗi tick).
 - HUD Hệ Thống render hoàn toàn client-side từ state đã đồng bộ; packet custom giới hạn: stats, quest, legion roster (tóm tắt), combat feedback (số sát thương, combo).
 - Sẵn sàng multiplayer sau này: không đọc trực tiếp dữ liệu client khác (tài liệu 23).
+- Combat action dùng `DodgeIntent` client→server với enum hướng nhỏ; server validate resource/state và gửi delta action/resource. Input không mang vị trí, hit result hay cờ perfect-dodge do client tự khai.
 
 ### 3.5. Dimension & Dungeon Runtime
 

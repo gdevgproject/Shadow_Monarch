@@ -39,6 +39,8 @@ Giữ toàn bộ điều khiển vanilla; **thêm lớp action**:
 
 > **Quy tắc phím v4.0:** không hardcode một phím như hợp đồng thiết kế. Lần đầu mở game, mod phát hiện xung đột với Minecraft và các binding Fabric đã đăng ký, gán một binding trống an toàn, báo rõ và cho phép remap toàn bộ. Lớp action chỉ bật trong combat stance (có kẻ địch aggro trong tầm hoặc tự bật), không làm builder khó chịu.
 
+**Hợp đồng Dodge M1-05:** Dodge có ưu tiên cao hơn recovery của đòn đánh: nếu người chơi đã đánh nhưng bấm Dodge trong recovery, action không được từ chối chỉ vì attack cooldown vanilla. Client chỉ gửi intent một trong tám hướng local; server quyết định Focus, Fatigue, i-frame, chuyển động và hit immunity. Không giữ phím di chuyển mặc định là **né lùi**; mọi hướng chéo được chuẩn hóa cùng quãng đường với hướng thẳng. Khi nhảy, Dodge chỉ thay vận tốc ngang và giữ vận tốc dọc vanilla: không hover, không double-jump và không đổi quỹ đạo rơi thành bay. Khi hit combat tới trong hai tick đầu của i-frame, đó là **Né Chuẩn Xác**: cú né không cộng Fatigue, hồi Mana nhỏ theo 14.19 và phát feedback hạt gốc UMBRA. Né thường vẫn giữ combo, không có thưởng Mana và không bị biến thành lối chơi vô hạn.
+
 ---
 
 ## 3. Tài nguyên chiến đấu — hệ kép MANA & THỂ LỰC (v4.0)

@@ -10,12 +10,18 @@ import net.minecraft.client.KeyMapping;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.resources.Identifier;
 import dev.umbra.core.contract.combat.UmbraCombatStatePayload;
+import dev.umbra.core.contract.combat.DodgeDirection;
+import dev.umbra.core.contract.combat.UmbraDodgeIntentPayload;
+import dev.umbra.core.contract.combat.UmbraDodgeStatePayload;
+import net.minecraft.network.chat.Component;
 
 /**
  * Client-only bootstrap entrypoint; it contains no gameplay authority.
  */
 public final class UmbraClientMod implements ClientModInitializer {
     private static KeyMapping statsKeyBinding;
+    private static KeyMapping dodgeKeyBinding;
+    private static boolean dodgeBindingChecked;
 
     @Override
     public void onInitializeClient() {
@@ -43,8 +49,12 @@ public final class UmbraClientMod implements ClientModInitializer {
                         payload.statPoints(),
                         payload.essence(),
                         payload.jobChanged(),
-                        payload.lastRespecTime()
+                        payload.lastRespecTime(),
+                        payload.currentMana(),
+                        payload.currentFocus(),
+                        payload.fatigue()
                     );
+                    ClientDodgeStateTracker.update(payload.currentMana(), payload.currentFocus(), payload.fatigue(), 0, false);
                 });
             }
         );
@@ -59,9 +69,19 @@ public final class UmbraClientMod implements ClientModInitializer {
             }
         );
 
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+            UmbraDodgeStatePayload.TYPE,
+            (payload, context) -> context.client().execute(() ->
+                ClientDodgeStateTracker.update(
+                    payload.mana(), payload.focus(), payload.fatigue(), payload.dodgeTicksRemaining(), payload.precisionDodge()
+                )
+            )
+        );
+
         // Reset client combat state on disconnect
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
             ClientCombatStateTracker.update(false, 0);
+            ClientDodgeStateTracker.update(101.0F, 100.0F, 0, 0, false);
         });
 
         // Register Combat Dummy entity renderer
@@ -78,16 +98,73 @@ public final class UmbraClientMod implements ClientModInitializer {
             KeyMapping.Category.MISC
         ));
 
+        dodgeKeyBinding = KeyMappingHelper.registerKeyMapping(new KeyMapping(
+            "key.umbra.dodge",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_R,
+            KeyMapping.Category.MISC
+        ));
+
         // Key bind listener
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            resolveDefaultDodgeBinding(client);
             while (statsKeyBinding.consumeClick()) {
                 if (client.player != null) {
                     client.setScreenAndShow(new UmbraStatsScreen());
+                }
+            }
+            while (dodgeKeyBinding.consumeClick()) {
+                if (client.player != null) {
+                    net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.send(
+                        new UmbraDodgeIntentPayload(resolveDodgeDirection(client).ordinal())
+                    );
                 }
             }
         });
 
         // Register the debug overlay HUD element
         HudElementRegistry.addLast(Identifier.fromNamespaceAndPath("umbra", "debug_overlay"), new UmbraDebugOverlay(configService));
+    }
+
+    private static void resolveDefaultDodgeBinding(net.minecraft.client.Minecraft client) {
+        if (dodgeBindingChecked || !dodgeKeyBinding.isDefault()) {
+            return;
+        }
+        dodgeBindingChecked = true;
+        InputConstants.Key[] candidates = {
+            InputConstants.getKey("key.keyboard.r"),
+            InputConstants.getKey("key.keyboard.c"),
+            InputConstants.getKey("key.mouse.4")
+        };
+        for (InputConstants.Key candidate : candidates) {
+            if (!isBoundByAnotherAction(client, candidate)) {
+                dodgeKeyBinding.setKey(candidate);
+                KeyMapping.resetMapping();
+                if (!candidate.equals(InputConstants.getKey("key.keyboard.r")) && client.player != null) {
+                    client.player.sendSystemMessage(Component.literal("UMBRA Dodge remapped to " + dodgeKeyBinding.getTranslatedKeyMessage().getString() + "."));
+                }
+                return;
+            }
+        }
+        dodgeKeyBinding.setKey(InputConstants.UNKNOWN);
+        KeyMapping.resetMapping();
+        if (client.player != null) {
+            client.player.sendSystemMessage(Component.literal("UMBRA Dodge is unbound: R, C, and Mouse4 conflict. Set it in Controls."));
+        }
+    }
+
+    private static boolean isBoundByAnotherAction(net.minecraft.client.Minecraft client, InputConstants.Key candidate) {
+        for (KeyMapping mapping : client.options.keyMappings) {
+            if (mapping != dodgeKeyBinding && mapping.matches(candidate)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static DodgeDirection resolveDodgeDirection(net.minecraft.client.Minecraft client) {
+        int forward = (client.options.keyUp.isDown() ? 1 : 0) - (client.options.keyDown.isDown() ? 1 : 0);
+        int strafe = (client.options.keyRight.isDown() ? 1 : 0) - (client.options.keyLeft.isDown() ? 1 : 0);
+        return DodgeDirection.fromMovementAxes(forward, strafe);
     }
 }

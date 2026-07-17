@@ -186,6 +186,19 @@ Nhiệm vụ rèn luyện của UMBRA mô phỏng "bài tập thể chất" bằ
 
 ## 12. Bổ sung v4.0 — state mới bắt buộc
 
+M1-05 thêm combat resource runtime-persistent vào `PlayerState`; chúng là trạng thái người chơi, không phải client cache:
+
+```json
+{
+  "schema_version": 4,
+  "current_mana": 101.0,
+  "current_focus": 100.0,
+  "fatigue": 0
+}
+```
+
+`current_mana` bị giới hạn bởi công thức MP 14.1, `current_focus` bởi Focus_max 14.19 và `fatigue` bởi 14.12. Migration v3→v4 tạo Mana/Focus đầy và Fatigue 0; S2C combat-resource state là delta gọn, không biến client thành nguồn chân lý.
+
 `PlayerState` phải thêm `rank`, `unspent_attribute_points`, `potential_commitments`, `world_strata_unlocked`, `active_stratum`, `family_orders`, `partner_bond` và preset legion/garnison. `potential_commitments` lưu preview version + lựa chọn đã xác nhận để migration/UI luôn giải thích được lựa chọn không hoàn tác.
 
 `AriseTargetState` cần `fresh_corpse_expires_at`, `echo_state`, `attempt_index`, `attempt_chances`, `capture_contract_id`, `gate_id` và `priority`. Trong Gate, `fresh_corpse_expires_at` chỉ chuyển xác thành `SoulEcho`; `SoulEcho` chỉ hết ở event `Gate.closed`/`Gate.broken`, **không** ở event rời Gate chưa clear. `priority = boss | elite | unique | common` quyết định gộp an toàn khi chạm cap 14.21. `BossDefinition` thêm `escort_composition`, `mount_reward`, `capture_contract` và `domain_rules` để designer không phải hardcode encounter.

@@ -26,6 +26,7 @@
 - **Công thức:** mọi công thức tài liệu 14 có test vector (đầu vào → đầu ra kỳ vọng), kể cả biên (clamp, trần, diminishing returns).
 - **Data:** mọi JSON trong repo qua schema validation CI; codec từ chối đúng file lỗi.
 - **Migration:** mở save mẫu của mọi phiên bản hỗ trợ → nâng cấp → kiểm tra dữ liệu bảo toàn (đặc biệt quân đoàn).
+- **Dodge M1-05:** vector AGI kiểm tra i-frame cap, Focus/Fatigue cost và hồi; packet test từ chối hướng không hợp lệ, spectator/vehicle/Fatigue 100/Focus thiếu; timing test phân biệt normal và Né Chuẩn Xác; migration v3→v4 giữ state cũ và khởi tạo resource đúng.
 
 ## 3. Tầng 2 — Simulation cân bằng (headless)
 

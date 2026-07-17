@@ -68,6 +68,13 @@ public final class UmbraDebugOverlay implements HudElement {
         int combatColor = inCombat ? 0xFFFF5555 : 0x88FFFFFF;
         drawContext.text(font, combatText, 5, y, combatColor, false);
         y += 10;
+        drawContext.text(font, String.format("Mana: %.0f | Focus: %.0f | Fatigue: %d", ClientDodgeStateTracker.getMana(), ClientDodgeStateTracker.getFocus(), ClientDodgeStateTracker.getFatigue()), 5, y, 0xFFB388FF, false);
+        y += 10;
+        if (ClientDodgeStateTracker.getDodgeTicksRemaining() > 0 || ClientDodgeStateTracker.isPrecisionDodge()) {
+            String dodgeText = ClientDodgeStateTracker.isPrecisionDodge() ? "Dodge: PRECISION" : "Dodge: ACTIVE";
+            drawContext.text(font, dodgeText, 5, y, 0xFFB388FF, false);
+            y += 10;
+        }
 
         if (configService.getDevConfig().isProfilingEnabled()) {
             drawContext.text(font, "Profiling: ACTIVE (Safe HUD: FPS=" + client.getFps() + ")", 5, y, 0xFFFF5555, false);

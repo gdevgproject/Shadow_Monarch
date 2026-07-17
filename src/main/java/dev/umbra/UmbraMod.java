@@ -68,6 +68,10 @@ public final class UmbraMod implements ModInitializer {
             dev.umbra.core.contract.combat.UmbraCombatStatePayload.TYPE,
             dev.umbra.core.contract.combat.UmbraCombatStatePayload.CODEC
         );
+        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.clientboundPlay().register(
+            dev.umbra.core.contract.combat.UmbraDodgeStatePayload.TYPE,
+            dev.umbra.core.contract.combat.UmbraDodgeStatePayload.CODEC
+        );
 
         // Register custom packet payloads C2S
         net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.serverboundPlay().register(
@@ -77,6 +81,10 @@ public final class UmbraMod implements ModInitializer {
         net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.serverboundPlay().register(
             dev.umbra.core.contract.state.UmbraStatsRespecPayload.TYPE,
             dev.umbra.core.contract.state.UmbraStatsRespecPayload.CODEC
+        );
+        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.serverboundPlay().register(
+            dev.umbra.core.contract.combat.UmbraDodgeIntentPayload.TYPE,
+            dev.umbra.core.contract.combat.UmbraDodgeIntentPayload.CODEC
         );
 
         // Register core services
@@ -145,6 +153,14 @@ public final class UmbraMod implements ModInitializer {
             Path worldDir = server.getWorldPath(LevelResource.ROOT);
             STATE_SAVE_SERVICE.onPlayerLeave(uuid, worldDir);
             COMBAT_SERVICE.clearPlayerState(uuid);
+        });
+
+        net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
+            // A respawn creates a new ServerPlayer instance. Reset transient locks and immediately
+            // sync persisted resources so Dodge cannot inherit a stale action from the old body.
+            COMBAT_SERVICE.clearPlayerState(newPlayer.getUUID());
+            PROGRESSION_SERVICE.updateDerivedAttributes(newPlayer);
+            STATE_SAVE_SERVICE.syncPlayerState(newPlayer);
         });
 
         // Register commands
@@ -259,6 +275,17 @@ public final class UmbraMod implements ModInitializer {
                     player.sendSystemMessage(net.minecraft.network.chat.Component.literal("§aAttributes successfully reset!"));
                 });
             }
+        );
+
+        net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.registerGlobalReceiver(
+            dev.umbra.core.contract.combat.UmbraDodgeIntentPayload.TYPE,
+            (payload, context) -> context.server().execute(() -> {
+                dev.umbra.core.contract.combat.DodgeDirection direction =
+                    dev.umbra.core.contract.combat.DodgeDirection.fromWireId(payload.directionWireId());
+                if (direction != null) {
+                    COMBAT_SERVICE.requestDodge(context.player(), direction);
+                }
+            })
         );
     }
 }

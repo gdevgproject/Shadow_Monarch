@@ -76,6 +76,7 @@ public final class ProgressionServiceImpl implements ProgressionService {
                 state.setStatPoints(state.getStatPoints() + levelDiff * 5);
             }
             state.setLevel(currentLevel);
+            restoreLevelUpCombatResources(state);
         }
 
         // Publish events
@@ -153,6 +154,7 @@ public final class ProgressionServiceImpl implements ProgressionService {
                 state.setStatPoints(state.getStatPoints() + levelDiff * 5);
             }
             state.setLevel(currentLevel);
+            restoreLevelUpCombatResources(state);
         }
 
         UmbraEventBus eventBus = getEventBus();
@@ -212,6 +214,9 @@ public final class ProgressionServiceImpl implements ProgressionService {
         int levelDiff = level - oldLevel;
         state.setStatPoints(Math.max(0, state.getStatPoints() + levelDiff * 5));
         state.setLevel(level);
+        if (level > oldLevel) {
+            restoreLevelUpCombatResources(state);
+        }
         // Reset XP on direct level changes to prevent out of bounds
         int oldXp = state.getShadowXp();
         state.setShadowXp(0);
@@ -269,6 +274,11 @@ public final class ProgressionServiceImpl implements ProgressionService {
                 player.setHealth(maxHp);
             }
         }
+    }
+
+    private void restoreLevelUpCombatResources(UmbraPlayerState state) {
+        state.setCurrentMana(20.0 + getEffectiveStat(state.getIntelligence()) * 8.0 + state.getLevel());
+        state.setFatigue(0);
     }
 
     private int getEffectiveStat(int rawValue) {

@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Implementation of StateSaveService handling saving, loading, and migration of states.
  */
 public final class StateSaveServiceImpl implements StateSaveService {
-    public static final int TARGET_PLAYER_VERSION = 3;
+    public static final int TARGET_PLAYER_VERSION = 4;
     public static final int TARGET_WORLD_VERSION = 2;
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -37,6 +37,7 @@ public final class StateSaveServiceImpl implements StateSaveService {
         // Register migrations
         playerMigrationChain.registerMigration(new PlayerMigrationV1ToV2());
         playerMigrationChain.registerMigration(new PlayerMigrationV2ToV3());
+        playerMigrationChain.registerMigration(new PlayerMigrationV3ToV4());
         worldMigrationChain.registerMigration(new WorldMigrationV1ToV2());
     }
 
@@ -69,6 +70,9 @@ public final class StateSaveServiceImpl implements StateSaveService {
         state.setEssence(migrated.has("essence") ? migrated.get("essence").getAsInt() : 0);
         state.setJobChanged(migrated.has("job_changed") && migrated.get("job_changed").getAsBoolean());
         state.setLastRespecTime(migrated.has("last_respec_time") ? migrated.get("last_respec_time").getAsLong() : 0L);
+        state.setCurrentMana(migrated.has("current_mana") ? migrated.get("current_mana").getAsDouble() : 20.0 + state.getIntelligence() * 8.0 + state.getLevel());
+        state.setCurrentFocus(migrated.has("current_focus") ? migrated.get("current_focus").getAsDouble() : 100.0);
+        state.setFatigue(migrated.has("fatigue") ? migrated.get("fatigue").getAsInt() : 0);
 
         // Parse legacy/unrecognized fields
         state.getLegacyFields().clear();
@@ -80,7 +84,8 @@ public final class StateSaveServiceImpl implements StateSaveService {
                 !key.equals("vitality") && !key.equals("intelligence") &&
                 !key.equals("perception") && !key.equals("stat_points") &&
                 !key.equals("essence") && !key.equals("job_changed") &&
-                !key.equals("last_respec_time")) {
+                !key.equals("last_respec_time") && !key.equals("current_mana") &&
+                !key.equals("current_focus") && !key.equals("fatigue")) {
                 state.getLegacyFields().put(key, entry.getValue());
             }
         }
@@ -130,6 +135,9 @@ public final class StateSaveServiceImpl implements StateSaveService {
         json.addProperty("essence", state.getEssence());
         json.addProperty("job_changed", state.isJobChanged());
         json.addProperty("last_respec_time", state.getLastRespecTime());
+        json.addProperty("current_mana", state.getCurrentMana());
+        json.addProperty("current_focus", state.getCurrentFocus());
+        json.addProperty("fatigue", state.getFatigue());
 
         // Merge legacy fields
         for (Map.Entry<String, JsonElement> entry : state.getLegacyFields().entrySet()) {
@@ -258,7 +266,10 @@ public final class StateSaveServiceImpl implements StateSaveService {
                 state.getStatPoints(),
                 state.getEssence(),
                 state.isJobChanged(),
-                state.getLastRespecTime()
+                state.getLastRespecTime(),
+                (float) state.getCurrentMana(),
+                (float) state.getCurrentFocus(),
+                state.getFatigue()
             )
         );
     }

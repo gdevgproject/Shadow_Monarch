@@ -110,4 +110,17 @@ public final class CombatServiceTest {
         );
         assertEquals(13.65f, dmgMax, 0.001f);
     }
+
+    @Test
+    public void testDodgeFormulaVectors() {
+        // 0.25s + AGI * 0.001, rounded up to server ticks and capped at 0.4s.
+        assertEquals(6, CombatServiceImpl.calculateDodgeIFrameTicksForAgility(10));
+        assertEquals(8, CombatServiceImpl.calculateDodgeIFrameTicksForAgility(1000));
+        assertEquals(7, CombatServiceImpl.calculateDodgeActionTicks());
+        assertEquals(3.22, CombatServiceImpl.calculateDodgeUnobstructedDistance(), 0.0001);
+        assertEquals(25.0, CombatServiceImpl.calculateDodgeFocusCost(84));
+        assertEquals(37.5, CombatServiceImpl.calculateDodgeFocusCost(85));
+        assertEquals(2.02, CombatServiceImpl.calculatePrecisionManaRestore(101.0), 0.0001);
+        assertEquals(6.0, CombatServiceImpl.calculatePrecisionManaRestore(1000.0), 0.0001);
+    }
 }

@@ -43,7 +43,7 @@ public final class StateMigrationTest {
         saveService.loadPlayerState(testPlayerUuid, v1Json);
 
         UmbraPlayerState state = saveService.getOrCreatePlayerState(testPlayerUuid);
-        assertEquals(3, state.getSchemaVersion());
+        assertEquals(4, state.getSchemaVersion());
         assertEquals(12, state.getLevel());
         assertEquals(3400, state.getShadowXp());
         assertEquals("E", state.getRank());
@@ -56,6 +56,9 @@ public final class StateMigrationTest {
         assertEquals(0, state.getEssence());
         assertFalse(state.isJobChanged());
         assertEquals(0L, state.getLastRespecTime());
+        assertEquals(112.0, state.getCurrentMana());
+        assertEquals(100.0, state.getCurrentFocus());
+        assertEquals(0, state.getFatigue());
         assertTrue(state.getLegacyFields().containsKey("custom_legacy_field"));
         assertEquals("some_value", state.getLegacyFields().get("custom_legacy_field").getAsString());
 
@@ -63,12 +66,15 @@ public final class StateMigrationTest {
         String savedJsonStr = saveService.savePlayerState(testPlayerUuid);
         JsonObject savedJson = JsonParser.parseString(savedJsonStr).getAsJsonObject();
 
-        assertEquals(3, savedJson.get("schema_version").getAsInt());
+        assertEquals(4, savedJson.get("schema_version").getAsInt());
         assertEquals(12, savedJson.get("level").getAsInt());
         assertEquals(3400, savedJson.get("shadow_xp").getAsInt());
         assertEquals("E", savedJson.get("rank").getAsString());
         assertEquals(10, savedJson.get("strength").getAsInt());
         assertEquals(55, savedJson.get("stat_points").getAsInt());
+        assertEquals(112.0, savedJson.get("current_mana").getAsDouble());
+        assertEquals(100.0, savedJson.get("current_focus").getAsDouble());
+        assertEquals(0, savedJson.get("fatigue").getAsInt());
         assertEquals("some_value", savedJson.get("custom_legacy_field").getAsString());
     }
 
@@ -108,7 +114,7 @@ public final class StateMigrationTest {
         saveService.loadPlayerState(testPlayerUuid, data.toString());
         UmbraPlayerState state = saveService.getOrCreatePlayerState(testPlayerUuid);
 
-        assertEquals(3, state.getSchemaVersion());
+        assertEquals(4, state.getSchemaVersion());
         assertEquals(55, state.getLevel());
         assertEquals(12000, state.getShadowXp());
         assertEquals("S", state.getRank());
@@ -124,13 +130,13 @@ public final class StateMigrationTest {
 
             saveService.onPlayerJoin(testPlayerUuid, tempDir);
             UmbraPlayerState playerState = saveService.getOrCreatePlayerState(testPlayerUuid);
-            assertEquals(3, playerState.getSchemaVersion());
+            assertEquals(4, playerState.getSchemaVersion());
             assertEquals(1, playerState.getLevel());
 
             // Modify state
             saveService.getWorldState().setSchemaVersion(2);
             saveService.getWorldState().setActiveStratum(5);
-            playerState.setSchemaVersion(3);
+            playerState.setSchemaVersion(4);
             playerState.setLevel(25);
             playerState.setShadowXp(500);
             playerState.setRank("D");
@@ -152,7 +158,7 @@ public final class StateMigrationTest {
 
             newService.onPlayerJoin(testPlayerUuid, tempDir);
             UmbraPlayerState newPlayerState = newService.getOrCreatePlayerState(testPlayerUuid);
-            assertEquals(3, newPlayerState.getSchemaVersion());
+            assertEquals(4, newPlayerState.getSchemaVersion());
             assertEquals(25, newPlayerState.getLevel());
             assertEquals(500, newPlayerState.getShadowXp());
             assertEquals("D", newPlayerState.getRank());
@@ -178,7 +184,7 @@ public final class StateMigrationTest {
     @Test
     public void testUmbraPlayerStatePayloadRecord() {
         dev.umbra.core.contract.state.UmbraPlayerStatePayload payload =
-            new dev.umbra.core.contract.state.UmbraPlayerStatePayload(5, 1200, "D", 10, 10, 10, 10, 10, 20, 0, false, 0L);
+            new dev.umbra.core.contract.state.UmbraPlayerStatePayload(5, 1200, "D", 10, 10, 10, 10, 10, 20, 0, false, 0L, 101.0F, 100.0F, 0);
         assertEquals(5, payload.level());
         assertEquals(1200, payload.shadowXp());
         assertEquals("D", payload.rank());
@@ -191,6 +197,9 @@ public final class StateMigrationTest {
         assertEquals(0, payload.essence());
         assertFalse(payload.jobChanged());
         assertEquals(0L, payload.lastRespecTime());
+        assertEquals(101.0F, payload.currentMana());
+        assertEquals(100.0F, payload.currentFocus());
+        assertEquals(0, payload.fatigue());
         assertNotNull(dev.umbra.core.contract.state.UmbraPlayerStatePayload.TYPE);
         assertNotNull(dev.umbra.core.contract.state.UmbraPlayerStatePayload.CODEC);
     }

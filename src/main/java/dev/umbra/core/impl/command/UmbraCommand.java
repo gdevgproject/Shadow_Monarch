@@ -1,6 +1,7 @@
 package dev.umbra.core.impl.command;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import dev.umbra.UmbraMod;
 import dev.umbra.core.contract.progression.ProgressionService;
@@ -141,6 +142,32 @@ public final class UmbraCommand {
                             );
                             return 1;
                         })
+                    )
+                )
+                .then(literal("combat")
+                    .then(literal("mana")
+                        .then(literal("set")
+                            .then(argument("player", EntityArgument.player())
+                                .then(argument("amount", FloatArgumentType.floatArg(0.0F))
+                                    .executes(context -> {
+                                        ServerPlayer player = EntityArgument.getPlayer(context, "player");
+                                        float amount = FloatArgumentType.getFloat(context, "amount");
+
+                                        StateSaveService stateSaveService = UmbraMod.getServiceRegistry()
+                                            .locate(StateSaveService.class).orElseThrow();
+                                        UmbraPlayerState state = stateSaveService.getOrCreatePlayerState(player.getUUID());
+                                        state.setCurrentMana(amount);
+                                        stateSaveService.syncPlayerState(player);
+
+                                        context.getSource().sendSuccess(
+                                            () -> Component.literal("Set Mana of " + player.getGameProfile().name() + " to " + amount),
+                                            true
+                                        );
+                                        return 1;
+                                    })
+                                )
+                            )
+                        )
                     )
                 )
                 .then(literal("essence")

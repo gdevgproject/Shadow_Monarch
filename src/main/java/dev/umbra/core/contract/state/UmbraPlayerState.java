@@ -21,10 +21,13 @@ public final class UmbraPlayerState {
     private int essence;
     private boolean jobChanged;
     private long lastRespecTime;
+    private double currentMana;
+    private double currentFocus;
+    private int fatigue;
     private final Map<String, JsonElement> legacyFields = new HashMap<>();
 
     public UmbraPlayerState() {
-        this.schemaVersion = 3;
+        this.schemaVersion = 4;
         this.level = 1;
         this.shadowXp = 0;
         this.rank = "E";
@@ -37,6 +40,9 @@ public final class UmbraPlayerState {
         this.essence = 0;
         this.jobChanged = false;
         this.lastRespecTime = 0;
+        this.currentMana = maximumManaFor(level, intelligence);
+        this.currentFocus = 100.0;
+        this.fatigue = 0;
     }
 
     public int getSchemaVersion() {
@@ -141,6 +147,34 @@ public final class UmbraPlayerState {
 
     public void setLastRespecTime(long lastRespecTime) {
         this.lastRespecTime = lastRespecTime;
+    }
+
+    public double getCurrentMana() {
+        return currentMana;
+    }
+
+    public void setCurrentMana(double currentMana) {
+        this.currentMana = currentMana;
+    }
+
+    public double getCurrentFocus() {
+        return currentFocus;
+    }
+
+    public void setCurrentFocus(double currentFocus) {
+        this.currentFocus = currentFocus;
+    }
+
+    public int getFatigue() {
+        return fatigue;
+    }
+
+    public void setFatigue(int fatigue) {
+        this.fatigue = fatigue;
+    }
+
+    private static double maximumManaFor(int level, int intelligence) {
+        return 20.0 + intelligence * 8.0 + level;
     }
 
     public Map<String, JsonElement> getLegacyFields() {

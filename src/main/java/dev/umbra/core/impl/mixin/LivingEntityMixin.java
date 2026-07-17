@@ -65,7 +65,7 @@ public abstract class LivingEntityMixin {
         return amount;
     }
 
-    @Inject(method = "hurtServer", at = @At("HEAD"))
+    @Inject(method = "hurtServer", at = @At("HEAD"), cancellable = true)
     private void onPlayerHurt(net.minecraft.server.level.ServerLevel level, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity target = (LivingEntity) (Object) this;
         if (target instanceof ServerPlayer player) {
@@ -73,6 +73,12 @@ public abstract class LivingEntityMixin {
                 .locate(CombatService.class)
                 .orElse(null);
             if (combatService != null) {
+                // Only entity-originated combat hits can consume dodge i-frames; falling,
+                // void and other environment damage stay vanilla-authoritative.
+                if (source.getEntity() != null && source.getEntity() != player && combatService.tryAbsorbDodgeDamage(player)) {
+                    cir.setReturnValue(false);
+                    return;
+                }
                 // Register received damage to trigger player stance
                 combatService.registerDamage(player);
             }

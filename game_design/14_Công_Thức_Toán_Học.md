@@ -166,6 +166,7 @@ Hệ_số_thích_ứng = clamp( 1 + 0.10·tanh( (Hiệu_suất_kỳ_vọng − H
 THANG: 0 → 100 (Kiệt Sức)
 TĂNG (chỉ trong/gần combat):
   · Kỹ năng bộc phá (dash/burst/tốc biến/execute/gầm): +3 mỗi lần
+  · Dodge thường: +1 mỗi lần; Né Chuẩn Xác hoàn lại đúng +1 này
   · Giao tranh liên tục: +1 mỗi 60 giây
   · Nhận đòn nặng (≥ 25% HP): +2
   · Arise giữa combat: +2 mỗi lần thử
@@ -264,6 +265,8 @@ Focus_hồi = 18 + min(12, 0.12·AGI_e) / giây ngoài animation khóa;
             giảm 35% khi đang nhận sát thương liên tục.
 Chi phí: dodge 25 · parry 18 · dash skill theo dữ liệu (20–40).
 Focus không hồi trong 0.35s sau khi tiêu; không bị Fatigue khóa, nhưng Fatigue 85+ tăng chi phí bộc phá theo 14.12.
+Velocity dodge (server tick, tổng 0.35s): [0.78, 0.67, 0.55, 0.45, 0.34, 0.25, 0.18] block/tick theo hướng intent đã chuẩn hóa; chỉ thay vận tốc ngang, va chạm vanilla vẫn quyết định vị trí cuối.
+Né Chuẩn Xác: hit combat trong tick 0–1 kể từ lúc server nhận DodgeIntent hợp lệ. Hoàn lại +1 Fatigue đã tính cho cú né và hồi Mana = min(0.02·MP_tối_đa, 6), tối đa một lần mỗi 20 tick. Không hoàn Focus, không tăng sát thương, không làm chậm tick/địch.
 PER tiers: 0 = phe + threat icon · 25 = level/role · 60 = weakness/status/telegraph · 100 = resist/trait/escort/true Gate clue.
 ```
 

@@ -132,3 +132,5 @@ Legion Screen thêm bản đồ lệnh: chọn bóng/nhóm → Guard player/NPC/
 Màn hình **Cổng Liên Giới** chỉ mở tại anchor an toàn, cho xem Thế Giới Gốc/tầng đã mở, PB khuyến nghị, mutator, cảnh báo, đường về và trạng thái Gate; không có nút “nâng world” vô tình. Màn hình stat tách rõ điểm thuộc tính có thể respec khỏi Tiềm Năng không hoàn tác, có preview toàn bộ mốc rồi mới cho xác nhận giữ phím. First-run binding panel giải quyết xung đột phím và hỗ trợ import/reset layout trước combat đầu tiên.
 
 Preset phím ưu tiên thao tác dễ nhớ nhưng không áp đặt: Dodge `R → C → Mouse4`, Class `G → Mouse5`, Ping `X → Z`, Stance `V → B`; mũi tên là fallback khi phím trước đã được Minecraft/mod khác chiếm. Nếu không còn binding an toàn, action không tự gán và panel yêu cầu người chơi chọn một phím. Mọi binding vẫn remap được và tooltip luôn hiện phím đang thực dùng.
+
+M1-05 không được để Dodge thành `UNKNOWN` im lặng: khi fallback tự chọn, game báo binding thực dùng một lần; khi mọi fallback đã xung đột, game nói rõ Dodge chưa gán và dẫn người chơi đến Controls. Feedback Né Chuẩn Xác dùng hạt bóng gốc và trạng thái chữ, không chỉ dựa vào màu.

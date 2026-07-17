@@ -23,7 +23,8 @@ public final class ClientPlayerStateTracker {
     public static synchronized void update(
         int newLevel, int newShadowXp, String newRank,
         int newStr, int newAgi, int newVit, int newInt, int newPer,
-        int newStatPoints, int newEssence, boolean newJobChanged, long newLastRespecTime
+        int newStatPoints, int newEssence, boolean newJobChanged, long newLastRespecTime,
+        float newCurrentMana, float newCurrentFocus, int newFatigue
     ) {
         level = newLevel;
         shadowXp = newShadowXp;
