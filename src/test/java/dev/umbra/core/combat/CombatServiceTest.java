@@ -26,6 +26,7 @@ public final class CombatServiceTest {
             10,   // perception
             0,    // comboCount
             1.0f, // weaponBase
+            1.0f, // cooldownScale
             0.0f, // targetArmor
             false,// forceCrit
             false,// applyVariance
@@ -41,14 +42,14 @@ public final class CombatServiceTest {
         // comboCount = 5 -> comboMult = 1.0 + 5 * 0.02 = 1.10
         // Expected damage = 13.0 * 1.10 = 14.3
         float dmg = combatService.calculateFormulaDamage(
-            1, 10, 10, 5, 1.0f, 0.0f, false, false, 0.0
+            1, 10, 10, 5, 1.0f, 1.0f, 0.0f, false, false, 0.0
         );
         assertEquals(14.3f, dmg, 0.001f);
 
         // comboCount = 50 -> comboMult = 1.0 + 50 * 0.02 = 2.00, capped at 1.50
         // Expected damage = 13.0 * 1.50 = 19.5
         float dmgCap = combatService.calculateFormulaDamage(
-            1, 10, 10, 50, 1.0f, 0.0f, false, false, 0.0
+            1, 10, 10, 50, 1.0f, 1.0f, 0.0f, false, false, 0.0
         );
         assertEquals(19.5f, dmgCap, 0.001f);
     }
@@ -60,7 +61,7 @@ public final class CombatServiceTest {
         // forceCrit = true
         // Expected damage = 13.0 * 1.55 = 20.15
         float dmgCrit = combatService.calculateFormulaDamage(
-            1, 10, 10, 0, 1.0f, 0.0f, true, false, 0.0
+            1, 10, 10, 0, 1.0f, 1.0f, 0.0f, true, false, 0.0
         );
         assertEquals(20.15f, dmgCrit, 0.001f);
 
@@ -69,7 +70,7 @@ public final class CombatServiceTest {
         // critDamage = 1.50 + 153 * 0.005 = 2.265 (226.5%)
         // Expected damage = 13.0 * 2.265 = 29.445
         float dmgHighCrit = combatService.calculateFormulaDamage(
-            1, 10, 300, 0, 1.0f, 0.0f, true, false, 0.0
+            1, 10, 300, 0, 1.0f, 1.0f, 0.0f, true, false, 0.0
         );
         assertEquals(29.445f, dmgHighCrit, 0.001f);
     }
@@ -81,14 +82,14 @@ public final class CombatServiceTest {
         // mitigation = 10 / (10 + 50 + 10 * 1) = 10 / 70 = 14.2857%
         // Expected damage = 13.0 * (1 - 0.142857) = 13.0 * 0.857143 = 11.1428
         float dmgArmor = combatService.calculateFormulaDamage(
-            1, 10, 10, 0, 1.0f, 10.0f, false, false, 0.0
+            1, 10, 10, 0, 1.0f, 1.0f, 10.0f, false, false, 0.0
         );
         assertEquals(11.1428f, dmgArmor, 0.001f);
 
         // targetArmor = 10000.0 -> mitigation capped at 75%
         // Expected damage = 13.0 * (1 - 0.75) = 3.25
         float dmgArmorCap = combatService.calculateFormulaDamage(
-            1, 10, 10, 0, 1.0f, 10000.0f, false, false, 0.0
+            1, 10, 10, 0, 1.0f, 1.0f, 10000.0f, false, false, 0.0
         );
         assertEquals(3.25f, dmgArmorCap, 0.001f);
     }
@@ -98,13 +99,14 @@ public final class CombatServiceTest {
         // base = 13.0
         // randomDoubleForVariance = 0.0 -> variance = 0.95 -> 13.0 * 0.95 = 12.35
         float dmgMin = combatService.calculateFormulaDamage(
-            1, 10, 10, 0, 1.0f, 0.0f, false, true, 0.0
+            1, 10, 10, 0, 1.0f, 1.0f, 0.0f, false, true, 0.0
         );
         assertEquals(12.35f, dmgMin, 0.001f);
 
         // randomDoubleForVariance = 1.0 -> variance = 1.05 -> 13.0 * 1.05 = 13.65
+        // Expected damage = 13.0 * 1.05 = 13.65
         float dmgMax = combatService.calculateFormulaDamage(
-            1, 10, 10, 0, 1.0f, 0.0f, false, true, 1.0
+            1, 10, 10, 0, 1.0f, 1.0f, 0.0f, false, true, 1.0
         );
         assertEquals(13.65f, dmgMax, 0.001f);
     }

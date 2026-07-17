@@ -99,6 +99,7 @@ public abstract class LivingEntityMixin {
                             int newCombo = combatService.getComboCount(player.getUUID());
                             dummy.logCombatHit(
                                 player,
+                                level.getGameTime(),
                                 this.umbra$lastBaseDamage,
                                 newCombo,
                                 this.umbra$lastComboMult,

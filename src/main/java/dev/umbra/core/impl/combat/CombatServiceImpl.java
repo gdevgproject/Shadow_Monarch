@@ -177,6 +177,7 @@ public final class CombatServiceImpl implements CombatService {
         }
 
         boolean isCrit = random.nextDouble() < critChance;
+        double cooldownScale = player.getAttackStrengthScale(0.5F);
         double randomVar = random.nextDouble();
 
         float finalDmg = calculateFormulaDamage(
@@ -185,6 +186,7 @@ public final class CombatServiceImpl implements CombatService {
             perception,
             combatState.comboCount,
             (float) weaponBase,
+            (float) cooldownScale,
             target.getArmorValue(),
             isCrit,
             true,
@@ -192,7 +194,7 @@ public final class CombatServiceImpl implements CombatService {
         );
 
         int effStr = getEffectiveStat(strength);
-        double baseDmgVal = weaponBase + effStr * 1.2;
+        double baseDmgVal = (weaponBase + effStr * 1.2) * cooldownScale;
         double comboMult = 1.0 + combatState.comboCount * 0.02;
         if (comboMult > 1.5) comboMult = 1.5;
         double critDamageMult = 1.50 + effPer * 0.005;
@@ -218,13 +220,14 @@ public final class CombatServiceImpl implements CombatService {
         int perception,
         int comboCount,
         float weaponBase,
+        float cooldownScale,
         float targetArmor,
         boolean forceCrit,
         boolean applyVariance,
         double randomDoubleForVariance
     ) {
         int effStr = getEffectiveStat(strength);
-        double baseDamage = weaponBase + effStr * 1.2;
+        double baseDamage = (weaponBase + effStr * 1.2) * cooldownScale;
 
         double comboMult = 1.0 + comboCount * 0.02;
         if (comboMult > 1.5) {

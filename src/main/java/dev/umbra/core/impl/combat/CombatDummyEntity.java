@@ -57,6 +57,7 @@ public class CombatDummyEntity extends Mob {
      */
     public void logCombatHit(
         ServerPlayer player,
+        long gameTick,
         float baseDmg,
         int comboCount,
         float comboMult,
@@ -68,12 +69,14 @@ public class CombatDummyEntity extends Mob {
     ) {
         float nextHealth = Math.max(0.0f, this.getHealth() - finalDmg);
         String report = String.format(
-            "§d§l[UMBRA COMBAT REPORT]§r\n" +
+            "§d§l[UMBRA COMBAT REPORT] §7(Tick: %d | Time: %.2fs)§r\n" +
             " §7• §fTarget: §bCombat Dummy §8(HP: %.1f/%.1f | Armor: %.1f | Mit: %.1f%%)\n" +
             " §7• §fBase Damage: §e%.2f §8(Weapon + STR)\n" +
             " §7• §fCombo Meter: §a%d §8(Mult: %.2fx)\n" +
             " §7• §fCritical: %s §8(Mult: %.2fx)\n" +
             " §7• §6§lFinal Damage: %.2f§r",
+            gameTick,
+            gameTick / 20.0f,
             nextHealth,
             this.getMaxHealth(),
             armor,
