@@ -153,9 +153,6 @@ public final class UmbraStatsScreen extends Screen {
 
     @Override
     public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float delta) {
-        // Overlay background tint
-        this.extractBackground(guiGraphics, mouseX, mouseY, delta);
-
         int pWidth = 340;
         int pHeight = 220;
         int startX = (guiGraphics.guiWidth() - pWidth) / 2;
