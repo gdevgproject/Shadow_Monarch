@@ -52,7 +52,7 @@ public final class UmbraClientMod implements ClientModInitializer {
         statsKeyBinding = KeyMappingHelper.registerKeyMapping(new KeyMapping(
             "key.umbra.stats",
             InputConstants.Type.KEYSYM,
-            org.lwjgl.glfw.GLFW.GLFW_KEY_O,
+            org.lwjgl.glfw.GLFW.GLFW_KEY_K,
             KeyMapping.Category.MISC
         ));
 

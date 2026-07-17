@@ -13,7 +13,7 @@
 
 ## Delivered scope
 
-Implemented player attribute stats (STR, AGI, VIT, INT, PER) with server-authoritative state management and persistence. Developed V2 to V3 schema migration logic via `PlayerMigrationV2ToV3`. Implemented C2S packets (`UmbraStatsAllocatePayload`, `UmbraStatsRespecPayload`) for secure point allocation and resets. Enhanced `/umbra` command with admin subcommands (`essence`, `job`, `respec bypass`). Built a premium dark glassmorphism stats GUI (`UmbraStatsScreen`) utilizing `GuiGraphicsExtractor` rendering and key mapping (`O`), displaying live previews of derived stats and reset tooltips.
+Implemented player attribute stats (STR, AGI, VIT, INT, PER) with server-authoritative state management and persistence. Developed V2 to V3 schema migration logic via `PlayerMigrationV2ToV3`. Implemented C2S packets (`UmbraStatsAllocatePayload`, `UmbraStatsRespecPayload`) for secure point allocation and resets. Enhanced `/umbra` command with admin subcommands (`essence`, `job`, `respec bypass`). Built a premium dark glassmorphism stats GUI (`UmbraStatsScreen`) utilizing `GuiGraphicsExtractor` rendering and key mapping (`K`), displaying live previews of derived stats and reset tooltips.
 
 ## Verification evidence
 
@@ -34,9 +34,9 @@ Implemented player attribute stats (STR, AGI, VIT, INT, PER) with server-authori
 2. Connect to a single-player world or server.
 3. Verify debug HUD displays attribute values (all default to 10).
 4. Run `/umbra setlevel 5`. Confirm unallocated points increase to 20.
-5. Press `O` key to open the System Attributes Interface.
+5. Press `K` key to open the System Attributes Interface.
 6. Verify layout matches premium glassmorphic styling, title shows correctly, and derived stats previews update dynamically as you press `+` on any stat.
 7. Click "Confirm Stats" to apply allocation. Confirm that the attributes update on the debug HUD.
 8. Run `/umbra essence set 10` and `/umbra job set true`.
-9. Press `O` to open screen again and click "Reset Stats". Confirm attributes reset back to 10 and unallocated points are refunded.
+9. Press `K` to open screen again and click "Reset Stats". Confirm attributes reset back to 10 and unallocated points are refunded.
 10. Report `PASS M1-03`.

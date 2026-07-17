@@ -42,7 +42,7 @@ public final class UmbraStatsScreen extends Screen {
     protected void init() {
         super.init();
 
-        int pWidth = 340;
+        int pWidth = 400;
         int pHeight = 220;
         int startX = (this.width - pWidth) / 2;
         int startY = (this.height - pHeight) / 2;
@@ -56,7 +56,7 @@ public final class UmbraStatsScreen extends Screen {
         this.perAdd = 0;
 
         // Position for +/- buttons
-        int leftColX = startX + 110;
+        int leftColX = startX + 165;
         int rowHeight = 22;
         int firstRowY = startY + 45;
 
@@ -82,15 +82,15 @@ public final class UmbraStatsScreen extends Screen {
 
         // Confirm Button
         confirmButton = this.addRenderableWidget(Button.builder(Component.literal("Confirm Stats"), b -> confirmAllocation())
-            .bounds(startX + 15, startY + pHeight - 35, 110, 20).build());
+            .bounds(startX + 20, startY + pHeight - 35, 110, 20).build());
 
         // Respec Button
         respecButton = this.addRenderableWidget(Button.builder(Component.literal("Reset Stats"), b -> requestRespec())
-            .bounds(startX + 135, startY + pHeight - 35, 90, 20).build());
+            .bounds(startX + 145, startY + pHeight - 35, 110, 20).build());
 
         // Close Button
         this.addRenderableWidget(Button.builder(Component.literal("Close"), b -> this.onClose())
-            .bounds(startX + 235, startY + pHeight - 35, 90, 20).build());
+            .bounds(startX + 270, startY + pHeight - 35, 110, 20).build());
 
         updateButtonStates();
     }
@@ -137,7 +137,7 @@ public final class UmbraStatsScreen extends Screen {
         if (this.minecraft != null && this.minecraft.level != null) {
             timeSinceLastRespec = this.minecraft.level.getGameTime() - ClientPlayerStateTracker.getLastRespecTime();
         }
-        boolean cooldownMet = timeSinceLastRespec >= 72000;
+        boolean cooldownMet = (ClientPlayerStateTracker.getLastRespecTime() == 0) || (timeSinceLastRespec >= 72000);
         respecButton.active = job && essence && cooldownMet;
     }
 
@@ -153,7 +153,7 @@ public final class UmbraStatsScreen extends Screen {
 
     @Override
     public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float delta) {
-        int pWidth = 340;
+        int pWidth = 400;
         int pHeight = 220;
         int startX = (guiGraphics.guiWidth() - pWidth) / 2;
         int startY = (guiGraphics.guiHeight() - pHeight) / 2;
@@ -193,7 +193,7 @@ public final class UmbraStatsScreen extends Screen {
         guiGraphics.text(this.font, pointsText, startX + 15, startY + pHeight - 55, 0xFFFFFFFF, false);
 
         // Right side: Previews of derived formulas
-        int previewX = startX + 160;
+        int previewX = startX + 215;
         int previewY = startY + 47;
 
         guiGraphics.text(this.font, "§d§nDerived Stats Preview:§r", previewX, previewY - 12, 0xFFFFFFFF, false);
@@ -281,7 +281,7 @@ public final class UmbraStatsScreen extends Screen {
             if (this.minecraft != null && this.minecraft.level != null) {
                 timeSinceLastRespec = this.minecraft.level.getGameTime() - ClientPlayerStateTracker.getLastRespecTime();
             }
-            boolean cooldownMet = timeSinceLastRespec >= 72000;
+            boolean cooldownMet = (ClientPlayerStateTracker.getLastRespecTime() == 0) || (timeSinceLastRespec >= 72000);
 
             if (!job) {
                 tooltip.add(Component.literal("§cRequires Job Changed status."));
@@ -307,7 +307,7 @@ public final class UmbraStatsScreen extends Screen {
 
     @Override
     public boolean keyPressed(net.minecraft.client.input.KeyEvent event) {
-        if (event.isEscape() || event.key() == GLFW.GLFW_KEY_O) {
+        if (event.isEscape() || event.key() == GLFW.GLFW_KEY_K) {
             this.onClose();
             return true;
         }

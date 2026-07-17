@@ -188,7 +188,7 @@ public final class UmbraMod implements ModInitializer {
                         player.sendSystemMessage(net.minecraft.network.chat.Component.literal("§cInsufficient Essence! Requires 10 Essence."));
                         return;
                     }
-                    if (gameTime - state.getLastRespecTime() < 72000) {
+                    if (state.getLastRespecTime() != 0 && gameTime - state.getLastRespecTime() < 72000) {
                         long ticksLeft = 72000 - (gameTime - state.getLastRespecTime());
                         long secondsLeft = ticksLeft / 20;
                         player.sendSystemMessage(net.minecraft.network.chat.Component.literal("§cRespec on cooldown! Try again in " + (secondsLeft / 60) + " minutes."));
