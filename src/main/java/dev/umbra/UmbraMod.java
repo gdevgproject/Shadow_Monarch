@@ -5,22 +5,26 @@ import dev.umbra.core.contract.content.UmbraContentRegistry;
 import dev.umbra.core.contract.event.UmbraEventBus;
 import dev.umbra.core.contract.registry.UmbraServiceRegistry;
 import dev.umbra.core.contract.scheduler.TickScheduler;
+import dev.umbra.core.contract.progression.ProgressionService;
 import dev.umbra.core.contract.state.StateSaveService;
 import dev.umbra.core.impl.config.UmbraConfigServiceImpl;
 import dev.umbra.core.impl.content.ContentRegistryImpl;
 import dev.umbra.core.impl.event.EventBusImpl;
+import dev.umbra.core.impl.progression.ProgressionServiceImpl;
 import dev.umbra.core.impl.registry.ServiceRegistryImpl;
 import dev.umbra.core.impl.scheduler.SchedulerImpl;
 import dev.umbra.core.impl.state.StateSaveServiceImpl;
 import java.nio.file.Path;
 import java.util.UUID;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.world.level.storage.LevelResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import dev.umbra.core.impl.command.UmbraCommand;
 
 /**
  * Common bootstrap entrypoint.
@@ -35,6 +39,7 @@ public final class UmbraMod implements ModInitializer {
     private static final ContentRegistryImpl CONTENT_REGISTRY = new ContentRegistryImpl();
     private static final StateSaveServiceImpl STATE_SAVE_SERVICE = new StateSaveServiceImpl();
     private static final UmbraConfigServiceImpl CONFIG_SERVICE = new UmbraConfigServiceImpl();
+    private static final ProgressionServiceImpl PROGRESSION_SERVICE = new ProgressionServiceImpl();
 
     public static UmbraServiceRegistry getServiceRegistry() {
         return SERVICE_REGISTRY;
@@ -59,6 +64,7 @@ public final class UmbraMod implements ModInitializer {
         SERVICE_REGISTRY.register(UmbraContentRegistry.class, CONTENT_REGISTRY);
         SERVICE_REGISTRY.register(StateSaveService.class, STATE_SAVE_SERVICE);
         SERVICE_REGISTRY.register(UmbraConfigService.class, CONFIG_SERVICE);
+        SERVICE_REGISTRY.register(ProgressionService.class, PROGRESSION_SERVICE);
 
         // Register Server Tick lifecycle hook
         ServerTickEvents.START_SERVER_TICK.register(server -> SCHEDULER.tick());
@@ -91,6 +97,11 @@ public final class UmbraMod implements ModInitializer {
             UUID uuid = handler.player.getUUID();
             Path worldDir = server.getWorldPath(LevelResource.ROOT);
             STATE_SAVE_SERVICE.onPlayerLeave(uuid, worldDir);
+        });
+
+        // Register commands
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+            UmbraCommand.register(dispatcher);
         });
     }
 }
