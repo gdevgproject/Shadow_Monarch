@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "active_stratum": 3,
+  "unknown_stratum_mutator": "hardcore_only"
+}
