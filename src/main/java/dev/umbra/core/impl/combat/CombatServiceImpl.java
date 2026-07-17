@@ -121,6 +121,11 @@ public final class CombatServiceImpl implements CombatService {
 
     @Override
     public float calculateCustomDamage(ServerPlayer player, LivingEntity target, float originalDamage) {
+        return calculateCustomDamageDetails(player, target, originalDamage).finalDmg();
+    }
+
+    @Override
+    public CustomDamageDetails calculateCustomDamageDetails(ServerPlayer player, LivingEntity target, float originalDamage) {
         UUID uuid = player.getUUID();
         UmbraPlayerState playerState = getStateSaveService().getOrCreatePlayerState(uuid);
         long tick = ((net.minecraft.server.level.ServerLevel) player.level()).getServer() != null ? ((net.minecraft.server.level.ServerLevel) player.level()).getServer().getTickCount() : 0;
@@ -186,31 +191,25 @@ public final class CombatServiceImpl implements CombatService {
             randomVar
         );
 
-        // Logging detailed combat stats to Dummy Entity if target is Combat Dummy
-        if (target instanceof CombatDummyEntity dummy) {
-            int effStr = getEffectiveStat(strength);
-            double baseDmgVal = weaponBase + effStr * 1.2;
-            double comboMult = 1.0 + combatState.comboCount * 0.02;
-            if (comboMult > 1.5) comboMult = 1.5;
-            double critDamageMult = 1.50 + effPer * 0.005;
-            if (critDamageMult > 2.50) critDamageMult = 2.50;
-            double armorMitigation = target.getArmorValue() / (target.getArmorValue() + 50.0 + 10.0 * playerState.getLevel());
-            if (armorMitigation > 0.75) armorMitigation = 0.75;
+        int effStr = getEffectiveStat(strength);
+        double baseDmgVal = weaponBase + effStr * 1.2;
+        double comboMult = 1.0 + combatState.comboCount * 0.02;
+        if (comboMult > 1.5) comboMult = 1.5;
+        double critDamageMult = 1.50 + effPer * 0.005;
+        if (critDamageMult > 2.50) critDamageMult = 2.50;
+        double armorMitigation = target.getArmorValue() / (target.getArmorValue() + 50.0 + 10.0 * playerState.getLevel());
+        if (armorMitigation > 0.75) armorMitigation = 0.75;
 
-            dummy.logCombatHit(
-                player,
-                (float) baseDmgVal,
-                combatState.comboCount,
-                (float) comboMult,
-                isCrit,
-                (float) (isCrit ? critDamageMult : 1.0),
-                target.getArmorValue(),
-                (float) armorMitigation,
-                finalDmg
-            );
-        }
-
-        return finalDmg;
+        return new CustomDamageDetails(
+            (float) baseDmgVal,
+            combatState.comboCount,
+            (float) comboMult,
+            isCrit,
+            (float) (isCrit ? critDamageMult : 1.0),
+            target.getArmorValue(),
+            (float) armorMitigation,
+            finalDmg
+        );
     }
 
     public float calculateFormulaDamage(

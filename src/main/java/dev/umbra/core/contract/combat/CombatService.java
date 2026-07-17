@@ -45,6 +45,11 @@ public interface CombatService {
     float calculateCustomDamage(ServerPlayer player, LivingEntity target, float originalDamage);
 
     /**
+     * Computes final damage details without modifying player combat state.
+     */
+    CustomDamageDetails calculateCustomDamageDetails(ServerPlayer player, LivingEntity target, float originalDamage);
+
+    /**
      * Ticks the combat service to handle stance timeouts and combo decay.
      */
     void tick(net.minecraft.server.MinecraftServer server);
@@ -53,4 +58,18 @@ public interface CombatService {
      * Clears all combat tracking state for a player (e.g. on log out).
      */
     void clearPlayerState(UUID playerUuid);
+
+    /**
+     * Record containing details of a custom damage calculation.
+     */
+    record CustomDamageDetails(
+        float baseDamage,
+        int comboCount,
+        float comboMult,
+        boolean isCrit,
+        float critMult,
+        float armor,
+        float armorMit,
+        float finalDmg
+    ) {}
 }
