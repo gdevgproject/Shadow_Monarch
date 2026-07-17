@@ -176,8 +176,8 @@ tasks.register('localCi') {
 
 tasks.register('printClientClasspath') {
     doLast {
-        println "--- minecraftCommonNamedCompile ---"
-        configurations.minecraftCommonNamedCompile.each { println it }
+        println "--- clientCompileClasspath ---"
+        configurations.clientCompileClasspath.each { println it }
     }
 }
 

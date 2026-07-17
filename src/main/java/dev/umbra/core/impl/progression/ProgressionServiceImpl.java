@@ -71,6 +71,10 @@ public final class ProgressionServiceImpl implements ProgressionService {
 
         state.setShadowXp(currentXp);
         if (leveledUp) {
+            int levelDiff = currentLevel - oldLevel;
+            if (levelDiff > 0) {
+                state.setStatPoints(state.getStatPoints() + levelDiff * 5);
+            }
             state.setLevel(currentLevel);
         }
 
@@ -99,6 +103,7 @@ public final class ProgressionServiceImpl implements ProgressionService {
         addXp(uuid, amount);
 
         int newLevel = state.getLevel();
+        updateDerivedAttributes(player);
         if (newLevel > oldLevel) {
             // Apply level-up effects for online player
             player.setHealth(player.getMaxHealth());
@@ -143,6 +148,10 @@ public final class ProgressionServiceImpl implements ProgressionService {
 
         state.setShadowXp(targetXp);
         if (leveledUp) {
+            int levelDiff = currentLevel - oldLevel;
+            if (levelDiff > 0) {
+                state.setStatPoints(state.getStatPoints() + levelDiff * 5);
+            }
             state.setLevel(currentLevel);
         }
 
@@ -170,6 +179,7 @@ public final class ProgressionServiceImpl implements ProgressionService {
         setXp(uuid, amount);
 
         int newLevel = state.getLevel();
+        updateDerivedAttributes(player);
         if (newLevel > oldLevel) {
             player.setHealth(player.getMaxHealth());
             player.level().playSound(
@@ -199,6 +209,8 @@ public final class ProgressionServiceImpl implements ProgressionService {
             return;
         }
 
+        int levelDiff = level - oldLevel;
+        state.setStatPoints(Math.max(0, state.getStatPoints() + levelDiff * 5));
         state.setLevel(level);
         // Reset XP on direct level changes to prevent out of bounds
         int oldXp = state.getShadowXp();
@@ -224,6 +236,7 @@ public final class ProgressionServiceImpl implements ProgressionService {
 
         setLevel(uuid, level);
 
+        updateDerivedAttributes(player);
         if (level > oldLevel) {
             player.setHealth(player.getMaxHealth());
             player.level().playSound(
@@ -239,6 +252,30 @@ public final class ProgressionServiceImpl implements ProgressionService {
         }
 
         getStateSaveService().syncPlayerState(player);
+    }
+
+    @Override
+    public void updateDerivedAttributes(ServerPlayer player) {
+        if (player == null) return;
+        UmbraPlayerState state = getStateSaveService().getOrCreatePlayerState(player.getUUID());
+        int level = state.getLevel();
+        int vitality = state.getVitality();
+        float maxHp = 20.0f + getEffectiveStat(vitality) * 6.0f + level * 2.0f;
+
+        var attributeInstance = player.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH);
+        if (attributeInstance != null) {
+            attributeInstance.setBaseValue(maxHp);
+            if (player.getHealth() > maxHp) {
+                player.setHealth(maxHp);
+            }
+        }
+    }
+
+    private int getEffectiveStat(int rawValue) {
+        if (rawValue <= 100) {
+            return rawValue;
+        }
+        return 100 + (int) Math.floor(Math.pow(rawValue - 100, 0.75));
     }
 
     private int playerLevel(UUID uuid) {

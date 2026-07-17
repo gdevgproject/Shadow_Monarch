@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Implementation of StateSaveService handling saving, loading, and migration of states.
  */
 public final class StateSaveServiceImpl implements StateSaveService {
-    public static final int TARGET_PLAYER_VERSION = 2;
+    public static final int TARGET_PLAYER_VERSION = 3;
     public static final int TARGET_WORLD_VERSION = 2;
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -36,6 +36,7 @@ public final class StateSaveServiceImpl implements StateSaveService {
     public StateSaveServiceImpl() {
         // Register migrations
         playerMigrationChain.registerMigration(new PlayerMigrationV1ToV2());
+        playerMigrationChain.registerMigration(new PlayerMigrationV2ToV3());
         worldMigrationChain.registerMigration(new WorldMigrationV1ToV2());
     }
 
@@ -59,13 +60,27 @@ public final class StateSaveServiceImpl implements StateSaveService {
         state.setLevel(migrated.get("level").getAsInt());
         state.setShadowXp(migrated.has("shadow_xp") ? migrated.get("shadow_xp").getAsInt() : 0);
         state.setRank(migrated.has("rank") ? migrated.get("rank").getAsString() : "E");
+        state.setStrength(migrated.has("strength") ? migrated.get("strength").getAsInt() : 10);
+        state.setAgility(migrated.has("agility") ? migrated.get("agility").getAsInt() : 10);
+        state.setVitality(migrated.has("vitality") ? migrated.get("vitality").getAsInt() : 10);
+        state.setIntelligence(migrated.has("intelligence") ? migrated.get("intelligence").getAsInt() : 10);
+        state.setPerception(migrated.has("perception") ? migrated.get("perception").getAsInt() : 10);
+        state.setStatPoints(migrated.has("stat_points") ? migrated.get("stat_points").getAsInt() : 0);
+        state.setEssence(migrated.has("essence") ? migrated.get("essence").getAsInt() : 0);
+        state.setJobChanged(migrated.has("job_changed") && migrated.get("job_changed").getAsBoolean());
+        state.setLastRespecTime(migrated.has("last_respec_time") ? migrated.get("last_respec_time").getAsLong() : 0L);
 
         // Parse legacy/unrecognized fields
         state.getLegacyFields().clear();
         for (Map.Entry<String, JsonElement> entry : migrated.entrySet()) {
             String key = entry.getKey();
             if (!key.equals("schema_version") && !key.equals("level") &&
-                !key.equals("shadow_xp") && !key.equals("rank")) {
+                !key.equals("shadow_xp") && !key.equals("rank") &&
+                !key.equals("strength") && !key.equals("agility") &&
+                !key.equals("vitality") && !key.equals("intelligence") &&
+                !key.equals("perception") && !key.equals("stat_points") &&
+                !key.equals("essence") && !key.equals("job_changed") &&
+                !key.equals("last_respec_time")) {
                 state.getLegacyFields().put(key, entry.getValue());
             }
         }
@@ -106,6 +121,15 @@ public final class StateSaveServiceImpl implements StateSaveService {
         json.addProperty("level", state.getLevel());
         json.addProperty("shadow_xp", state.getShadowXp());
         json.addProperty("rank", state.getRank());
+        json.addProperty("strength", state.getStrength());
+        json.addProperty("agility", state.getAgility());
+        json.addProperty("vitality", state.getVitality());
+        json.addProperty("intelligence", state.getIntelligence());
+        json.addProperty("perception", state.getPerception());
+        json.addProperty("stat_points", state.getStatPoints());
+        json.addProperty("essence", state.getEssence());
+        json.addProperty("job_changed", state.isJobChanged());
+        json.addProperty("last_respec_time", state.getLastRespecTime());
 
         // Merge legacy fields
         for (Map.Entry<String, JsonElement> entry : state.getLegacyFields().entrySet()) {
@@ -222,7 +246,20 @@ public final class StateSaveServiceImpl implements StateSaveService {
         UmbraPlayerState state = getOrCreatePlayerState(playerUuid);
         net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.send(
             player,
-            new UmbraPlayerStatePayload(state.getLevel(), state.getShadowXp(), state.getRank())
+            new UmbraPlayerStatePayload(
+                state.getLevel(),
+                state.getShadowXp(),
+                state.getRank(),
+                state.getStrength(),
+                state.getAgility(),
+                state.getVitality(),
+                state.getIntelligence(),
+                state.getPerception(),
+                state.getStatPoints(),
+                state.getEssence(),
+                state.isJobChanged(),
+                state.getLastRespecTime()
+            )
         );
     }
 

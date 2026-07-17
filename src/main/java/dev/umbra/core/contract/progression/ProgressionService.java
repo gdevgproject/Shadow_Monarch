@@ -45,4 +45,9 @@ public interface ProgressionService {
      * Returns the required XP to level up from the given level.
      */
     int getRequiredXpForLevel(int level);
+
+    /**
+     * Updates player derived attributes (like max health) based on level/stats.
+     */
+    void updateDerivedAttributes(ServerPlayer player);
 }

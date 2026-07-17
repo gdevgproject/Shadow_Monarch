@@ -43,6 +43,18 @@ public final class UmbraDebugOverlay implements HudElement {
         y += 10;
         drawContext.text(font, "Rank: " + ClientPlayerStateTracker.getRank(), 5, y, 0xFF55FFFF, false);
         y += 10;
+        drawContext.text(font, String.format("Stats: STR=%d AGI=%d VIT=%d INT=%d PER=%d",
+            ClientPlayerStateTracker.getStrength(),
+            ClientPlayerStateTracker.getAgility(),
+            ClientPlayerStateTracker.getVitality(),
+            ClientPlayerStateTracker.getIntelligence(),
+            ClientPlayerStateTracker.getPerception()), 5, y, 0xFF55FF55, false);
+        y += 10;
+        drawContext.text(font, "Free Points: " + ClientPlayerStateTracker.getStatPoints() +
+            " | Essence: " + ClientPlayerStateTracker.getEssence(), 5, y, 0xFF55FF55, false);
+        y += 10;
+        drawContext.text(font, "Job Changed: " + ClientPlayerStateTracker.isJobChanged(), 5, y, 0xFF55FF55, false);
+        y += 10;
         drawContext.text(font, "Difficulty: " + configService.getPlayerConfig().getDifficulty(), 5, y, 0xFFFFFFFF, false);
         y += 10;
         drawContext.text(font, "Adaptive: " + configService.getPlayerConfig().isAdaptive(), 5, y, 0xFFFFFFFF, false);

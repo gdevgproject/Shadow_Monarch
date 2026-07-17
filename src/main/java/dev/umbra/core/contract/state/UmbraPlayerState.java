@@ -12,13 +12,31 @@ public final class UmbraPlayerState {
     private int level;
     private int shadowXp;
     private String rank;
+    private int strength;
+    private int agility;
+    private int vitality;
+    private int intelligence;
+    private int perception;
+    private int statPoints;
+    private int essence;
+    private boolean jobChanged;
+    private long lastRespecTime;
     private final Map<String, JsonElement> legacyFields = new HashMap<>();
 
     public UmbraPlayerState() {
-        this.schemaVersion = 1;
+        this.schemaVersion = 3;
         this.level = 1;
         this.shadowXp = 0;
         this.rank = "E";
+        this.strength = 10;
+        this.agility = 10;
+        this.vitality = 10;
+        this.intelligence = 10;
+        this.perception = 10;
+        this.statPoints = 0;
+        this.essence = 0;
+        this.jobChanged = false;
+        this.lastRespecTime = 0;
     }
 
     public int getSchemaVersion() {
@@ -51,6 +69,78 @@ public final class UmbraPlayerState {
 
     public void setRank(String rank) {
         this.rank = rank;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public int getAgility() {
+        return agility;
+    }
+
+    public void setAgility(int agility) {
+        this.agility = agility;
+    }
+
+    public int getVitality() {
+        return vitality;
+    }
+
+    public void setVitality(int vitality) {
+        this.vitality = vitality;
+    }
+
+    public int getIntelligence() {
+        return intelligence;
+    }
+
+    public void setIntelligence(int intelligence) {
+        this.intelligence = intelligence;
+    }
+
+    public int getPerception() {
+        return perception;
+    }
+
+    public void setPerception(int perception) {
+        this.perception = perception;
+    }
+
+    public int getStatPoints() {
+        return statPoints;
+    }
+
+    public void setStatPoints(int statPoints) {
+        this.statPoints = statPoints;
+    }
+
+    public int getEssence() {
+        return essence;
+    }
+
+    public void setEssence(int essence) {
+        this.essence = essence;
+    }
+
+    public boolean isJobChanged() {
+        return jobChanged;
+    }
+
+    public void setJobChanged(boolean jobChanged) {
+        this.jobChanged = jobChanged;
+    }
+
+    public long getLastRespecTime() {
+        return lastRespecTime;
+    }
+
+    public void setLastRespecTime(long lastRespecTime) {
+        this.lastRespecTime = lastRespecTime;
     }
 
     public Map<String, JsonElement> getLegacyFields() {

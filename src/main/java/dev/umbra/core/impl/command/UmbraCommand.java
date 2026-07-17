@@ -128,11 +128,128 @@ public final class UmbraCommand {
                             context.getSource().sendSuccess(
                                 () -> Component.literal("Player " + player.getGameProfile().name() +
                                     ": Level = " + state.getLevel() + ", XP = " + state.getShadowXp() +
-                                    ", Rank = " + state.getRank()),
+                                    ", Rank = " + state.getRank() +
+                                    ", Stats: STR=" + state.getStrength() +
+                                    " AGI=" + state.getAgility() +
+                                    " VIT=" + state.getVitality() +
+                                    " INT=" + state.getIntelligence() +
+                                    " PER=" + state.getPerception() +
+                                    ", FreePoints = " + state.getStatPoints() +
+                                    ", Essence = " + state.getEssence() +
+                                    ", JobChanged = " + state.isJobChanged()),
                                 false
                             );
                             return 1;
                         })
+                    )
+                )
+                .then(literal("essence")
+                    .then(literal("add")
+                        .then(argument("player", EntityArgument.player())
+                            .then(argument("amount", IntegerArgumentType.integer(0))
+                                .executes(context -> {
+                                    ServerPlayer player = EntityArgument.getPlayer(context, "player");
+                                    int amount = IntegerArgumentType.getInteger(context, "amount");
+
+                                    StateSaveService stateSaveService = UmbraMod.getServiceRegistry()
+                                        .locate(StateSaveService.class).orElseThrow();
+                                    UmbraPlayerState state = stateSaveService.getOrCreatePlayerState(player.getUUID());
+                                    state.setEssence(state.getEssence() + amount);
+                                    stateSaveService.syncPlayerState(player);
+
+                                    context.getSource().sendSuccess(
+                                        () -> Component.literal("Added " + amount + " Essence to " + player.getGameProfile().name() + ". Current: " + state.getEssence()),
+                                        true
+                                    );
+                                    return 1;
+                                })
+                            )
+                        )
+                    )
+                    .then(literal("set")
+                        .then(argument("player", EntityArgument.player())
+                            .then(argument("amount", IntegerArgumentType.integer(0))
+                                .executes(context -> {
+                                    ServerPlayer player = EntityArgument.getPlayer(context, "player");
+                                    int amount = IntegerArgumentType.getInteger(context, "amount");
+
+                                    StateSaveService stateSaveService = UmbraMod.getServiceRegistry()
+                                        .locate(StateSaveService.class).orElseThrow();
+                                    UmbraPlayerState state = stateSaveService.getOrCreatePlayerState(player.getUUID());
+                                    state.setEssence(amount);
+                                    stateSaveService.syncPlayerState(player);
+
+                                    context.getSource().sendSuccess(
+                                        () -> Component.literal("Set Essence of " + player.getGameProfile().name() + " to " + amount),
+                                        true
+                                    );
+                                    return 1;
+                                })
+                            )
+                        )
+                    )
+                )
+                .then(literal("job")
+                    .then(literal("set")
+                        .then(argument("player", EntityArgument.player())
+                            .then(argument("value", com.mojang.brigadier.arguments.BoolArgumentType.bool())
+                                .executes(context -> {
+                                    ServerPlayer player = EntityArgument.getPlayer(context, "player");
+                                    boolean val = com.mojang.brigadier.arguments.BoolArgumentType.getBool(context, "value");
+
+                                    StateSaveService stateSaveService = UmbraMod.getServiceRegistry()
+                                        .locate(StateSaveService.class).orElseThrow();
+                                    UmbraPlayerState state = stateSaveService.getOrCreatePlayerState(player.getUUID());
+                                    state.setJobChanged(val);
+                                    stateSaveService.syncPlayerState(player);
+
+                                    context.getSource().sendSuccess(
+                                        () -> Component.literal("Set jobChanged of " + player.getGameProfile().name() + " to " + val),
+                                        true
+                                    );
+                                    return 1;
+                                })
+                            )
+                        )
+                    )
+                )
+                .then(literal("respec")
+                    .then(literal("bypass")
+                        .then(argument("player", EntityArgument.player())
+                            .executes(context -> {
+                                ServerPlayer player = EntityArgument.getPlayer(context, "player");
+
+                                StateSaveService stateSaveService = UmbraMod.getServiceRegistry()
+                                    .locate(StateSaveService.class).orElseThrow();
+                                UmbraPlayerState state = stateSaveService.getOrCreatePlayerState(player.getUUID());
+
+                                int allocatedPoints = (state.getStrength() - 10) +
+                                                      (state.getAgility() - 10) +
+                                                      (state.getVitality() - 10) +
+                                                      (state.getIntelligence() - 10) +
+                                                      (state.getPerception() - 10);
+
+                                state.setStrength(10);
+                                state.setAgility(10);
+                                state.setVitality(10);
+                                state.setIntelligence(10);
+                                state.setPerception(10);
+
+                                state.setStatPoints(state.getStatPoints() + allocatedPoints);
+
+                                ProgressionService progressionService = UmbraMod.getServiceRegistry()
+                                    .locate(ProgressionService.class).orElseThrow();
+                                progressionService.updateDerivedAttributes(player);
+
+                                stateSaveService.syncPlayerState(player);
+
+                                context.getSource().sendSuccess(
+                                    () -> Component.literal("Bypassed respec cooldown/requirements and reset stats of " + player.getGameProfile().name()),
+                                    true
+                                );
+                                return 1;
+                            })
+                        )
                     )
                 )
         );

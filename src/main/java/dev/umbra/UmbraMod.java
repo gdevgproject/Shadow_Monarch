@@ -7,6 +7,7 @@ import dev.umbra.core.contract.registry.UmbraServiceRegistry;
 import dev.umbra.core.contract.scheduler.TickScheduler;
 import dev.umbra.core.contract.progression.ProgressionService;
 import dev.umbra.core.contract.state.StateSaveService;
+import dev.umbra.core.contract.state.UmbraPlayerState;
 import dev.umbra.core.impl.config.UmbraConfigServiceImpl;
 import dev.umbra.core.impl.content.ContentRegistryImpl;
 import dev.umbra.core.impl.event.EventBusImpl;
@@ -58,6 +59,16 @@ public final class UmbraMod implements ModInitializer {
             dev.umbra.core.contract.state.UmbraPlayerStatePayload.CODEC
         );
 
+        // Register custom packet payloads C2S
+        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.serverboundPlay().register(
+            dev.umbra.core.contract.state.UmbraStatsAllocatePayload.TYPE,
+            dev.umbra.core.contract.state.UmbraStatsAllocatePayload.CODEC
+        );
+        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.serverboundPlay().register(
+            dev.umbra.core.contract.state.UmbraStatsRespecPayload.TYPE,
+            dev.umbra.core.contract.state.UmbraStatsRespecPayload.CODEC
+        );
+
         // Register core services
         SERVICE_REGISTRY.register(UmbraEventBus.class, EVENT_BUS);
         SERVICE_REGISTRY.register(TickScheduler.class, SCHEDULER);
@@ -90,6 +101,10 @@ public final class UmbraMod implements ModInitializer {
             UUID uuid = handler.player.getUUID();
             Path worldDir = server.getWorldPath(LevelResource.ROOT);
             STATE_SAVE_SERVICE.onPlayerJoin(uuid, worldDir);
+            
+            // Recalculate and update base HP/attributes on join
+            PROGRESSION_SERVICE.updateDerivedAttributes(handler.player);
+            
             STATE_SAVE_SERVICE.syncPlayerState(handler.player);
         });
 
@@ -103,5 +118,114 @@ public final class UmbraMod implements ModInitializer {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             UmbraCommand.register(dispatcher);
         });
+
+        // Register Serverbound network receivers
+        net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.registerGlobalReceiver(
+            dev.umbra.core.contract.state.UmbraStatsAllocatePayload.TYPE,
+            (payload, context) -> {
+                context.server().execute(() -> {
+                    net.minecraft.server.level.ServerPlayer player = context.player();
+                    if (player == null) return;
+
+                    int strAdd = payload.strAdded();
+                    int agiAdd = payload.agiAdded();
+                    int vitAdd = payload.vitAdded();
+                    int intAdd = payload.intAdded();
+                    int perAdd = payload.perAdded();
+
+                    if (strAdd < 0 || agiAdd < 0 || vitAdd < 0 || intAdd < 0 || perAdd < 0) {
+                        return;
+                    }
+
+                    int sum = strAdd + agiAdd + vitAdd + intAdd + perAdd;
+                    if (sum == 0) return;
+
+                    StateSaveService stateSaveService = getServiceRegistry().locate(StateSaveService.class).orElseThrow();
+                    UmbraPlayerState state = stateSaveService.getOrCreatePlayerState(player.getUUID());
+
+                    if (sum <= state.getStatPoints()) {
+                        state.setStrength(state.getStrength() + strAdd);
+                        state.setAgility(state.getAgility() + agiAdd);
+                        state.setVitality(state.getVitality() + vitAdd);
+                        state.setIntelligence(state.getIntelligence() + intAdd);
+                        state.setPerception(state.getPerception() + perAdd);
+                        state.setStatPoints(state.getStatPoints() - sum);
+
+                        ProgressionService progressionService = getServiceRegistry().locate(ProgressionService.class).orElseThrow();
+                        progressionService.updateDerivedAttributes(player);
+
+                        stateSaveService.syncPlayerState(player);
+
+                        player.level().playSound(
+                            null,
+                            player.getX(), player.getY(), player.getZ(),
+                            net.minecraft.sounds.SoundEvents.EXPERIENCE_ORB_PICKUP,
+                            net.minecraft.sounds.SoundSource.PLAYERS,
+                            0.5F, 1.5F
+                        );
+                    }
+                });
+            }
+        );
+
+        net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.registerGlobalReceiver(
+            dev.umbra.core.contract.state.UmbraStatsRespecPayload.TYPE,
+            (payload, context) -> {
+                context.server().execute(() -> {
+                    net.minecraft.server.level.ServerPlayer player = context.player();
+                    if (player == null) return;
+
+                    StateSaveService stateSaveService = getServiceRegistry().locate(StateSaveService.class).orElseThrow();
+                    UmbraPlayerState state = stateSaveService.getOrCreatePlayerState(player.getUUID());
+
+                    long gameTime = player.level().getGameTime();
+
+                    if (!state.isJobChanged()) {
+                        player.sendSystemMessage(net.minecraft.network.chat.Component.literal("§cYou must undergo a Job Change to respec attributes."));
+                        return;
+                    }
+                    if (state.getEssence() < 10) {
+                        player.sendSystemMessage(net.minecraft.network.chat.Component.literal("§cInsufficient Essence! Requires 10 Essence."));
+                        return;
+                    }
+                    if (gameTime - state.getLastRespecTime() < 72000) {
+                        long ticksLeft = 72000 - (gameTime - state.getLastRespecTime());
+                        long secondsLeft = ticksLeft / 20;
+                        player.sendSystemMessage(net.minecraft.network.chat.Component.literal("§cRespec on cooldown! Try again in " + (secondsLeft / 60) + " minutes."));
+                        return;
+                    }
+
+                    int allocatedPoints = (state.getStrength() - 10) +
+                                          (state.getAgility() - 10) +
+                                          (state.getVitality() - 10) +
+                                          (state.getIntelligence() - 10) +
+                                          (state.getPerception() - 10);
+
+                    state.setStrength(10);
+                    state.setAgility(10);
+                    state.setVitality(10);
+                    state.setIntelligence(10);
+                    state.setPerception(10);
+
+                    state.setStatPoints(state.getStatPoints() + allocatedPoints);
+                    state.setEssence(state.getEssence() - 10);
+                    state.setLastRespecTime(gameTime);
+
+                    ProgressionService progressionService = getServiceRegistry().locate(ProgressionService.class).orElseThrow();
+                    progressionService.updateDerivedAttributes(player);
+
+                    stateSaveService.syncPlayerState(player);
+
+                    player.level().playSound(
+                        null,
+                        player.getX(), player.getY(), player.getZ(),
+                        net.minecraft.sounds.SoundEvents.PLAYER_LEVELUP,
+                        net.minecraft.sounds.SoundSource.PLAYERS,
+                        0.8F, 0.5F
+                    );
+                    player.sendSystemMessage(net.minecraft.network.chat.Component.literal("§aAttributes successfully reset!"));
+                });
+            }
+        );
     }
 }
