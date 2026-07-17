@@ -21,23 +21,23 @@ Ngân sách được **giám sát runtime**: vượt ngân sách → scheduler t
 
 ### 2.1. AI theo mức chi tiết (AI LOD)
 
-| Tầm với ngườichơi | Chế độ AI |
+| Tầm với người chơi | Chế độ AI |
 |---|---|
 | < 32 block | Đầy đủ (BT + utility + squad) |
 | 32–64 block | Giản lược (utility mỗi 10 tick, không squad re-eval) |
 | 64–128 block | Chỉ di chuyển/tuần tra thô, nghĩ 1 lần/giây |
-| > 128 block | **Ngủ** — chỉ lưu vị trí, thức dậy khi có ngườichơi gần |
+| > 128 block | **Ngủ** — chỉ lưu vị trí, thức dậy khi có người chơi gần |
 
 ### 2.2. Chia nhịp "suy nghĩ" (staggering)
 
-- Entity chia làm 4 nhóm; mỗi tick chỉ một nhóm chạy utility scoring → AI "nghĩ" 5 lần/giây thay vì 20, ngườichơi không nhận ra.
+- Entity chia làm 4 nhóm; mỗi tick chỉ một nhóm chạy utility scoring → AI "nghĩ" 5 lần/giây thay vì 20, người chơi không nhận ra.
 - Perception scan tối đa 1 lần/10 tick, dùng **spatial hash** thay vì quét entity.
 - Pathfinding: cache đường, chia sẻ trong squad, re-path ≤ 1 lần/20 tick; đường ngắn dùng steering thuần (không A*).
 
 ### 2.3. Quân đoàn không triệu hồi = dữ liệu thuần
 
 - Bóng trong storage **không tồn tại entity** (tài liệu 15) — 200 bóng sở hữu chi phí ≈ 0 tick.
-- Trần triệu hồi đồng thờI (thiết kế 04.6.1, tối đa 40) chính là đòn bẩy hiệu năng — thiết kế game và hiệu năng ở đây là một.
+- Trần triệu hồi đồng thời (thiết kế 04.6.1, tối đa 40) chính là đòn bẩy hiệu năng — thiết kế game và hiệu năng ở đây là một.
 
 ### 2.4. Client-side
 
@@ -47,7 +47,7 @@ Ngân sách được **giám sát runtime**: vượt ngân sách → scheduler t
 
 ### 2.5. Worldgen & dungeon
 
-- Gen dungeon **async + pre-gen** trước khi mở cổng (tài liệu 16.3.5); không gen trong tick ngườichơi bước vào.
+- Gen dungeon **async + pre-gen** trước khi mở cổng (tài liệu 16.3.5); không gen trong tick người chơi bước vào.
 - Template room là dữ liệu nén; đặt khối theo chunk-batch, không setblock lẻ.
 
 ## 3. Đo lường & quy trình
@@ -68,5 +68,5 @@ Ngân sách được **giám sát runtime**: vượt ngân sách → scheduler t
 ## 5. Rủi ro & Câu hỏi mở
 
 1. **Server yếu (host rẻ tiền)?** → Config hạ trần entity/tần suất gate; AI LOD có thêm tầng "siết".
-2. **Mod khác cũng nặng AI?** → Ngân sách của ta tự co lại khi mspt tổng cao (nhượng bộ lịch sự) — nhưng log cảnh báo để ngườichơi biết.
+2. **Mod khác cũng nặng AI?** → Ngân sách của ta tự co lại khi mspt tổng cao (nhượng bộ lịch sự) — nhưng log cảnh báo để người chơi biết.
 3. **VFX "khoảnh khắc aura" (quân đoàn trỗi dậy hàng loạt) quá tải?** → Gom thành một VFX tổng thay vì 40 VFX nhỏ — vừa đẹp hơn vừa rẻ hơn.

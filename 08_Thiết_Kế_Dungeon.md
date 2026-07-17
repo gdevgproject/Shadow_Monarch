@@ -20,14 +20,14 @@
 
 ## 2. Vết Nứt — hệ sinh thái gate
 
-### 2.1. Vòng đờI
+### 2.1. Vòng đời
 
-1. **Hình thành:** xuất hiện trong bán kính phù hợp với hạng ngườichơi (không quá gần nhà — tránh grief; không quá xa — tránh bỏ quên). VFX cột sáng nhìn thấy từ xa → kéo ngườichơi ra khỏi nhà một cách tự nhiên.
+1. **Hình thành:** xuất hiện trong bán kính phù hợp với hạng người chơi (không quá gần nhà — tránh grief; không quá xa — tránh bỏ quên). VFX cột sáng nhìn thấy từ xa → kéo người chơi ra khỏi nhà một cách tự nhiên.
 2. **Hạng hiển thị:** E→S đo bằng vật phẩm/kỹ năng; **có 5% sai hạng** (thấp hơn hoặc cao hơn thật) — "fear of the unknown", niềm tin vào UI đôi khi bị phản bội một cách có kiểm soát.
-3. **Deadline 7 ngày trong game:** quá hạn → **Dungeon Break** (mục 4). Đồng hồ đếm nhìn thấy được — áp lực thờI gian nhẹ, không FOMO (7 ngày game ≈ 2.3 giờ thực; và ngườichơi có thể đóng gate sớm bằng vật phẩm nếu không muốn đánh).
+3. **Deadline 7 ngày trong game:** quá hạn → **Dungeon Break** (mục 4). Đồng hồ đếm nhìn thấy được — áp lực thời gian nhẹ, không FOMO (7 ngày game ≈ 2.3 giờ thực; và người chơi có thể đóng gate sớm bằng vật phẩm nếu không muốn đánh).
 4. **Đóng:** boss bị hạ → gate đóng sau ~1 giờ, để lại **Tàn Tích** (đào được tài nguyên đặc thù) — dungeon không biến mất vô nghĩa, nó *trở thành mỏ*.
 
-> **Lý do:** deadline biến nghề "Shadow Monarch" thành dịch vụ khẩn cấp (đúng tinh thần nguyên tác) nhưng được thiết kế lại để *không bao giờ trừng phạt ngườichơi offline*: timer chỉ chạy khi chunk tải/ngườichơi online, và luôn có lựa chọn "đóng gate không đánh" với chi phí vừa phải.
+> **Lý do:** deadline biến nghề "Shadow Monarch" thành dịch vụ khẩn cấp (đúng tinh thần nguyên tác) nhưng được thiết kế lại để *không bao giờ trừng phạt người chơi offline*: timer chỉ chạy khi chunk tải/người chơi online, và luôn có lựa chọn "đóng gate không đánh" với chi phí vừa phải.
 
 ### 2.2. Bên trong một gate: cấu trúc chuẩn
 
@@ -39,7 +39,7 @@
 ```
 
 - **Luật 3-2-1:** tối thiểu 3 khu chiến đấu, 2 khu "nghỉ" (khám phá/puzzle/loot), 1 bí mật ẩn mỗi gate.
-- **Bí mật:** phòng ẩn sau tường giả, đường dưới lava, câu đố redstone-lite — thưởng cho PER và thói quen khám phá của ngườichơi Minecraft.
+- **Bí mật:** phòng ẩn sau tường giả, đường dưới lava, câu đố redstone-lite — thưởng cho PER và thói quen khám phá của người chơi Minecraft.
 
 ---
 
@@ -60,13 +60,13 @@ Không sinh thuần ngẫu nhiên (hang ổ vô định) cũng không dựng tay
 
 - Bẫy *đọc được và né được*: bẫy gai có dấu vết trên sàn, bẫy mũi tên có khe bắn lộ ra — không bẫy "giết ngay lần đầu".
 - Puzzle dùng chất Minecraft: redstone đơn giản, đẩy khối, đốt cháy, nước/lava, đàn hồi slime — **không puzzle trừu tượng kiểu minigame ngoài Minecraft**.
-- Phần thưởng puzzle/bí mật nghiêng về *vật phẩm định danh* (rune, chìa Instant Dungeon, mảnh growth weapon) hơn là tài nguyên rờI.
+- Phần thưởng puzzle/bí mật nghiêng về *vật phẩm định danh* (rune, chìa Instant Dungeon, mảnh growth weapon) hơn là tài nguyên rời.
 
 ---
 
 ## 4. Dungeon Break & Field Dungeon
 
-- **Break:** khi gate hết hạn, boss + quân tràn ra overworld trong một "đợt" có cấu trúc: tiên phong → chủ lực → boss. Mục tiêu của chúng: làng gần nhất hoặc căn cứ ngườichơi. Ngườichơi dẹp được → thưởng lớn + danh tiếng NPC; bỏ mặc → vùng đó thành **Field Dungeon** (quái trấn giữ bán vĩnh viễn, tài nguyên đặc thù, có thể dẹp sau).
+- **Break:** khi gate hết hạn, boss + quân tràn ra overworld trong một "đợt" có cấu trúc: tiên phong → chủ lực → boss. Mục tiêu của chúng: làng gần nhất hoặc căn cứ người chơi. Người chơi dẹp được → thưởng lớn + danh tiếng NPC; bỏ mặc → vùng đó thành **Field Dungeon** (quái trấn giữ bán vĩnh viễn, tài nguyên đặc thù, có thể dẹp sau).
 - **Lý do:** thất bại biến thành nội dung mới thay vì game over — đúng nguyên tắc "hình phạt rèn luyện". Field Dungeon còn là nơi farm đặc thù và săn bóng phe hiếm.
 
 ---
@@ -74,8 +74,8 @@ Không sinh thuần ngẫu nhiên (hang ổ vô định) cũng không dựng tay
 ## 5. Vực Tháp — endgame roguelike
 
 - 100 tầng, mỗi tầng: layout ngẫu nhiên + **mutator xếp chồng** (tầng càng cao càng nhiều mutator), boss định danh mỗi 10 tầng.
-- Mỗi lần vào là một "run": chọn đường (2–3 nhánh tầng), nhặt **Ấn Bóng** (buff tạm thờI chỉ trong run — cơ chế roguelike kinh điển).
-- **Checkpoint mỗi 10 tầng** — tôn trọng thờI gian ngườichơi; run không bắt buộc một mạch 100 tầng.
+- Mỗi lần vào là một "run": chọn đường (2–3 nhánh tầng), nhặt **Ấn Bóng** (buff tạm thời chỉ trong run — cơ chế roguelike kinh điển).
+- **Checkpoint mỗi 10 tầng** — tôn trọng thời gian người chơi; run không bắt buộc một mạch 100 tầng.
 - Tầng 100: **Kiến Trúc Sư Vô Danh** — boss tốt nghiệp, mở Prestige (tài liệu 03.7).
 - Sau khi clear 100: mở **Tháp Vô Định** — chế độ vô hạn với mutator tăng dần, bảng thành tích cá nhân (offline, so với chính mình).
 
@@ -106,6 +106,6 @@ Không sinh thuần ngẫu nhiên (hang ổ vô định) cũng không dựng tay
 ## 8. Rủi ro & Câu hỏi mở
 
 1. **Template pool cạn → cảm giác lặp?** → Mục tiêu 40 phòng/phe lúc 1.0 + mutator; pipeline cho phép thêm phòng không cần code (tài liệu 21).
-2. **Ngườichơi kéo boss ra khỏi arena để cheese?** → Boss leash mềm: rờI arena quá xa → hồi phục + quay về, *nhưng* rơi thêm loot khuyến khích đánh "đúng luật" ở lần sau; không phạt nặng sáng tạo.
-3. **Deadline 7 ngày với ngườichơi đi xa?** → Timer chỉ chạy khi online; gate xa nhà vẫn Break nhưng hướng về vùng hoang, không phải nhà ngườichơi.
-4. **Câu hỏi mở:** cho phép ngườichơi *xây nhà trong dungeon* đã clear? (đáng mơ ước, cần đánh giá save/tech — tài liệu 23).
+2. **Người chơi kéo boss ra khỏi arena để cheese?** → Boss leash mềm: rời arena quá xa → hồi phục + quay về, *nhưng* rơi thêm loot khuyến khích đánh "đúng luật" ở lần sau; không phạt nặng sáng tạo.
+3. **Deadline 7 ngày với người chơi đi xa?** → Timer chỉ chạy khi online; gate xa nhà vẫn Break nhưng hướng về vùng hoang, không phải nhà người chơi.
+4. **Câu hỏi mở:** cho phép người chơi *xây nhà trong dungeon* đã clear? (đáng mơ ước, cần đánh giá save/tech — tài liệu 23).

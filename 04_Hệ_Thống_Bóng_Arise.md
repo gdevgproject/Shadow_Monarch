@@ -3,6 +3,7 @@
 > **Chủ sở hữu:** Systems Designer + Combat Designer
 > **Mục đích:** Thiết kế *trái tim* của UMBRA. Nếu chỉ được đọc một tài liệu chuyên môn, đọc tài liệu này.
 > **Nguyên tắc tối thượng:** **Bóng không phải thú cưng. Bóng không phải summon. Bóng là đồng đội.**
+> **Nguyên tắc số 2 (v2.0):** **Bóng là undead thực thụ. Chúng không chết — chúng lui về bóng tối và trỗi dậy lại.** Trận đấu của một Chúa Tể chỉ thật sự kết thúc khi **mana của ngườichơi cạn**.
 
 ---
 
@@ -10,19 +11,20 @@
 
 Một bóng thành công khi ngườichơi tự nguyện làm 5 việc: **đặt tên nó, lo nó chết, khoe về nó, xây chiến thuật quanh nó, và nhớ nó sau 100 giờ chơi.**
 
-Ba quyết định nền móng:
+Bốn quyết định nền móng:
 
 1. **Mọi bóng đều vĩnh viễn.** Không bóng nào "hết hạn", không bóng nào bắt buộc vứt đi vì lỗi thờI. Bóng yếu có thể *tiến hóa*, *chuyển vai trò*, hoặc *dũng cảm hy sinh có nghĩa* (mục 8.3) — nhưng không bao giờ vô dụng.
-2. **Mỗi bóng là một cá thể.** Tên, tính cách, đặc điểm (trait), lịch sử chiến đấu, mối quan hệ với bóng khác — tất cả được lưu trữ và phát triển.
-3. **Quân đoàn là trò chơi riêng.** Thu thập, xây đội hình, cộng hưởng, tiến hóa — đủ sâu để một ngườichơi "chỉ chơi quân đoàn" vẫn có hàng trăm giờ nội dung.
+2. **Bóng không bao giờ chết.** Bị hạ = lui về bóng của chủ nhân, không mất dữ liệu, không mất cấp, không mất quan hệ. Cái giá duyệt là **mana và nhịp trận đấu** (mục 7) — không phải mất đồng đội.
+3. **Mỗi bóng là một cá thể.** Tên, tính cách, đặc điểm (trait), lịch sử chiến đấu, mối quan hệ với bóng khác — tất cả được lưu trữ và phát triển.
+4. **Quân đoàn là trò chơi riêng.** Thu thập, xây đội hình, cộng hưởng, tiến hóa — đủ sâu để một ngườichơi "chỉ chơi quân đoàn" vẫn có hàng trăm giờ nội dung.
 
-> **Lý do:** Solo Leveling biến Shadow Extraction thành một trong những core loop phụ thỏa mãn nhất từng có vì nó đảo nghịch tâm lý săn quái: *quái càng mạnh, ngườichơi càng thèm gặp* — mọi boss đều là gacha pity-guaranteed. UMBRA giữ cơ chế đó và bổ sung chiều sâu nuôi dạy mà một tác phẩm truyện không thể có.
+> **Lý do:** Solo Leveling biến Shadow Extraction thành một trong những core loop phụ thỏa mãn nhất từng có vì nó đảo nghịch tâm lý săn quái: *quái càng mạnh, ngườichơi càng thèm gặp* — mọi boss đều là gacha pity-guaranteed. Và điều làm nên *cảm giác Chúa Tể* không phải là "có nhiều lính", mà là **đạo quân đứng dậy sau mỗi lần bị đánh gục** — Jinwoo chưa từng mất vĩnh viễn một bóng nào. UMBRA giữ trọn hai cơ chế đó và bổ sung chiều sâu nuôi dạy mà một tác phẩm truyện không thể có.
 
 ---
 
 ## 2. TRỖI DẬY — Nghi lễ trích xuất
 
-### 2.1. Điều kiện & cửa sổ thờigian
+### 2.1. Điều kiện & cửa sổ thờI gian
 
 - Kẻ địch phải **do ngườichơi hoặc quân đoàn của ngườichơi hạ** (last-hit của phe ngườichơi).
 - **Cửa sổ linh hồn: 30 giây** sau khi chết. Xác không biến mất ngay — nó "rỉ bóng" (VFX nhận diện từ xa).
@@ -57,7 +59,7 @@ Mỗi bóng là bản ghi gồm:
 | **Vai trò** | Tank / Sát Thương / Sát Thủ / Xạ Thủ / Pháp Sư / Hỗ Trợ / Hồi Phục / Triệu Hồi | Strategy |
 | **Tính cách** | 1 trong 8 (mục 5.3) — ảnh hưởng hành vi AI | Attachment |
 | **Đặc điểm (Traits)** | 1–3 trait sinh ngẫu nhiên + trait mở qua sự kiện | Uniqueness |
-| **Lịch sử** | Số trận, số kill, số lần "chết", trận đáng nhớ nhất (tự ghi) | Memory |
+| **Lịch sử** | Số trận, số kill, số lần "tan vỡ", trận đáng nhớ nhất (tự ghi) | Memory |
 | **Quan hệ** | Thân/thù với bóng khác → synergy khi đứng chung đội hình | Emergent story |
 
 ---
@@ -118,6 +120,20 @@ Tính cách **không thay đổi** — nó là "con ngườI" của bóng. Hai b
 
 Mỗi bóng chấm điểm mục tiêu theo: vai trò của mình (Sát Thủ ưu tiên healer/pháp sư địch), vai trò địch, khoảng cách, HP địch, mối đe dọa với chủ nhân, tính cách cá nhân. Ngườichơi có thể **đánh dấu mục tiêu** (ping) để focus fire — công cụ chỉ huy chủ động quan trọng nhất.
 
+### 5.5. Kỹ năng Chỉ Huy (Commander Pings) — mở theo hạng
+
+Ngườichơi *chỉ huy chủ động*, không ngồi nhìn (chống auto-play, tài liệu 13.7):
+
+| Kỹ năng | Phím | Hạng mở | Hiệu ứng |
+|---|---|---|---|
+| **Đánh Dấu** | X | B | Focus fire một mục tiêu; bóng ưu tiên cao nhất |
+| **Giữ Trận** | X (giữ) | B | Toàn quân Giữ Vị Trí tại điểm ping |
+| **Xung Phong** | Alt+X | A | Toàn quân +tốc độ, dồn hướng ping 8s |
+| **Triệu Tập** | Alt+G | A | Thu toàn bộ bóng về sát chủ nhân tức thờI (thoát AoE) |
+| **Hộ Giá** | X vào bản thân | S | Bóng Tank/Hộ Chủ chen nhận đòn đang nhắm chủ trong 4s |
+
+> **Lý do:** ping là cầu nối giữa "ngườichơi mạnh" và "quân đoàn mạnh" — nó biến 40 entity thành *một ý chí*. Mọi ping đều có phản hồi nghe-nhìn rõ ràng (bóng gầm đáp, viền mục tiêu sáng lên) để ngườichơi *cảm nhận được quyền lực chỉ huy* (Nguyên tắc 4).
+
 ---
 
 ## 6. Quản lý quân đoàn
@@ -131,7 +147,7 @@ Mỗi bóng chấm điểm mục tiêu theo: vai trò của mình (Sát Thủ ư
 
 ### 6.2. Giao diện quân đoàn (Legion Screen)
 
-Tab trong Hệ Thống: danh sách bóng (lọc theo vai trò/cấp/tính cách), đội hình đang thiết lập (3 preset lưu sẵn), trạng thái (HP, hồi chiêu, tâm trạng), nút triệu hồi/thu hồi nhanh theo nhóm. **Quy tắc UX: mọi thao tác quản lý ≤ 3 click.**
+Tab trong Hệ Thống: danh sách bóng (lọc theo vai trò/cấp/tính cách), đội hình đang thiết lập (3 preset lưu sẵn), trạng thái (HP, hồi chiêu, tâm trạng), nút triệu hồi/thu hồi nhanh theo nhóm. **Quy tắc UX: mọi thao tác quản lý ≤ 3 click** (chi tiết luồng màn hình: tài liệu 25).
 
 ### 6.3. Triệu hồi & Thu hồi
 
@@ -141,11 +157,44 @@ Tab trong Hệ Thống: danh sách bóng (lọc theo vai trò/cấp/tính cách)
 
 ---
 
-## 7. Sinh tồn của bóng: chết, hồi sinh, hy sinh
+## 7. QUÂN ĐOÀN BẤT TỬ — sinh tồn, tan vỡ, tái sinh (trụ cột v2.0)
 
-1. **Bóng bị hạ** → tan về bóng chủ nhân, tốn mana để **tái sinh** (thờI gian theo cấp). Không mất gì ngoài thờI gian + mana.
-2. **Vùng Hủy Diệt** (một số boss Vương Giả có cơ chế): bóng chết trong vùng này bị **thương nặng** — không chết vĩnh viễn, nhưng cần **Nghi Thức Chữa Lành** (tốn tài nguyên + thờI gian) → vẫn có stakes mà không cướp đồng đội của ngườichơi.
-3. **Hy sinh có nghĩa (Release):** ngườichơi có thể *giải phóng* một bóng — nghi thức trang trọng, bóng "cảm ơn" và để lại **Tinh Hoa Linh Hồn** (vật phẩm tăng potential cho bóng khác). Một số bóng *yêu cầu* được giải phóng qua quest riêng (tri ân Min Byung-Gyu) — cho ngườichơi lựa chọn đạo đức thật.
+> Đây là mục quan trọng nhất của tài liệu này, và là khác biệt lớn nhất giữa UMBRA và mọi hệ triệu hồi thông thường.
+
+### 7.1. Ba luật bất biến
+
+1. **Không bóng nào chết.** HP về 0 → bóng **tan về bóng của chủ nhân**, vào trạng thái **Tán Vỡ (Shattered)**. Dữ liệu, cấp độ, trang bị, quan hệ, lịch sử — nguyên vẹn.
+2. **Tái sinh luôn khả dụng.** Không có cooldown vĩnh viễn, không có "số lần chết tối đa", không có vật phẩm hồi sinh hiếm. Chỉ có **hai cái giá**: mana (nhanh) hoặc thờI gian (chậm).
+3. **Quân đoàn ngã khi Mana cạn.** Thanh mana của Chúa Tể *chính là* thanh máu tập thể của đạo quân. Đây là trục căng thẳng thay thế cho "sợ mất lính".
+
+### 7.2. Hai đường tái sinh
+
+| Đường | Chi phí | ThờI gian | Dùng khi |
+|---|---|---|---|
+| **Tái Triệu Hồi Tức ThờI** | Mana theo cấp bóng (14.6), bóng trồi lại tại chỗ với 60% HP | Tức thờI (1 nhịp summon) | Đang combat, cần giữ đội hình |
+| **Tái Sinh Chậm** | Miễn phí | Theo cấp (Thường ~1 phút → Nguyên Soái ~15 phút, 14.6) | Ngoài combat, giữa hai gate |
+
+- Tái triệu hồi tức thờI **mở khóa ở hạng B** (cùng nhịp Job Change) — trước đó bóng tan vỡ chỉ hồi chậm, để ngườichơi *trân trọng* từng bóng đầu tiên.
+- Có **khấu hao mana theo chuỗi:** mỗi lần tái triệu hồi tức thờI *cùng một bóng* trong 60 giây, chi phí +50% (trần ×3) — chống "bất tử spam", giữ quyết định có trọng lượng (14.6).
+- **Tín hiệu đọc được:** bóng Tán Vỡ hiển thị trong Legion HUD kèm chi phí tái triệu hồi; mana dưới ngưỡng cảnh báo → viền HUD chuyển tím nhạt. Ngườichơi luôn *nhìn thấy* đạo quân mình còn "sống" được bao lâu (Nguyên tắc 4).
+
+### 7.3. Vùng Hủy Diệt & thương nặng
+
+- Một số boss Vương Giả có **Vùng Hủy Diệt**: bóng tan vỡ trong vùng này bị **thương nặng** — không chết, nhưng cần **Nghi Thức Chữa Lành** (tốn tài nguyên + thờI gian tại Đài Rèn hoặc Tổ Ấm) trước khi triệu hồi lại được.
+- Stakes tồn tại ở cấp *chiến dịch* (mất bóng khỏi đội hình vài ngày), không ở cấp *vĩnh viễn* — không bao giờ cướp đồng đội của ngườichơi.
+
+### 7.4. Hy sinh có nghĩa (Release)
+
+Ngườichơi có thể *giải phóng* một bóng — nghi thức trang trọng, bóng "cảm ơn" và để lại **Tinh Hoa Linh Hồn** (vật phẩm tăng potential cho bóng khác). Một số bóng *yêu cầu* được giải phóng qua quest riêng (tri ân Min Byung-Gyu) — cho ngườichơi lựa chọn đạo đức thật. Release là **hành động tự nguyện duy nhất** kết thúc một bóng — và chính vì nó tự nguyện, nó có trọng lượng.
+
+### 7.5. Tâm lý học của Quân Đoàn Bất Tử (design rationale)
+
+| Hiệu ứng tâm lý | Cơ chế tạo ra |
+|---|---|
+| **An toàn để gắn bó** | Không sợ mất vĩnh viễn → ngườichơi dám đầu tư tình cảm, dám đặt tên |
+| **Căng thẳng thay thế** | Áp lực chuyển sang quản trị mana — nhịp "đổi mana lấy quân số" là quyết định liên tục |
+| **Khoảnh khắc anh hùng** | Bóng trồi dậy từ làn khói đen ngay khi địch tưởng đã hạ được nó — *spectacle* lặp lại hàng trăm lần không nhàm |
+| **Điểm dừng tự nhiên** | Mana cạn → quân tan → tín hiệu rõ ràng "nên rút" — thất bại đọc được, không ức chế |
 
 ---
 
@@ -163,7 +212,7 @@ Bóng cấp Kỵ Sĩ trở lên có **2 ô trang bị** (vũ khí + bùa). Đa s
 
 ### 8.3. Bóng yếu cuối game làm gì?
 
-- **Đổi vai trò:** bóng Sát Thương lỗi thờI → huấn luyện viên (buff bóng mới), đốt lò (nguyên liệu tiến hóa giữ nguyên giá trị đã đầu tư qua hệ quy đổi), hoặc **garnison** trấn thủ căn cứ/ngườI làng (world integration).
+- **Đổi vai trò:** bóng Sát Thương lỗi thờI → huấn luyện viên (buff bóng mới), đốt lò (nguyên liệu tiến hóa giữ nguyên giá trị đã đầu tư qua hệ quy đổi), hoặc **garnison** trấn thủ căn cứ/Tổ Ấm/đô thị (tài liệu 10 — bóng cũ canh nhà cho gia đình).
 - Mục tiêu: không bao giờ có thông báo "bóng này đã hết giá trị".
 
 ---
@@ -181,13 +230,14 @@ Bóng cấp Kỵ Sĩ trở lên có **2 ô trang bị** (vũ khí + bùa). Đa s
 
 - Trần entity triệu hồi đồng thờI theo hạng (tối đa thiết kế: 40 ở Vương Giả) — chi tiết ngân sách tick ở tài liệu 17.
 - AI bóng dùng chung scheduler với AI địch (tài liệu 07) — bóng và địch là cùng một hạt nhân AI, khác phe.
-- Bóng không hoạt động = dữ liệu thuần (không entity) — chỉ materialize khi triệu hồi.
+- Bóng không hoạt động = dữ liệu thuần (không entity) — chỉ materialize khi triệu hồi; bóng Tán Vỡ là *dữ liệu + timer*, không phải entity.
 
 ---
 
 ## 11. Rủi ro & Câu hỏi mở
 
-1. **Quân đoàn lấn át ngườichơi (auto-play)?** → Boss có cơ chế khắc quân số (tài liệu 09); ngườichơi luôn là nguồn sát thương/ra quyết định chính; capacity triệu hồi giới hạn.
-2. **Attachment ngược:** ngườichơi *quá* gắn với bóng đầu tiên, không chịu đổi đội hình? → Đó là thành công, không phải lỗi — nhưng synergy/garnison đảm bảo bóng cũ luôn có chỗ.
-3. **3 lần thử Arise có gây tuyệt vọng với boss hiếm?** → Boss respawn theo cơ chế riêng (tài liệu 08); cân nhắc "linh hồn lưu lạc" cho phép giữ linh hồn boss 1 lần với vật phẩm hiếm.
-4. **Cân bằng 8 tính cách:** "Điềm Tĩnh" có thể trở thành lựa chọn duy nhất của min-maxer → tính cách cho bonus ẩn khác nhau theo vai trò, telemetry sẽ quyết định điều chỉnh.
+1. **Quân đoàn lấn át ngườichơi (auto-play)?** → Boss có cơ chế khắc quân số (tài liệu 09); ngườichơi luôn là nguồn sát thương/ra quyết định chính; capacity triệu hồi giới hạn; tái triệu hồi tức thờI có khấu hao mana.
+2. **Bất tử làm mất stakes?** → Stakes chuyển tầng: mana (trận), khấu hao (chuỗi), thương nặng (chiến dịch), Vùng Hủy Diệt (encounter). Không cần stakes "mất vĩnh viễn" để có căng thẳng.
+3. **Attachment ngược:** ngườichơi *quá* gắn với bóng đầu tiên, không chịu đổi đội hình? → Đó là thành công, không phải lỗi — nhưng synergy/garnison đảm bảo bóng cũ luôn có chỗ.
+4. **3 lần thử Arise có gây tuyệt vọng với boss hiếm?** → Boss respawn theo cơ chế riêng (tài liệu 08); cân nhắc "linh hồn lưu lạc" cho phép giữ linh hồn boss 1 lần với vật phẩm hiếm.
+5. **Cân bằng 8 tính cách:** "Điềm Tĩnh" có thể trở thành lựa chọn duy nhất của min-maxer → tính cách cho bonus ẩn khác nhau theo vai trò, telemetry sẽ quyết định điều chỉnh.

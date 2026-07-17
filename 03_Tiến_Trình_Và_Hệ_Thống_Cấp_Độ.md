@@ -1,11 +1,11 @@
 # 03 — TIẾN TRÌNH & HỆ THỐNG CẤP ĐỘ (PROGRESSION & LEVEL SYSTEM)
 
 > **Chủ sở hữu:** Systems Designer
-> **Mục đích:** Định nghĩa toàn bộ trục tăng trưởng của *bản thân ngườichơi*: Level, EXP, chỉ số, hạng, class, talent, mastery, prestige. Mọi công thức chi tiết ở tài liệu 14; file này định nghĩa *cấu trúc và lý do*.
+> **Mục đích:** Định nghĩa toàn bộ trục tăng trưởng của *bản thân người chơi*: Level, EXP, chỉ số, hạng, class, talent, mastery, prestige. Mọi công thức chi tiết ở tài liệu 14; file này định nghĩa *cấu trúc và lý do*.
 
 ---
 
-## 1. Triết lý: hai trục sức mạnh, một ngườichơi
+## 1. Triết lý: hai trục sức mạnh, một người chơi
 
 UMBRA tách sức mạnh thành **hai trục song song**:
 
@@ -21,7 +21,7 @@ UMBRA tách sức mạnh thành **hai trục song song**:
 ### 2.1. Cấu trúc
 
 - **Level 1 → 100:** thang chính, gắn với 6 giai đoạn tiến trình (GDD mục 3).
-- **Level Vượt Ngôi (Prestige Level):** sau khi "tốt nghiệp" khỏi Hệ Thống (đánh bại Kiến Trúc Sư), level 100 trở thành nền; ngườichơi tích lũy **Điểm Vượt Ngôi** vô hạn với diminishing returns — endless progression nhưng không power creep vô hạn (chi tiết 13.4).
+- **Level Vượt Ngôi (Prestige Level):** sau khi "tốt nghiệp" khỏi Hệ Thống (đánh bại Kiến Trúc Sư), level 100 trở thành nền; người chơi tích lũy **Điểm Vượt Ngôi** vô hạn với diminishing returns — endless progression nhưng không power creep vô hạn (chi tiết 13.4).
 - **Không có level cap cứng** ở prestige, nhưng *tốc độ tăng sức mạnh giảm dần theo log* — mỗi 10 prestige level tăng ~1% power tổng thể.
 
 ### 2.2. Nguồn EXP (đa dạng hóa, chống một-meta-farm)
@@ -70,7 +70,7 @@ Dùng đường cong **mũ mềm + bậc thang hạng** (công thức: 14.2). Đ
 
 ## 4. Hệ thống Hạng (Rank E → Vương Giả)
 
-### 4.1. Thang hạng của ngườichơi
+### 4.1. Thang hạng của người chơi
 
 | Hạng | Điều kiện | Quyền lợi mở ra |
 |---|---|---|
@@ -83,11 +83,11 @@ Dùng đường cong **mũ mềm + bậc thang hạng** (công thức: 14.2). Đ
 | **Quốc Gia** | Level 90 + giết 1 Vương Giả | World event phòng thủ, đàm phán guild NPC |
 | **Vương Giả** | Đánh bại Kiến Trúc Sư (tốt nghiệp) | Prestige, quyền năng Vương Giả, New Game+ |
 
-> **Lý do thiết kế quan trọng — đảo ngược Solo Leveling có chủ đích:** trong nguyên tác, hạng là *bất biến* và Jinwoo là ngoại lệ duy nhất. Trong game single-player, mọi ngườichơi đều là "ngoại lệ" — nhưng cảm giác đặc quyền được tái tạo bằng cách cho **NPC hunter có hạng cố định** (dân làng Thức Tỉnh, lính guild) trong khi *chỉ ngườichơi có thanh EXP*. Thế giới xoay quanh đặc quyền của bạn, đúng bài học số 1.
+> **Lý do thiết kế quan trọng — đảo ngược Solo Leveling có chủ đích:** trong nguyên tác, hạng là *bất biến* và Jinwoo là ngoại lệ duy nhất. Trong game single-player, mọi người chơi đều là "ngoại lệ" — nhưng cảm giác đặc quyền được tái tạo bằng cách cho **NPC hunter có hạng cố định** (dân làng Thức Tỉnh, lính guild) trong khi *chỉ người chơi có thanh EXP*. Thế giới xoay quanh đặc quyền của bạn, đúng bài học số 1.
 
 ### 4.2. Hạng không chỉ là ổ khóa
 
-Hạng quyết định: loại quest nhận được, giá và hàng trong cửa hàng Hệ Thống, phản ứng NPC (dân làng kính nể/tránh xa), loại Vết Nứt spawn gần ngườichơi, và điều kiện vào nội dung. **Hạng là danh tính xã hội trong thế giới**, không chỉ là số.
+Hạng quyết định: loại quest nhận được, giá và hàng trong cửa hàng Hệ Thống, phản ứng NPC (dân làng kính nể/tránh xa), loại Vết Nứt spawn gần người chơi, và điều kiện vào nội dung. **Hạng là danh tính xã hội trong thế giới**, không chỉ là số.
 
 ---
 
@@ -95,7 +95,7 @@ Hạng quyết định: loại quest nhận được, giá và hàng trong cửa
 
 ### 5.1. Triết lý: một class ẩn, ba chuyên hóa
 
-UMBRA không có chọn class đầu game — mọi ngườichơi đều đi tới **Chúa Tể Hắc Ảnh** (đó là fantasy của mod). Đa dạng build đến từ **ba Chuyên Hóa (Specialization)** mở sau Job Change:
+UMBRA không có chọn class đầu game — mọi người chơi đều đi tới **Chúa Tể Hắc Ảnh** (đó là fantasy của mod). Đa dạng build đến từ **ba Chuyên Hóa (Specialization)** mở sau Job Change:
 
 | Chuyên hóa | Fantasy | Trục nghiêng về | Điểm mạnh | Điểm chết |
 |---|---|---|---|---|
@@ -113,9 +113,9 @@ Mở ở level 20 qua chuỗi quest dẫn tới **Dungeon Chuyển Chức** — 
 1. **Điều kiện:** hoàn thành 7 daily quest liên tiếp + solo 1 gate hạng D.
 2. **Nội dung dungeon:** 3 cánh cửa — mỗi cửa thử một kỹ năng (sinh tồn / chiến đấu thuần / chỉ huy NPC tạm thờicho mượn).
 3. **Boss:** **Hiệp Sĩ Huyết Sắt** (Igris-analog) — boss đầu tiên dạy "cách biệt đẳng cấp": không thể đánh trâu, phải dùng đúng cơ chế vừa học.
-4. **Phần thưởng:** class ẩn + kỹ năng lõi **Trỗi Dậy** + (ẩn) Hiệp Sĩ Huyết Sắt trở thành *bóng đầu tiên có tên* nếu ngườichơi thắng ở độ khó cao nhất.
+4. **Phần thưởng:** class ẩn + kỹ năng lõi **Trỗi Dậy** + (ẩn) Hiệp Sĩ Huyết Sắt trở thành *bóng đầu tiên có tên* nếu người chơi thắng ở độ khó cao nhất.
 
-> **Lý do thiết kế:** boss-đầu-tiên-trở-thành-bóng-đầu-tiên là vòng khép cảm xúc mạnh nhất của nguyên tác ("rival-to-ally"). Nó dạy ngườichơi ngay từ đầu: *kẻ địch đáng nhớ nhất là kẻ địch bạn chinh phục*.
+> **Lý do thiết kế:** boss-đầu-tiên-trở-thành-bóng-đầu-tiên là vòng khép cảm xúc mạnh nhất của nguyên tác ("rival-to-ally"). Nó dạy người chơi ngay từ đầu: *kẻ địch đáng nhớ nhất là kẻ địch bạn chinh phục*.
 
 ---
 
@@ -123,11 +123,11 @@ Mở ở level 20 qua chuỗi quest dẫn tới **Dungeon Chuyển Chức** — 
 
 ### 6.1. Talent (Thiên Phú) — điểm khởi đầu khác biệt
 
-Khi Thức Tỉnh, ngườichơi chọn 1 trong 5 Thiên Phú — *không mạnh hơn nhau, chỉ khác nhau về trải nghiệm đầu game*:
+Khi Thức Tỉnh, người chơi chọn 1 trong 5 Thiên Phú — *không mạnh hơn nhau, chỉ khác nhau về trải nghiệm đầu game*:
 
 | Thiên Phú | Hiệu ứng | Phù hợp |
 |---|---|---|
-| Kẻ Sống Sót | +VIT, daily quest dễ hơn ở tuần đầu | Ngườichơi mới Minecraft |
+| Kẻ Sống Sót | +VIT, daily quest dễ hơn ở tuần đầu | Người chơi mới Minecraft |
 | Tay Nhanh | +AGI, dodge rộng rãi hơn | Action-game player |
 | Đầu Lạnh | +PER, nhìn thấy chỉ số ẩn của quái | Theorycrafter |
 | Tim To | +INT sớm, gặp bóng đầu tiên sớm 5 level | Ngườớimê summoner |

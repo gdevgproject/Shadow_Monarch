@@ -1,7 +1,7 @@
 # 06 — HỆ THỐNG KỸ NĂNG (SKILL SYSTEM)
 
 > **Chủ sở hữu:** Systems Designer
-> **Mục đích:** Toàn bộ kỹ năng của ngườichơi: passive, active, class skill, skill tree, rune, synergy. Nguyên tắc số 1: **mỗi kỹ năng phải thay đổi cách chơi, không chỉ thay đổi con số.**
+> **Mục đích:** Toàn bộ kỹ năng của người chơi: passive, active, class skill, skill tree, rune, synergy. Nguyên tắc số 1: **mỗi kỹ năng phải thay đổi cách chơi, không chỉ thay đổi con số.**
 
 ---
 
@@ -17,7 +17,7 @@
 
 ## 2. Skill Tree — cấu trúc "Sông Ba Ngả"
 
-Mỗi chuyên hóa (Sát Ảnh / Thống Soái / Hắc Pháp) có một cây, nhưng **ba cây chung gốc** — ngườichơi rẽ ngả dần, không bị khóa ngay:
+Mỗi chuyên hóa (Sát Ảnh / Thống Soái / Hắc Pháp) có một cây, nhưng **ba cây chung gốc** — người chơi rẽ ngả dần, không bị khóa ngay:
 
 ```
         [GỐC CHUNG — mọi Chúa Tể đều học]
@@ -49,7 +49,7 @@ Ví dụ rune định danh đầu game (tri ân nhưng gốc):
 |---|---|---|
 | Vọt Tàn Ảnh | Dash xuyên kẻ địch, để lại bóng mồi | Undead |
 | Gầm Kinh Hồn | AoE fear, giảm chỉ số đám yếu hơn bạn | Dragonkin |
-| Mưa Dao | Ném vòng dao quanh ngườI, sát thương theo combo | Beast |
+| Mưa Dao | Ném vòng dao quanh người, sát thương theo combo | Beast |
 | Trói Hư Không | Kéo một mục tiêu về phía bạn (hoặc kéo bạn tới nó) | Demon |
 | Nhịp Máu | Đòn tiếp theo hút HP bằng 50% sát thương | Insect |
 
@@ -84,14 +84,14 @@ Thiết kế theo cặp/bộ ba có *tên gọi* (dễ nhớ, dễ lan truyền 
 
 ## 6. Ngân sách thiết kế (chống bành trướng)
 
-- Tổng active skill ngườichơi: **≤ 24** (4 ô + 1 class cùng lúc → chọn 5/24 là quyết định build hằng ngày).
+- Tổng active skill người chơi: **≤ 24** (4 ô + 1 class cùng lúc → chọn 5/24 là quyết định build hằng ngày).
 - Passive node: ~180. Keystone: 9. Rune: ~40 loại lúc 1.0.
-- Mọi skill mới phải trả lờI: *"Nó thay combo/rotation nào? Nó khắc build nào? Build nào khắc nó?"* — không trả lờI được 3 câu → không vào game.
+- Mọi skill mới phải trả lời: *"Nó thay combo/rotation nào? Nó khắc build nào? Build nào khắc nó?"* — không trả lời được 3 câu → không vào game.
 
 ---
 
 ## 7. Rủi ro & Câu hỏi mở
 
 1. **Rune RNG gây cay cú?** → Bột Rune + rune định hướng (chọn phe) giảm; theo dõi tỷ lệ "20 giờ không ra rune mục tiêu" trong test.
-2. **Skill tree 180 nút có quá tải ngườI mới?** → Gốc chung chỉ 6 nút bắt buộc hiểu; cây mở dần theo hạng.
+2. **Skill tree 180 nút có quá tải người mới?** → Gốc chung chỉ 6 nút bắt buộc hiểu; cây mở dần theo hạng.
 3. **Keystone đánh đổi có bị "lựa hiển nhiên"?** → Mỗi keystone phải có ít nhất một encounter trong game nơi nó *yếu hơn không chọn* — thiết kế boss kiểm chứng (tài liệu 09).

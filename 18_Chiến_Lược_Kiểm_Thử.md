@@ -1,14 +1,14 @@
 # 18 — CHIẾN LƯỢC KIỂM THỬ (TESTING STRATEGY)
 
 > **Chủ sở hữu:** QA Lead
-> **Triết lý:** Một mod sống nhiều năm không thể test tay mãi. Tự động hóa *mọi thứ đo được*, để con ngườI test *mọi thứ cảm được*.
+> **Triết lý:** Một mod sống nhiều năm không thể test tay mãi. Tự động hóa *mọi thứ đo được*, để con người test *mọi thứ cảm được*.
 
 ---
 
 ## 1. Kim tự tháp kiểm thử
 
 ```
-          ▲  Playtest cảm xúc (con ngườI)
+          ▲  Playtest cảm xúc (con người)
          ╱ ╲   — combat feel, attachment, flow
         ╱   ╲
        ╱ Tích ╲  Kịch bản end-to-end (bot trong game)
@@ -44,9 +44,9 @@ Dùng game-test framework của nền tảng: bot thực hiện kịch bản end
 4. Dungeon Break kích hoạt → dọn → Field Dungeon không tồn tại; bỏ mặc → Field Dungeon hình thành.
 5. Save/reload giữa trận boss → trạng thái khôi phục đúng.
 
-## 5. Tầng 4 — Playtest cảm xúc (con ngườI)
+## 5. Tầng 4 — Playtest cảm xúc (con người)
 
-- **Nhịp:** mỗi milestone 2 đợt, mỗi đợt 5–8 ngườI (hồ sơ khác nhau: vanilla player, ARPG player, builder).
+- **Nhịp:** mỗi milestone 2 đợt, mỗi đợt 5–8 người (hồ sơ khác nhau: vanilla player, ARPG player, builder).
 - **Phương pháp:** chơi tự do 2 giờ → phỏng vấn theo thước đo tài liệu 01.6 (kể tên 3 bóng? chủ động tìm trận khó? vẫn đào đá/xây nhà?).
 - **Telemetry nội bộ (offline, local-only):** tỷ lệ chọn build, nơi chết nhiều, quest bỏ dở — dữ liệu lưu local của tester, không gửi đâu cả.
 
@@ -60,11 +60,11 @@ Dùng game-test framework của nền tảng: bot thực hiện kịch bản end
 - [ ] Unit/simulation liên quan xanh.
 - [ ] Kịch bản bot (nếu thuộc 5 kịch bản lõi) xanh.
 - [ ] Benchmark không regression.
-- [ ] Đã có ít nhất một ngườI *không phải tác giả* chơi thử và ghi nhận cảm xúc đúng mục tiêu.
+- [ ] Đã có ít nhất một người *không phải tác giả* chơi thử và ghi nhận cảm xúc đúng mục tiêu.
 - [ ] Tài liệu chuyên môn tương ứng đã cập nhật.
 
 ## 8. Rủi ro & Câu hỏi mở
 
-1. **Simulation lệch thực tế (bot không né đòn như ngườI)?** → Simulation đo *sàn* cân bằng; playtest đo *trần*. Hai tầng không thay thế nhau.
+1. **Simulation lệch thực tế (bot không né đòn như người)?** → Simulation đo *sàn* cân bằng; playtest đo *trần*. Hai tầng không thay thế nhau.
 2. **Chi phí duy trì bot khi MC cập nhật?** → Kịch bản bot viết trên lớp hành động trừu tượng ("đi tới", "đánh"), không phụ thuộc API cụ thể.
-3. **Playtest cảm xúc khó tuyển ngườI?** → Duy trì cộng đồng tester nhỏ, thưởng bằng tên trong credits + quyền xem roadmap sớm.
+3. **Playtest cảm xúc khó tuyển người?** → Duy trì cộng đồng tester nhỏ, thưởng bằng tên trong credits + quyền xem roadmap sớm.

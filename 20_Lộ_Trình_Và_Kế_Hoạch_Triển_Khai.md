@@ -7,7 +7,7 @@
 
 ## 1. Tổng quan milestone
 
-| M | Tên | Trọng tâm | ThờI lượng tham chiếu* |
+| M | Tên | Trọng tâm | Thời lượng tham chiếu* |
 |---|---|---|---|
 | M0 | **Bộ khung** | Core architecture, data loader, save/migration, config | 4–6 tuần |
 | M1 | **Kẻ Thức Tỉnh** | Hệ Thống UI, level/stat, daily quest/penalty, combat stance | 6–8 tuần |
@@ -19,7 +19,7 @@
 | M7 | **Endgame** | Red Gate, Break/Field, Vực Tháp 1–100, 12 boss định danh | 10 tuần |
 | M8 | **Đánh Bóng 1.0** | Balance pass, performance pass, playtest lớn, tài liệu hóa | 6 tuần |
 
-*Tham chiếu cho team 2–4 ngườI bán thờI gian; không phải cam kết — chất lượng thắng lịch trình (Nguyên tắc 22).
+*Tham chiếu cho team 2–4 người bán thời gian; không phải cam kết — chất lượng thắng lịch trình (Nguyên tắc 22).
 
 ---
 
@@ -31,7 +31,7 @@
 
 ### M1 — Kẻ Thức Tỉnh
 - Xây: Hệ Thống UI (stats/quest), level 1–20, 5 chỉ số + phân bổ, daily quest + Penalty Zone, combat stance + dodge cơ bản.
-- **Exit:** ngườichơi mới trải qua "1 ngày của Kẻ Thức Tỉnh" trọn vẹn; playtest nội bộ xác nhận cảm giác *lớn lên từng ngày*.
+- **Exit:** người chơi mới trải qua "1 ngày của Kẻ Thức Tỉnh" trọn vẹn; playtest nội bộ xác nhận cảm giác *lớn lên từng ngày*.
 
 ### M2 — Vertical Slice ⭐ (milestone quan trọng nhất)
 - Xây: generator gate hạng D (1 phe, 12 phòng), 6 loại quái 1 phe với AI đầy đủ, boss tutorial #1, loot/rarity cơ bản.
@@ -52,7 +52,7 @@
 
 ### M6 — Chiều Sâu Vật Phẩm
 - Xây: affix pool 60, rune 40 loại, growth weapon 6 món, Đài Rèn Hắc Ảnh (reforge/rèn rune), 4 tiền tệ + faucet/sink, cửa hàng Hệ Thống + 2 loại hộp.
-- **Exit:** simulation economy 10.000 ngày đạt 0.8–0.9; không vật liệu nào "chết" theo thờI gian.
+- **Exit:** simulation economy 10.000 ngày đạt 0.8–0.9; không vật liệu nào "chết" theo thời gian.
 
 ### M7 — Endgame
 - Xây: Red Gate, Break/Field, Vực Tháp + mutator + Ấn Bóng, boss 6–12, phe 5–8, prestige "Vượt Ngôi".
@@ -76,5 +76,5 @@
 |---|---|
 | MC ra bản mới giữa dự án | Đóng băng phiên bản mục tiêu; port sau M8 (chính sách 19.3) |
 | AI/dungeon phức tạp hơn dự kiến | Vertical slice M2 tồn tại để phát hiện sớm — nếu M2 thổi ngân sách, giảm scope M5 (ít phe hơn lúc 1.0) |
-| Thiếu ngườI làm asset | Art bible cho phép phong cách "Minecraft-native" (khối, ít texture ngoài) — giảm phụ thuộc artist |
+| Thiếu người làm asset | Art bible cho phép phong cách "Minecraft-native" (khối, ít texture ngoài) — giảm phụ thuộc artist |
 | Burnout | Milestone 6–8 tuần có buffer; không crunch — mod là sản phẩm dài hạn |

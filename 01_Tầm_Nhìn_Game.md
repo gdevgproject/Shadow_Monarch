@@ -7,9 +7,9 @@
 
 ## 1. Câu tầm nhìn (Vision Statement)
 
-> **"Biến Minecraft Survival thành một action-RPG sandbox nơi ngườichơi bắt đầu là một con ngườibình thường và kết thúc là Chúa Tể Hắc Ảnh — bằng cách biến mọi kẻ thù từng đánh bại thành đồng đội vĩnh viễn."**
+> **"Biến Minecraft Survival thành một action-RPG sandbox nơi người chơi bắt đầu là một con ngườibình thường và kết thúc là Chúa Tể Hắc Ảnh — bằng cách biến mọi kẻ thù từng đánh bại thành đồng đội vĩnh viễn."**
 
-Một câu, ba lờihứa:
+Một câu, ba lời hứa:
 
 1. **Hành trình** — zero-to-hero thật sự, không phải "mạnh sẵn từ đầu".
 2. **Chuyển hóa** — Minecraft vẫn nguyên bản chất sandbox; RPG là lớp đất mới, không phải lớp sơn phủ.
@@ -19,7 +19,7 @@ Một câu, ba lờihứa:
 
 ## 2. Trải nghiệm mục tiêu theo thờigian chơi
 
-| Mốc | Ngườichơi nên cảm thấy | Hệ thống gánh cảm xúc đó |
+| Mốc | Người chơi nên cảm thấy | Hệ thống gánh cảm xúc đó |
 |---|---|---|
 | Giờ 0–1 | "Mình yếu đuối và thế giới này đáng sợ" | Survival vanilla + sự kiện Thức Tỉnh (survival-horror tutorial) |
 | Giờ 1–5 | "Mình đang lớn lên từng ngày" | Level/EXP, daily quest, 5 chỉ số tự phân bổ |
@@ -34,7 +34,7 @@ Một câu, ba lờihứa:
 ## 3. Ba trụ cột thiết kế (Design Pillars)
 
 ### Trụ cột 1 — "Kẻ thua trở thành tài sản"
-Mọi trận đánh đều có khả năng sinh ra *một thứ gì đó vĩnh viễn*: một bóng mới, một rune, một mảnh trang bị. Ngườichơi phải *thèm* gặp kẻ địch mạnh thay vì né chúng.
+Mọi trận đánh đều có khả năng sinh ra *một thứ gì đó vĩnh viễn*: một bóng mới, một rune, một mảnh trang bị. Người chơi phải *thèm* gặp kẻ địch mạnh thay vì né chúng.
 - **Hệ quả bắt buộc:** boss không chỉ là chướng ngại — boss là *cơ hội*. Tỷ lệ Trỗi Dậy trên boss phải đủ cao để "thắng là có hàng", đủ thấp để cú Arise thành công là một khoảnh khắc.
 
 ### Trụ cột 2 — "Minecraft trước, mod sau"
@@ -47,9 +47,9 @@ Tầng chiến thuật (trận đánh này), tầng chiến dịch (đêm nay đ
 
 ---
 
-## 4. Đối tượng ngườichơi & lờihứa với từng nhóm
+## 4. Đối tượng người chơi & lời hứa với từng nhóm
 
-| Nhóm ngườichơi | Họ muốn | UMBRA đáp ứng bằng |
+| Nhóm người chơi | Họ muốn | UMBRA đáp ứng bằng |
 |---|---|---|
 | Power-fantasy RPG player | Cảm giác lớn mạnh không trần | 6 giai đoạn tiến trình + endless tier |
 | Collector | "Bắt hết, nuôi hết" | 100+ loại bóng, legendary/unique/boss shadows |
@@ -76,10 +76,10 @@ Anti-goals quan trọng ngang goals — chúng chặn scope creep:
 
 Một thiết kế tốt khi, trong playtest:
 
-- Ngườichơi **kể lại** được tên ít nhất 3 bóng của mình mà không mở giao diện. *(→ Attachment thành công)*
-- Ngườichơi **chủ động** đi tìm trận đánh khó hơn sau khi lên cấp. *(→ Power loop thành công)*
-- Hai ngườichơi cùng 100 giờ có build **khác nhau rõ rệt** và cả hai đều thắng được nội dung tương đương. *(→ Build diversity thành công)*
-- Ngườichơi vẫn **đào đá, xây nhà, làm ruộng** sau 50 giờ. *(→ Minecraft compatibility thành công)*
+- Người chơi **kể lại** được tên ít nhất 3 bóng của mình mà không mở giao diện. *(→ Attachment thành công)*
+- Người chơi **chủ động** đi tìm trận đánh khó hơn sau khi lên cấp. *(→ Power loop thành công)*
+- Hai người chơi cùng 100 giờ có build **khác nhau rõ rệt** và cả hai đều thắng được nội dung tương đương. *(→ Build diversity thành công)*
+- Người chơi vẫn **đào đá, xây nhà, làm ruộng** sau 50 giờ. *(→ Minecraft compatibility thành công)*
 - Không ai hỏi "tại sao cái này tồn tại?" về bất kỳ hệ thống nào. *(→ Design coherence thành công)*
 
 ---
@@ -89,7 +89,7 @@ Một thiết kế tốt khi, trong playtest:
 | Rủi ro | Ảnh hưởng | Đối sách sơ bộ (chi tiết ở tài liệu chuyên môn) |
 |---|---|---|
 | Power creep nuốt endgame | Mất thử thách sau giờ 100 | "Đổi trục xung đột" + Vực Tháp vô hạn có mutator (tài liệu 08, 13) |
-| Quân đoàn lớn làm ngườichơi "ngồi nhìn" | Mất skill expression | Đòi hỏi chỉ huy chủ động, boss khắc chế quân số (tài liệu 04, 09) |
+| Quân đoàn lớn làm người chơi "ngồi nhìn" | Mất skill expression | Đòi hỏi chỉ huy chủ động, boss khắc chế quân số (tài liệu 04, 09) |
 | 200+ entity giết FPS | Trải nghiệm sụp đổ | Ngân sách tick cứng, AI LOD (tài liệu 17) |
-| Ngườichơi mới choáng ngợp | Bỏ chơi sớm | Hệ Thống tự mở khóa từng module theo nhịp (tài liệu 03) |
+| Người chơi mới choáng ngợp | Bỏ chơi sớm | Hệ Thống tự mở khóa từng module theo nhịp (tài liệu 03) |
 | "Chỉ một build tối ưu" | Meta chết | Cân bằng theo vòng khắc chế mềm, không theo thang số cứng (tài liệu 13) |

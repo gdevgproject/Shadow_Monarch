@@ -15,10 +15,10 @@
 
 ### Quy tắc đường ống
 
-1. **Spec 1 trang trước JSON:** nội dung mới phải trả lờI: nó phục vụ cảm xúc nào (Kim Tự Tháp)? khắc/được khắc bởi cái gì? đóng góp PB bao nhiêu?
+1. **Spec 1 trang trước JSON:** nội dung mới phải trả lời: nó phục vụ cảm xúc nào (Kim Tự Tháp)? khắc/được khắc bởi cái gì? đóng góp PB bao nhiêu?
 2. **CI bắt buộc:** schema validation + giá trị biên + tham chiếu treo (ID không tồn tại) → lỗi = chặn merge.
-3. **Mọi nội dung có chủ sở hữu:** ngườI chịu trách nhiệm balance/patch của chính nội dung đó.
-4. **ThờI gian mục tiêu:** một con quái mới từ spec → trong game test được ≤ 1 ngày làm việc.
+3. **Mọi nội dung có chủ sở hữu:** người chịu trách nhiệm balance/patch của chính nội dung đó.
+4. **Thời gian mục tiêu:** một con quái mới từ spec → trong game test được ≤ 1 ngày làm việc.
 
 ### Công cụ hỗ trợ (dev-tool nội bộ)
 
@@ -34,17 +34,17 @@
 
 | Vai trò | Màu | Dùng cho |
 |---|---|---|
-| Hắc Ảnh (ngườichơi & bóng) | **Tím đậm → đen**, điểm nhấn **tím sáng** | UI Hệ Thống, VFX Arise, mắt bóng |
-| Uy quyền/lâu đờI | **Vàng kim** | Legendary, khung boss, thông báo trọng đại |
+| Hắc Ảnh (người chơi & bóng) | **Tím đậm → đen**, điểm nhấn **tím sáng** | UI Hệ Thống, VFX Arise, mắt bóng |
+| Uy quyền/lâu đời | **Vàng kim** | Legendary, khung boss, thông báo trọng đại |
 | Nguy hiểm | Đỏ thẫm | Telegraph, Red Gate, cảnh báo |
 | Hồi phục/hỗ trợ | Xanh lam nhạt | Heal, buff, Hộp Ban Phúc |
 
-**Luật:** mỗi phe quái có palette riêng tối đa 3 màu chính (tài liệu 07.4) — nhìn silhouette + màu là đọc được phe, kể cả với ngườI mù màu một phần (không dựa vào màu thuần túy, luôn kèm hình dáng).
+**Luật:** mỗi phe quái có palette riêng tối đa 3 màu chính (tài liệu 07.4) — nhìn silhouette + màu là đọc được phe, kể cả với người mù màu một phần (không dựa vào màu thuần túy, luôn kèm hình dáng).
 
 ### 2.2. Nguyên tắc hình khối
 
 - **Minecraft-native:** model mới giữ ngôn ngữ khối; silhouette đọc được ở 20 block; không quá 2× mật độ poly của mob vanilla cùng cỡ.
-- **Bóng:** cùng silhouette với nguyên bản nhưng đổi palette (đen–tím, mắt tím sáng, viền khói) → ngườichơi nhận ra *"đó là con X của tôi"* tức thì.
+- **Bóng:** cùng silhouette với nguyên bản nhưng đổi palette (đen–tím, mắt tím sáng, viền khói) → người chơi nhận ra *"đó là con X của tôi"* tức thì.
 - **Boss:** silhouette độc nhất — không hai boss nào cùng dáng đứng.
 
 ### 2.3. VFX

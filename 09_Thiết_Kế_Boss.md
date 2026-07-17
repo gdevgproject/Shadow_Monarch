@@ -10,8 +10,8 @@
 1. **Một boss = một bài học.** Nếu không nói được "boss này dạy gì", boss đó chưa xong.
 2. **Pha, không phải HP.** Boss thay đổi hành vi theo pha (70%/40%/15% HP) — HP dài không thay thế được cơ chế.
 3. **Đọc được, né được, phạt được.** Mọi đòn mạnh có telegraph ≥ 0.6s; mọi đòn telegraph đều có cửa sổ punish nếu né đúng.
-4. **Không DPS-check thuần túy** trước endgame. Boss kiểm tra kỹ năng, không kiểm tra thờI gian farm.
-5. **Enrage mềm, không oneshot tuyệt đối.** Quá 12 phút boss tăng dần áp lực (nhanh hơn, nhiều quái phụ) thay vì giết ngay — kết thúc trận đấu mà không "tường" ngườichơi.
+4. **Không DPS-check thuần túy** trước endgame. Boss kiểm tra kỹ năng, không kiểm tra thời gian farm.
+5. **Enrage mềm, không oneshot tuyệt đối.** Quá 12 phút boss tăng dần áp lực (nhanh hơn, nhiều quái phụ) thay vì giết ngay — kết thúc trận đấu mà không "tường" người chơi.
 6. **Lần giết đầu là sự kiện.** Cinematic ngắn, Arise bonus, loot định danh — lần giết thứ 20 là farm hiệu quả (TTK ngắn, có thể skip intro).
 
 ---
@@ -33,15 +33,15 @@
 | 11 | **Sứ Giả Cửu Vương** (×3) | Đa phe | Gate S+ chuỗi | Raid cơ chế: mỗi sứ giả một trục (quân số / đơn đấu / puzzle-combat) | Mảnh Vương Quyền |
 | 12 | **Kiến Trúc Sư Vô Danh** | — | Vực Tháp tầng 100 | **Tổng ôn mọi bài học** — boss "nhà thiết kế": dùng lại cơ chế của 11 boss trước theo cách xáo trộn | Prestige "Vượt Ngôi" |
 
-> **Lý do ma trận này:** (a) mỗi boss kiểm tra một trục kỹ năng khác nhau → ngườichơi *trưởng thành* qua từng trận; (b) phần thưởng định danh tạo trục collection; (c) boss 12 là meta-narrative: *level cap thật sự là khi ngườichơi đánh bại designer* — bẻ khóa lore và mở prestige cùng một nhịp cảm xúc.
+> **Lý do ma trận này:** (a) mỗi boss kiểm tra một trục kỹ năng khác nhau → người chơi *trưởng thành* qua từng trận; (b) phần thưởng định danh tạo trục collection; (c) boss 12 là meta-narrative: *level cap thật sự là khi người chơi đánh bại designer* — bẻ khóa lore và mở prestige cùng một nhịp cảm xúc.
 
 ---
 
 ## 3. Giải phẫu một boss mẫu: Hiệp Sĩ Huyết Sắt (boss 5)
 
-**Bối cảnh:** Ứng viên Ngôi Vương Trống phải đánh bại "ngườI canh gác" — một hiệp sĩ cổ đại mạnh vượt xa mọi thứ ngườichơi từng gặp.
+**Bối cảnh:** Ứng viên Ngôi Vương Trống phải đánh bại "người canh gác" — một hiệp sĩ cổ đại mạnh vượt xa mọi thứ người chơi từng gặp.
 
-**Pha 1 — "Lễ Nghi" (100–70% HP):** đánh chậm, đòn đơn, telegraph dài. *Dạy:* boss này không đánh trâu được — HP của bạn không đủ đổi máu. Ngườichơi buộc phải bắt đầu dodge.
+**Pha 1 — "Lễ Nghi" (100–70% HP):** đánh chậm, đòn đơn, telegraph dài. *Dạy:* boss này không đánh trâu được — HP của bạn không đủ đổi máu. Người chơi buộc phải bắt đầu dodge.
 
 **Pha 2 — "Kiếm Vũ" (70–40%):** combo 3–5 nhịp, có nhịp *giả* (feint). *Dạy:* đọc animation, không dodge bừa — dodge sai nhịp = ăn đòn.
 
@@ -49,7 +49,7 @@
 
 **Pha 4 — "Quỳ Gối" (15%):** boss dừng lại, cắm kiếm xuống đất — **lựa chọn:** giết (Arise ngay, bình thường) hoặc *không đánh nữa trong 10 giây* (boss nhận thua → Arise với tỷ lệ +30% và tính cách **Trung Thành** cố định). 
 
-> **Đây là boss dạy bài học quan trọng nhất của UMBRA:** *cách bạn thắng định nghĩa thứ bạn nhận được.* Lựa chọn ẩn này không có trong hướng dẫn — ngườichơi phát hiện và kể cho nhau (emergent storytelling + cộng đồng).
+> **Đây là boss dạy bài học quan trọng nhất của UMBRA:** *cách bạn thắng định nghĩa thứ bạn nhận được.* Lựa chọn ẩn này không có trong hướng dẫn — người chơi phát hiện và kể cho nhau (emergent storytelling + cộng đồng).
 
 ---
 
@@ -65,7 +65,7 @@ Chín Vương Giả (lore gốc UMBRA) là nội dung sau level 100, mỗi Vươ
 | Vương Ký Sinh | Nhiễm bóng của bạn, quay lại đánh bạn | Có — đau nhất |
 | ... | (6 Vương còn lại ở tài liệu mở rộng nội bộ) | — |
 
-**Nguyên tắc Cửu Vương:** mỗi Vương *phá vỡ một giả định* ngườichơi đã quen (quân đoàn bất tử? stealth an toàn? DPS cao là thắng?). Khi power creep làm mọi thứ dễ, boss endgame *đổi luật chơi* thay vì tăng số — đây là "đổi trục xung đột" ở tầng encounter.
+**Nguyên tắc Cửu Vương:** mỗi Vương *phá vỡ một giả định* người chơi đã quen (quân đoàn bất tử? stealth an toàn? DPS cao là thắng?). Khi power creep làm mọi thứ dễ, boss endgame *đổi luật chơi* thay vì tăng số — đây là "đổi trục xung đột" ở tầng encounter.
 
 ---
 
@@ -83,7 +83,7 @@ Chín Vương Giả (lore gốc UMBRA) là nội dung sau level 100, mỗi Vươ
 - [ ] Có ít nhất 2 pha thay đổi hành vi thật sự?
 - [ ] Mọi đòn mạnh có telegraph đọc được?
 - [ ] Có ít nhất một cơ chế chống "spam một chiêu"?
-- [ ] Ngườichơi thua có hiểu *vì sao* thua không?
+- [ ] Người chơi thua có hiểu *vì sao* thua không?
 - [ ] Phần thưởng có *định danh* (không chỉ là số)?
 - [ ] Nếu boss có thể Arise: boss shadow có làm ai đó muốn khoe không?
 - [ ] Arena có lợi dụng địa hình Minecraft (cao độ, lava, nước)?
