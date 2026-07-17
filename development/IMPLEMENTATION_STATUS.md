@@ -4,11 +4,11 @@
 
 - **Ticket:** M1-04 — Combat Stance and Damage Pipeline
 - **Branch:** `codex/m1-04`
-- **State:** `verified`
-- **Current commit:** `M1-04: Implement server-authoritative combat stance, combo decay, custom damage pipeline, and training dummy logs`
+- **State:** `completed`
+- **Current commit:** `M1-04: Block spam-clicked hits during target invulnerability in LivingEntityMixin`
 - **Requirements:** M1-04 (R11)
 - **Dependency evidence:** M1-03 is integrated in `master`.
-- **User playtest result:** `NONE` (Awaiting playtest confirmation)
+- **User playtest result:** `PASS **M1-04**`
 - **Next AUTO ticket:** `NONE`
 
 ## Delivered scope
