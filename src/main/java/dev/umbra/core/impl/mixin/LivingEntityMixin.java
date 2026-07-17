@@ -44,6 +44,11 @@ public abstract class LivingEntityMixin {
                 .locate(CombatService.class)
                 .orElse(null);
             if (combatService != null) {
+                // Block spam clicks during the invulnerability window (invulnerableTime > 10)
+                float cooldownScale = player.getAttackStrengthScale(0.5F);
+                if (target.invulnerableTime > 10 && cooldownScale < 0.9F) {
+                    return 0.0F;
+                }
                 var details = combatService.calculateCustomDamageDetails(player, target, amount);
                 this.umbra$lastBaseDamage = details.baseDamage();
                 this.umbra$lastComboMult = details.comboMult();
