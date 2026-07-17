@@ -1,0 +1,16 @@
+{
+  "reference_card_id": "UMBRA-RC-999",
+  "source_context": "Genshin World Rank",
+  "extracted_principle": "Alternative parallel stratum selectable worlds",
+  "umbra_fantasy": "Travel to harder strata while keeping home base clean",
+  "player_decision_changed": "Đọc | Di chuyển | Chọn mục tiêu | Chỉ huy | Chuẩn bị",
+  "originalization": "Strata world saves do not clone overworld chunks",
+  "counterplay_tactical": "Telegraphed mechanics to learn",
+  "counterplay_strategic": "Preparation with elements/resistance",
+  "faction_world_link": "Interdimensional stratas",
+  "power_budget_and_risk": "Parallel worlds limited to active participants",
+  "tech_cost": "Async generation prevents lag spikes",
+  "prototype_question": "Does world reload correctly",
+  "ship_phase": "P7+",
+  "approval": "Game / Art / QA / Tech"
+}

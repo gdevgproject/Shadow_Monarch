@@ -1,0 +1,6 @@
+{
+  "id": "umbra:frost_elf_stalker",
+  "faction": "frost",
+  "role": "assassin"
+  "personality_weights": { "cunning": 0.7, "cowardly": 0.2, "aggressive": 0.1 }
+}

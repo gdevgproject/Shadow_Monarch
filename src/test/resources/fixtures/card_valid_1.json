@@ -1,0 +1,17 @@
+{
+  "reference_card_id": "UMBRA-RC-001",
+  "source_context": "Solo Leveling / Necromancer concept",
+  "extracted_principle": "Summoning defeated enemies as loyal shadows with stats scaling",
+  "umbra_fantasy": "You arise shadows from fallen foes to form your army",
+  "player_decision_changed": "Chỉ huy | Chuẩn bị",
+  "originalization: ": "We use standard MC elements, contract authorization, shadow tiers",
+  "originalization": "Contracts and authority rules prevent direct copies",
+  "counterplay_tactical": "Shield or interrupt summoners",
+  "counterplay_strategic": "Save resources for shadow bosses",
+  "faction_world_link": "Shadow / Overworld biome",
+  "power_budget_and_risk": "Max 40 shadows limits lag",
+  "tech_cost": "Entity LOD reduces rendering overhead",
+  "prototype_question": "Can we spawn 10 zombies as shadows",
+  "ship_phase": "1.0",
+  "approval": "Game / Tech / Combat"
+}

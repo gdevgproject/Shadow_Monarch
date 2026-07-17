@@ -1,0 +1,14 @@
+{
+  "id": "invalid-id-format",
+  "faction": "frost",
+  "role": "assassin",
+  "personality_weights": { "cunning": 0.5, "cowardly": 0.1, "aggressive": 0.1 },
+  "base_stats": { "level": 0, "hp": -10.0, "damage": -2.0, "armor": 4.0, "move_speed": 1.25 },
+  "scaling": { "hp_per_level": -8.0, "damage_per_level": 1.1 },
+  "resistances": { "fire": 2.5, "ice": 0.5 },
+  "abilities": ["umbra:shadow_step"],
+  "squad": { "preferred_size": [5, 2], "synergy_roles": ["tank"] },
+  "loot_table": "umbra:entities/frost_elf_stalker",
+  "arise": { "tier": "elite", "authority_required": -10.0 },
+  "ai_profile": "umbra:assassin_default"
+}

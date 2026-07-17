@@ -1,0 +1,14 @@
+{
+  "id": "umbra:goblin_scout",
+  "faction": "goblin",
+  "role": "scout",
+  "personality_weights": { "cunning": 0.2, "cowardly": 0.6, "aggressive": 0.2 },
+  "base_stats": { "level": 5, "hp": 40.0, "damage": 5.0, "armor": 1.0, "move_speed": 1.1 },
+  "scaling": { "hp_per_level": 4.0, "damage_per_level": 0.5 },
+  "resistances": {},
+  "abilities": ["umbra:dash"],
+  "squad": { "preferred_size": [3, 8], "synergy_roles": ["warrior"] },
+  "loot_table": "umbra:entities/goblin_scout",
+  "arise": { "tier": "common", "authority_required": 10.0 },
+  "ai_profile": "umbra:scout_default"
+}
