@@ -1,0 +1,39 @@
+# Gradle
+.gradle/
+build/
+
+# Log files
+*.log
+
+# Crash reports
+crash-reports/
+
+# Minecraft run directory (saves, logs, config, etc.)
+run/
+runClient/
+runServer/
+
+# IDEs and editors
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+.vscode/
+.classpath
+.project
+.settings/
+.factorypath
+
+# Operating System Files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Java / Compilation
+*.class
+*.bluej
+*.jar
+
+# Local configuration / secrets
+local.properties
