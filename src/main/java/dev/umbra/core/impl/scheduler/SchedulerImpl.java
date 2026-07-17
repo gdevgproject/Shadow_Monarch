@@ -1,5 +1,7 @@
 package dev.umbra.core.impl.scheduler;
 
+import dev.umbra.UmbraMod;
+import dev.umbra.core.contract.config.UmbraConfigService;
 import dev.umbra.core.contract.scheduler.TickScheduler;
 import java.util.Queue;
 import java.util.concurrent.Callable;
@@ -18,6 +20,11 @@ public final class SchedulerImpl implements TickScheduler {
 
     private final Queue<Runnable> tickQueue = new ConcurrentLinkedQueue<>();
     private final ExecutorService asyncExecutor = Executors.newWorkStealingPool();
+
+    private long lastTickDurationNs = 0;
+    private int lastTickExecutedCount = 0;
+    private double averageTickDurationMs = 0.0;
+    private long lastLogWarningTimeMs = 0;
 
     @Override
     public void runOnTick(Runnable task) {
@@ -61,17 +68,78 @@ public final class SchedulerImpl implements TickScheduler {
         });
     }
 
+    @Override
+    public long getLastTickDurationNs() {
+        return lastTickDurationNs;
+    }
+
+    @Override
+    public int getLastTickExecutedCount() {
+        return lastTickExecutedCount;
+    }
+
+    @Override
+    public int getPendingTasksCount() {
+        return tickQueue.size();
+    }
+
+    @Override
+    public double getAverageTickDurationMs() {
+        return averageTickDurationMs;
+    }
+
+    private long getMaxTickBudgetNs() {
+        try {
+            var registry = UmbraMod.getServiceRegistry();
+            if (registry != null) {
+                var configService = registry.locate(UmbraConfigService.class).orElse(null);
+                if (configService != null && configService.getServerConfig() != null) {
+                    return configService.getServerConfig().getMaxTickBudgetMs() * 1_000_000L;
+                }
+            }
+        } catch (Throwable ignored) {
+        }
+        return 15 * 1_000_000L; // default 15ms
+    }
+
     /**
      * Executes all pending tick tasks. Called at the start of every server tick.
      */
     public void tick() {
+        long startTime = System.nanoTime();
+        long budgetNs = getMaxTickBudgetNs();
+        int executedCount = 0;
         Runnable task;
+
         while ((task = tickQueue.poll()) != null) {
             try {
                 task.run();
+                executedCount++;
             } catch (Exception e) {
                 LOGGER.error("Error executing tick task", e);
             }
+
+            long elapsedNs = System.nanoTime() - startTime;
+            if (elapsedNs >= budgetNs) {
+                long currentTimeMs = System.currentTimeMillis();
+                if (currentTimeMs - lastLogWarningTimeMs > 5000) {
+                    LOGGER.warn("Central Scheduler: tick budget exceeded! Took {}ms (budget: {}ms). Deferring remaining {} tasks.",
+                            elapsedNs / 1_000_000, budgetNs / 1_000_000, tickQueue.size());
+                    lastLogWarningTimeMs = currentTimeMs;
+                }
+                break;
+            }
+        }
+
+        long durationNs = System.nanoTime() - startTime;
+        this.lastTickDurationNs = durationNs;
+        this.lastTickExecutedCount = executedCount;
+
+        double durationMs = durationNs / 1_000_000.0;
+        if (this.averageTickDurationMs == 0.0) {
+            this.averageTickDurationMs = durationMs;
+        } else {
+            this.averageTickDurationMs = 0.05 * durationMs + 0.95 * this.averageTickDurationMs;
         }
     }
 

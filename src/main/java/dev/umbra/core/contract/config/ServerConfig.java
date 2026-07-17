@@ -6,6 +6,7 @@ package dev.umbra.core.contract.config;
 public final class ServerConfig {
     private double gateFrequencyMultiplier = 1.0;
     private int maxSummonLimit = 12;
+    private long maxTickBudgetMs = 15;
 
     public double getGateFrequencyMultiplier() {
         return gateFrequencyMultiplier;
@@ -21,5 +22,13 @@ public final class ServerConfig {
 
     public void setMaxSummonLimit(int maxSummonLimit) {
         this.maxSummonLimit = maxSummonLimit;
+    }
+
+    public long getMaxTickBudgetMs() {
+        return maxTickBudgetMs;
+    }
+
+    public void setMaxTickBudgetMs(long maxTickBudgetMs) {
+        this.maxTickBudgetMs = maxTickBudgetMs;
     }
 }

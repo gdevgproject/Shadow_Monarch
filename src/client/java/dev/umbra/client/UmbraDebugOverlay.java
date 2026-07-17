@@ -47,6 +47,23 @@ public final class UmbraDebugOverlay implements HudElement {
         if (configService.getDevConfig().isProfilingEnabled()) {
             drawContext.text(font, "Profiling: ACTIVE (Safe HUD: FPS=" + client.getFps() + ")", 5, y, 0xFFFF5555, false);
             y += 10;
+            try {
+                var registry = dev.umbra.UmbraMod.getServiceRegistry();
+                if (registry != null) {
+                    var scheduler = registry.locate(dev.umbra.core.contract.scheduler.TickScheduler.class).orElse(null);
+                    if (scheduler != null) {
+                        double avgMs = scheduler.getAverageTickDurationMs();
+                        long lastNs = scheduler.getLastTickDurationNs();
+                        int executed = scheduler.getLastTickExecutedCount();
+                        int pending = scheduler.getPendingTasksCount();
+                        drawContext.text(font, String.format("Scheduler MSPT: %.3f ms (Last: %.3f ms)", avgMs, lastNs / 1_000_000.0), 5, y, 0xFF55FF55, false);
+                        y += 10;
+                        drawContext.text(font, String.format("Tasks: %d run | %d pending", executed, pending), 5, y, 0xFF55FF55, false);
+                        y += 10;
+                    }
+                }
+            } catch (Exception ignored) {
+            }
         }
     }
 }

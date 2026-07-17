@@ -22,4 +22,24 @@ public interface TickScheduler {
      * Runs a heavy task asynchronously and executes a callback on the main tick thread when complete.
      */
     <T> void runAsync(Callable<T> asyncTask, Consumer<T> onMainThreadCallback);
+
+    /**
+     * Gets the duration of the last tick's scheduler task executions in nanoseconds.
+     */
+    long getLastTickDurationNs();
+
+    /**
+     * Gets the number of tasks executed in the last tick.
+     */
+    int getLastTickExecutedCount();
+
+    /**
+     * Gets the number of tasks currently pending in the queue.
+     */
+    int getPendingTasksCount();
+
+    /**
+     * Gets the running average of UMBRA scheduler task execution in milliseconds.
+     */
+    double getAverageTickDurationMs();
 }
