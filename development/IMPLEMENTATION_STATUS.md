@@ -4,12 +4,12 @@
 
 - **Ticket:** M1-04 — Combat Stance and Damage Pipeline
 - **Branch:** `codex/m1-04`
-- **State:** `completed`
-- **Current commit:** `M1-04: Block spam-clicked hits during target invulnerability in LivingEntityMixin`
+- **State:** `verified`
+- **Current commit:** `M1-04: Record user playtest PASS`
 - **Requirements:** M1-04 (R11)
 - **Dependency evidence:** M1-03 is integrated in `master`.
-- **User playtest result:** `PASS **M1-04**`
-- **Next AUTO ticket:** `NONE`
+- **User playtest result:** `PASS **M1-04**` (Confirmed by user playtest result)
+- **Next AUTO ticket:** `M1-05`
 
 ## Delivered scope
 
