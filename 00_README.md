@@ -1,8 +1,28 @@
 # UMBRA: SHADOW MONARCH — BỘ TÀI LIỆU THIẾT KẾ TỔNG THỂ
 
-> **Trạng thái:** Bản thiết kế nền tảng **v2.0** (Design Foundation, rà soát & mở rộng toàn diện)
+> **Trạng thái:** Bản thiết kế nền tảng **v3.0** (Design Foundation, rà soát nhất quán trước khi bước vào phát triển mod)
 > **Nền tảng mục tiêu:** Minecraft Java Edition · Fabric Loader · phiên bản stable mới nhất
 > **Bản chất tài liệu:** Bộ hồ sơ thiết kế cấp studio — KHÔNG chứa mã nguồn. Mọi quyết định đều ghi kèm lý do thiết kế.
+
+---
+
+## 0. Quyết định chuẩn v3.0 — phải ưu tiên hơn mọi mô tả cũ
+
+Đợt rà soát v3.0 xác nhận bộ v2.0 có nền tốt, nhưng còn các mâu thuẫn về hạng, Job Change, mana quân đoàn và nội dung hậu cấp 100. Các quyết định dưới đây là **hợp đồng liên tài liệu**; nếu một đoạn cũ khác với chúng thì đoạn cũ được xem là lỗi thời.
+
+| ID | Quyết định chuẩn | Mục tiêu trải nghiệm | Nguồn chi tiết |
+|---|---|---|---|
+| V3-01 | Hạng người chơi là **F → E → D → C → B → A → S → S+ → Quốc Gia → Vương Giả**. Job Change và Trỗi Dậy mở ở level 20/hạng D; không còn mâu thuẫn hạng B. | Người chơi nhìn thấy mọi nấc trưởng thành. | 02, 03, 06, 14 |
+| V3-02 | Level 100 mở **Thăng Giới** và các **Thế Giới Song Song**; thế giới cũ luôn quay lại được, không bị ghi đè hay ép nâng độ khó. | Vừa có thử thách dài hạn, vừa có cảm giác mạnh vượt bậc khi trở về. | 01, 02, 03, 08, 10, 13, 15 |
+| V3-03 | Điểm chỉ số cơ bản là do người chơi tự phân bổ; chỉ Tiềm Năng đã xem trước hậu quả mới là cam kết không hoàn tác. Không có lựa chọn mù làm hỏng save. | Tự do build nhưng vẫn công bằng. | 03, 14, 25 |
+| V3-04 | Bóng có HP, XP và vai trò riêng. Mana chỉ trả cho hành động chủ động (triệu hồi, hồi sinh, kỹ năng/Exchange), **không có phí duy trì theo giây**; bóng canh nhà miễn phí. | Chỉ huy sâu thay vì bị thanh mana bóp nghẹt. | 04, 05, 13, 14 |
+| V3-05 | Linh hồn tồn tại ít nhất 2 phút và tồn tại đến khi rời/đóng Gate. Ba lần Trỗi Dậy hiển thị xác suất; boss định danh có pity lần 3 = 100%, Hiệp Sĩ Huyết Sắt là nghi lễ cố định thất bại hai lần đầu. | Boss khó thắng phải trở thành phần thưởng đáng tin cậy. | 04, 09, 14, 25 |
+| V3-06 | Một Gate chỉ đóng khi mọi mục tiêu bắt buộc đã hoàn thành. Mỗi vùng tối đa 2 Gate hoạt động; hạng sinh theo sức mạnh hiệu dụng trong biên hợp lý, không khóa cứng hạng cao. | Thế giới sống, khó nhưng không lừa người chơi. | 08, 10, 13, 14 |
+| V3-07 | Kết thúc truyện là **tốt nghiệp**, không phải game over. Nội dung vô hạn có giới hạn power creep dùng Thăng Giới, Vực Tháp, biến thể, xã hội và bộ sưu tập — không dùng daily/FOMO. | Có thể chơi nhiều năm vì còn muốn chơi. | 01, 20, 23 |
+
+### Cách dùng tài liệu tham khảo
+
+`0.5_phan_tich_solo_leveling.md` chỉ là case study để hiểu một fantasy và các bài học thành công/thất bại. UMBRA ưu tiên thiết kế gốc; các tham chiếu action-RPG/open world chỉ được rút thành **nguyên lý**, không sao chép tên gọi, cốt truyện, asset hay cấu trúc nội dung cụ thể.
 
 ---
 

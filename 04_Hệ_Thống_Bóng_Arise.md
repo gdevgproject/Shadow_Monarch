@@ -27,12 +27,13 @@ Bốn quyết định nền móng:
 ### 2.1. Điều kiện & cửa sổ thờI gian
 
 - Kẻ địch phải **do ngườichơi hoặc quân đoàn của ngườichơi hạ** (last-hit của phe ngườichơi).
-- **Cửa sổ linh hồn: 30 giây** sau khi chết. Xác không biến mất ngay — nó "rỉ bóng" (VFX nhận diện từ xa).
+- **Cửa sổ linh hồn: tối thiểu 2 phút ngoài Gate; trong Gate tồn tại cho đến khi người chơi rời Gate hoặc Gate đóng.** Xác không biến mất ngay — nó "rỉ bóng" (VFX nhận diện từ xa). Không có tình huống một trận hỗn chiến khiến người chơi mất boss vì phải sống sót trước.
 - Ngườichơi đứng gần, giữ phím Arise → **nghi lễ 2.5 giây** (có thể bị interrupt nếu bị đánh → tạo quyết định chiến thuật: dọn sạch rồi Arise, hay liều Arise giữa combat?).
 
 ### 2.2. Ba lần thử & cái giá của thất bại
 
-- Mỗi linh hồn cho **tối đa 3 lần thử**. Thất bại lần 1–2: linh hồn "rạn nứt", tỷ lệ lần sau giảm. Thất bại lần 3: **linh hồn tan biến**, rơi ra **Mảnh Bóng** (currency — thất bại vẫn có giá trị).
+- Mỗi linh hồn cho **tối đa 3 lần thử**. Tỷ lệ được hiển thị trước từng lần và **không giảm theo thất bại**: lần 2 nhận Resonance bonus, lần 3 nhận bonus lớn. Mục tiêu thường/elite hết lần 3 mới tan biến và rơi **Mảnh Bóng**; người chơi biết chính xác rủi ro trước khi thử.
+- **Boss định danh đủ điều kiện có pity lần 3 = 100%.** Đây là phần thưởng của chiến thắng, không phải gacha trá hình. Riêng **Hiệp Sĩ Huyết Sắt** là bài học nghi lễ: lần 1 và 2 bị phong ấn theo kịch bản, lần 3 chắc chắn thành công; UI nói rõ đây là "Nghi Thức Hoàn Tất", không giả vờ tung xúc xắc.
 - Mỗi lần thử tốn mana đáng kể → Arise dưới áp lực là quyết định tài nguyên.
 
 > **Lý do:** "3 lần thử" giữ đúng nghi lễ nguyên tác, tạo nhịp căng thẳng–vỡ òa. Nhưng tan biến phải *cho ra tài nguyên* — bài học "hình phạt tốt nhất là hình phạt rèn luyện": thất bại nuôi dưỡng hệ thống khác (Mảnh Bóng dùng cho tiến hóa, cửa hàng).
@@ -60,7 +61,7 @@ Mỗi bóng là bản ghi gồm:
 | **Tính cách** | 1 trong 8 (mục 5.3) — ảnh hưởng hành vi AI | Attachment |
 | **Đặc điểm (Traits)** | 1–3 trait sinh ngẫu nhiên + trait mở qua sự kiện | Uniqueness |
 | **Lịch sử** | Số trận, số kill, số lần "tan vỡ", trận đáng nhớ nhất (tự ghi) | Memory |
-| **Quan hệ** | Thân/thù với bóng khác → synergy khi đứng chung đội hình | Emergent story |
+| **Quan hệ** | Bond/niềm tin với bóng khác → synergy, bark và vai trò phối hợp | Emergent story |
 
 ---
 
@@ -154,6 +155,7 @@ Tab trong Hệ Thống: danh sách bóng (lọc theo vai trò/cấp/tính cách)
 - Triệu hồi: bóng *trồi lên từ bóng của chủ nhân* — VFX nhận diện bắt buộc (đây là "khoảnh khắc aura" của mod; thiết kế VFX ở tài liệu 21).
 - Thu hồi tức thờI, miễn phí — thoát hiểm luôn được khuyến khích.
 - **Shadow Exchange:** đổi chỗ tức thờI với một bóng bất kỳ đang hoạt động (mở ở hạng S) — mobility cấp chiến lược, tạo vô số outplay.
+- **Garnison & hộ tống:** mỗi bóng/nhóm có thể được chỉ định bảo vệ một người, một vùng, một lối vào hoặc một tuyến tuần tra; lệnh lưu theo preset và vẫn hiệu lực khi người chơi rời khu vực. Bóng cùng quân đoàn không thù địch, không friendly-fire và không phá lệnh của nhau; khác biệt tính cách chỉ tạo cách thực hiện, không tạo nội chiến.
 
 ---
 
@@ -165,7 +167,7 @@ Tab trong Hệ Thống: danh sách bóng (lọc theo vai trò/cấp/tính cách)
 
 1. **Không bóng nào chết.** HP về 0 → bóng **tan về bóng của chủ nhân**, vào trạng thái **Tán Vỡ (Shattered)**. Dữ liệu, cấp độ, trang bị, quan hệ, lịch sử — nguyên vẹn.
 2. **Tái sinh luôn khả dụng.** Không có cooldown vĩnh viễn, không có "số lần chết tối đa", không có vật phẩm hồi sinh hiếm. Chỉ có **hai cái giá**: mana (nhanh) hoặc thờI gian (chậm).
-3. **Quân đoàn ngã khi Mana cạn.** Thanh mana của Chúa Tể *chính là* thanh máu tập thể của đạo quân. Đây là trục căng thẳng thay thế cho "sợ mất lính".
+3. **Mana là tài nguyên quyết định chủ động, không phải tiền thuê quân theo giây.** Mỗi bóng có HP riêng; mana trả khi triệu hồi, tái sinh hoặc dùng kỹ năng quyền năng. Không có phí duy trì, nên garnison/đứng gác không làm người chơi nghèo mana.
 
 ### 7.2. Hai đường tái sinh
 
@@ -174,7 +176,7 @@ Tab trong Hệ Thống: danh sách bóng (lọc theo vai trò/cấp/tính cách)
 | **Tái Triệu Hồi Tức ThờI** | Mana theo cấp bóng (14.6), bóng trồi lại tại chỗ với 60% HP | Tức thờI (1 nhịp summon) | Đang combat, cần giữ đội hình |
 | **Tái Sinh Chậm** | Miễn phí | Theo cấp (Thường ~1 phút → Nguyên Soái ~15 phút, 14.6) | Ngoài combat, giữa hai gate |
 
-- Tái triệu hồi tức thờI **mở khóa ở hạng B** (cùng nhịp Job Change) — trước đó bóng tan vỡ chỉ hồi chậm, để ngườichơi *trân trọng* từng bóng đầu tiên.
+- Tái triệu hồi tức thờI **mở khóa ở hạng D cùng Job Change**; cấp bóng cao và triệu hồi lặp mới khiến nó đắt. Người chơi học quản lý mana ngay khi có bóng, không bị đợi sai nhịp mở khóa.
 - Có **khấu hao mana theo chuỗi:** mỗi lần tái triệu hồi tức thờI *cùng một bóng* trong 60 giây, chi phí +50% (trần ×3) — chống "bất tử spam", giữ quyết định có trọng lượng (14.6).
 - **Tín hiệu đọc được:** bóng Tán Vỡ hiển thị trong Legion HUD kèm chi phí tái triệu hồi; mana dưới ngưỡng cảnh báo → viền HUD chuyển tím nhạt. Ngườichơi luôn *nhìn thấy* đạo quân mình còn "sống" được bao lâu (Nguyên tắc 4).
 

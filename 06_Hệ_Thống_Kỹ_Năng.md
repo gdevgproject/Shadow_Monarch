@@ -72,7 +72,7 @@ Thiết kế theo cặp/bộ ba có *tên gọi* (dễ nhớ, dễ lan truyền 
 
 | Kỹ năng | Mở khóa | Thiết kế |
 |---|---|---|
-| **Trỗi Dậy** | Job Change (hạng B) | Xem tài liệu 04.2 |
+| **Trỗi Dậy** | Job Change (level 20, hạng D) | Xem tài liệu 04.2 |
 | **Cất Giữ Bóng** | Job Change | Vô hình, không slot giới hạn trữ (giới hạn triệu hồi) |
 | **Mắt Bóng** | hạng B+ | Nhìn/nghe qua bóng đang Ẩn Mình — do thám xa an toàn |
 | **Shadow Exchange** | hạng S | Đổi chỗ với bóng, cooldown theo khoảng cách |
@@ -95,3 +95,11 @@ Thiết kế theo cặp/bộ ba có *tên gọi* (dễ nhớ, dễ lan truyền 
 1. **Rune RNG gây cay cú?** → Bột Rune + rune định hướng (chọn phe) giảm; theo dõi tỷ lệ "20 giờ không ra rune mục tiêu" trong test.
 2. **Skill tree 180 nút có quá tải người mới?** → Gốc chung chỉ 6 nút bắt buộc hiểu; cây mở dần theo hạng.
 3. **Keystone đánh đổi có bị "lựa hiển nhiên"?** → Mỗi keystone phải có ít nhất một encounter trong game nơi nó *yếu hơn không chọn* — thiết kế boss kiểm chứng (tài liệu 09).
+
+---
+
+## 8. Bổ sung v3.0 — bộ kỹ năng chiến đấu sâu nhưng đọc được
+
+Năm ô trang bị (4 active + 1 class) là trần thao tác đồng thời; thư viện kỹ năng có thể lớn hơn nhưng mỗi skill phải thuộc một trong bốn vai trò: mở giao tranh, né/phản đòn, kiểm soát không gian, hoặc payoff combo. Một skill mới thay thế được một quyết định cũ mới xứng đáng vào pool.
+
+Thêm ba mẫu bắt buộc cho 1.0: **Bước Hư Ảnh** (chuỗi dash/không thể bị chọn trong khoảnh khắc, nhưng không gây sát thương miễn phí), **Nhãn Giới Tĩnh Lặng** (làm chậm cục bộ, xem 05.11), và **Cưỡi Bóng** (mount skill theo chủng loài). Chúng dùng ý tưởng action-RPG chung nhưng có animation, luật, tên gọi và counterplay gốc UMBRA. Monarch's Domain được chuẩn hóa: aura tròn, 12 giây cơ bản, phạm vi/hiệu ứng/đồng hồ hiển thị rõ; bóng trong vùng nhận buff theo vai trò, kẻ địch không bị xóa cơ chế.

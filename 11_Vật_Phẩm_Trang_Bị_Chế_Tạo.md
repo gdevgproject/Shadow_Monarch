@@ -81,3 +81,11 @@ Bóng cấp Kỵ Sĩ+: 2 ô (vũ khí + bùa). Loot pool chung với người ch
 1. **Affix pool quá rộng → loot nhạt?** → Pool nhỏ có chủ đích (~60 affix), mỗi affix phải qua được bài kiểm "ai đó sẽ xây build quanh nó".
 2. **Reforge thành máy xay tài nguyên gây chán?** → Giới hạn số lần reforge/món (vết khắc vĩnh viễn trên đồ) → quyết định có trọng lượng.
 3. **Growth weapon nuốt slot vũ khí (mọi người chỉ dùng growth)?** → Growth mạnh ở *độ dài đời*, không mạnh tuyệt đối; vũ khí Mythic rơi vẫn cạnh tranh ở endgame thuần số.
+
+---
+
+## 8. Bổ sung v3.0 — loadout, set và nhịp 10 level
+
+Loadout người chơi gồm vũ khí chính, vũ khí phụ hoặc hai tay, mũ, giáp ngực, găng, giày, nhẫn ×2, vòng cổ và bùa. Vũ khí hai tay chiếm cả hai tay nhưng được budget mạnh hơn/đổi combo, không chỉ là số damage cao hơn. Mỗi **10 level** có một bậc trang bị mua/chế tạo cơ bản với yêu cầu level rõ; đồ Gate/boss cùng bậc thêm trait/lore thay vì chỉ thay thế bằng item level.
+
+Set bonus dùng 2/4 mảnh, luôn mở tương tác build (ví dụ parry, mount, Domain, độc, dodge), không cộng số thuần. Một set hoàn chỉnh không được mạnh hơn mọi tổ hợp mixed-affix; mọi bonus có power budget trong 13/14. Bóng Kỵ Sĩ+ dùng loadout rút gọn vũ khí/bùa/giáp, tự tăng chỉ số theo vai trò và XP riêng; người chơi chỉ định ưu tiên phát triển thay vì phải phân 5 stat từng bóng.

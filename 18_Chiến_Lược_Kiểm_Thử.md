@@ -68,3 +68,11 @@ Dùng game-test framework của nền tảng: bot thực hiện kịch bản end
 1. **Simulation lệch thực tế (bot không né đòn như người)?** → Simulation đo *sàn* cân bằng; playtest đo *trần*. Hai tầng không thay thế nhau.
 2. **Chi phí duy trì bot khi MC cập nhật?** → Kịch bản bot viết trên lớp hành động trừu tượng ("đi tới", "đánh"), không phụ thuộc API cụ thể.
 3. **Playtest cảm xúc khó tuyển người?** → Duy trì cộng đồng tester nhỏ, thưởng bằng tên trong credits + quyền xem roadmap sớm.
+
+---
+
+## 9. Bổ sung v3.0 — ma trận regression bắt buộc
+
+Thêm test vector cho ba lần Arise (xác suất tăng, boss lần 3 = 100%, Hiệp Sĩ Huyết Sắt `[0,0,1]`), timer linh hồn trong/ngoài Gate, Gate không đóng trước objective, và trần hai Gate mỗi vùng. Simulation phải chạy commander/solo/hybrid ở từng rank F→S+ và từng Stratum để chặn power creep quân đoàn.
+
+Kịch bản bot mới: gọi/thu hồi bóng không trừ mana theo giây; đặt garnison hộ tống Em/Mẹ; quay lại Thế Giới Gốc sau tầng song song không đổi block; dungeon nước có đường thở/thoát; AI boss bảo vệ healer/boss mà vẫn có counterplay. Playtest cảm xúc thêm câu hỏi: người chơi có biết vì sao điểm Tiềm Năng không undo không, có thấy boss capture công bằng không, có dám quay lại thế giới cũ để tận hưởng sức mạnh không.

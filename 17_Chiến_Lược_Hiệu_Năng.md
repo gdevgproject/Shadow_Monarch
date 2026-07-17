@@ -1,7 +1,7 @@
 # 17 — CHIẾN LƯỢC HIỆU NĂNG (PERFORMANCE STRATEGY)
 
 > **Chủ sở hữu:** Performance Engineer
-> **Tuyên ngôn:** Hiệu năng là *tính năng*, không phải giai đoạn tối ưu cuối dự án. Mục tiêu: **200 bóng + 200 địch đang hoạt động, AI đầy đủ, TPS 20 ổn định trên server tầm trung, không giật client.**
+> **Tuyên ngôn:** Hiệu năng là *tính năng*, không phải giai đoạn tối ưu cuối dự án. Mục tiêu: **200 bóng sở hữu dưới dạng dữ liệu, tối đa 40 bóng và 80 địch gần người chơi có AI đầy đủ**, phần còn lại dùng LOD/ngủ; TPS 20 ổn định trên server tầm trung, không giật client.
 
 ---
 
@@ -70,3 +70,11 @@ Ngân sách được **giám sát runtime**: vượt ngân sách → scheduler t
 1. **Server yếu (host rẻ tiền)?** → Config hạ trần entity/tần suất gate; AI LOD có thêm tầng "siết".
 2. **Mod khác cũng nặng AI?** → Ngân sách của ta tự co lại khi mspt tổng cao (nhượng bộ lịch sự) — nhưng log cảnh báo để người chơi biết.
 3. **VFX "khoảnh khắc aura" (quân đoàn trỗi dậy hàng loạt) quá tải?** → Gom thành một VFX tổng thay vì 40 VFX nhỏ — vừa đẹp hơn vừa rẻ hơn.
+
+---
+
+## 6. Bổ sung v3.0 — ngân sách vùng, đô thị và nước
+
+Ngân sách entity là **theo vùng combat**, không phải lời hứa “càng nhiều càng hay”: mặc định tối đa 40 bóng vật thể hóa, 80 địch full AI; người chơi có thể sở hữu nhiều hơn mà không mất tick. Khi boss có hộ vệ hoặc phòng thủ đô thị, Director phân đợt để không đẩy quá ngân sách; giảm số entity phải đổi bằng AI/role/telegraph thú vị hơn, không chỉ xóa quân.
+
+Đô thị dùng NPC proxy ngoài tầm, schedule theo event và animation LOD; hàng người xếp giám định là presentation cục bộ, không simulation pathfinding cho toàn bộ cư dân. Water dungeon dùng mesh/particle giới hạn theo phòng, không quét fluid mỗi tick; mount có collision/pathing profile riêng và fallback an toàn nếu chunk/không khí chưa sẵn sàng.

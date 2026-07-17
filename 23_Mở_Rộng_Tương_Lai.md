@@ -50,3 +50,17 @@
 1. Đọc telemetry + phản hồi cộng đồng: người chơi *dừng lại ở đâu*, *yêu thứ gì*.
 2. Ưu tiên theo: củng cố trái tim (bóng) → chiều sâu endgame → mở rộng bề ngang.
 3. Mọi gói mở rộng vẫn qua đầy đủ quy trình: spec → pipeline → balance → playtest — gói mở rộng không được phép kém chất lượng hơn bản gốc.
+
+---
+
+## 6. Bổ sung v3.0 — thứ tự mở rộng sau 1.0
+
+Không coi mọi ý tưởng trong design bible là lời hứa ngày phát hành. Theo dữ liệu P6, các gói mở rộng được ưu tiên theo giá trị trải nghiệm/rủi ro kỹ thuật:
+
+1. **Dưới Mặt Nước:** bộ tộc, dungeon, công trình, mount nước và boss ba chiều.
+2. **Kẻ Kỵ Hành:** mount mặt đất/bay giới hạn, route khám phá, boss cưỡi thú.
+3. **Những Thế Giới Song Song:** Strata 2–5, mutator, thành phố/guild quest liên giới.
+4. **Những Ràng Buộc Tự Nguyện:** mở rộng companion/romance giữa NPC trưởng thành đã có quest và AI nền tảng.
+5. **Cửu Vương hoàn chỉnh:** boss 7–12, Vực Tháp sâu và campaign hậu truyện.
+
+Co-op/online là nhánh kiến trúc có thể mở sau khi single-player ổn định, không phải một mục tiêu tự động. Chỉ triển khai sau threat model, quyền sở hữu Gate/Shadow, packet budget, migration và playtest latency; không dùng mạng để giải quyết bài toán nội dung hoặc giữ chân người chơi.

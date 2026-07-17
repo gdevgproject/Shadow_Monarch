@@ -139,3 +139,15 @@ Không thêm dimension mới ở 1.0 (trừ pocket dimension của dungeon/Penal
 3. **Máy farm vanilla phá kinh tế EXP?** → Quái chết bởi sát thương môi trường/máy farm không rơi EXP đầy đủ, không cho Arise; chi tiết 12.5.
 4. **Đô Thị 4x làm nặng worldgen/hiệu năng?** → Đô Thị là *cấu trúc nâng cấp có điều kiện*, số lượng giới hạn mỗi vùng; NPC dùng social AI LOD (07.14).
 5. **Ngườichơi bỏ quên gia đình?** → Cho phép chơi không xây Tổ Ấm (nội dung gia đình mở theo ý ngườichơi), nhưng chuỗi chính khuyến khích mạnh bằng phần thưởng định danh — tự do vẫn được tôn trọng.
+
+---
+
+## 8. Bổ sung v3.0 — đô thị sống, gia đình an toàn và thế giới nhiều lớp
+
+Mỗi “làng” quan trọng trong fantasy Hunter được xử lý như một **Đô Thị quy mô nhỏ**, không phải một NPC đứng cạnh máy đo. Máy Giám Định là một nghi thức công khai: cư dân đến xếp hàng theo lịch, người hạng thấp phản ứng bằng tò mò/vỗ tay/kính nể khi thấy kết quả bất thường, hunter và thương nhân có bark khác nhau. Mật độ NPC, lịch và animation phải LOD theo tài liệu 17; sự sống động không được trả giá bằng TPS.
+
+Gia đình có lệnh rõ ràng, không phải escort mơ hồ. Mẹ ở trạng thái ngủ có vị trí an toàn tại Tổ Ấm; Em có ba mode người chơi chọn: **Ở nhà an toàn**, **Theo gần (không vào Gate nguy hiểm)**, hoặc **Hỗ trợ nhiệm vụ đã kịch bản hóa**. Bóng có thể hộ tống Mẹ/Em, canh cổng hoặc rút họ về khu trú ẩn. Mẹ và Em khởi đầu hạng E cố định, không tham gia race level; người chơi tăng độ bền bằng trang bị/đồ phòng hộ và nâng cấp nhà. Thất bại phòng thủ gây thương tích/trạng thái hồi phục, không giết vĩnh viễn, không phá save hay công trình.
+
+Quan hệ thân thiết/ hôn nhân là hệ **Liên Kết Đồng Hành** tự nguyện với NPC trưởng thành: cần chuỗi tin cậy, đồng thuận hai chiều, ranh giới vai trò và khả năng chia tay tôn trọng. Bạn đời có lịch riêng, có thể đồng hành khi tự nguyện, hỗ trợ qua nghề/chuyên môn/quest chứ không là follower chiến đấu toàn thời gian. Nước phải được thiết kế như một xã hội hoàn chỉnh: bộ tộc thủy sinh, kiến trúc, trade, dungeon, mount và tuyến di chuyển riêng; không chỉ là một biome đầy mob.
+
+Thăng Giới không nâng toàn bộ Overworld hiện tại. Cổng Liên Giới dẫn tới các lớp world song song giữ Thế Giới Gốc an toàn; mỗi lớp quản lý Gate/sự kiện/loot riêng và có đường trở về hiển thị rõ. Đây là nơi thử thách dài hạn, còn thành phố, gia đình và công trình của người chơi vẫn có nền nhà ổn định.

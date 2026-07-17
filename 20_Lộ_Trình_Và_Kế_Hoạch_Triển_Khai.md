@@ -11,12 +11,12 @@
 |---|---|---|---|
 | M0 | **Bộ khung** | Core architecture, data loader, save/migration, config | 4–6 tuần |
 | M1 | **Kẻ Thức Tỉnh** | Hệ Thống UI, level/stat, daily quest/penalty, combat stance | 6–8 tuần |
-| M2 | **Vertical Slice** | Một gate hạng D hoàn chỉnh + 1 phe quái + boss tutorial | 6 tuần |
+| M2 | **Vertical Slice** | Đường chơi F→D hoàn chỉnh + 1 phe quái + boss tutorial | 6 tuần |
 | M3 | **Trỗi Dậy** | Job Change, Arise, storage, summon, lệnh cơ bản | 8 tuần |
 | M4 | **Quân Đoàn** | Formation, vai trò, tính cách, tiến hóa, Legion UI | 8 tuần |
 | M5 | **Thế Giới Sống** | 4 phe quái đầy đủ, AI nâng cao, world events, Hiệp Hội | 8 tuần |
 | M6 | **Chiều Sâu Vật Phẩm** | Rarity/affix/rune/growth/reforge, economy đầy đủ | 6 tuần |
-| M7 | **Endgame** | Red Gate, Break/Field, Vực Tháp 1–100, 12 boss định danh | 10 tuần |
+| M7 | **Endgame Foundation** | Red Gate, Break/Field, Vực Tháp 1–25, Thăng Giới 1, 6 boss định danh | 10 tuần |
 | M8 | **Đánh Bóng 1.0** | Balance pass, performance pass, playtest lớn, tài liệu hóa | 6 tuần |
 
 *Tham chiếu cho team 2–4 người bán thời gian; không phải cam kết — chất lượng thắng lịch trình (Nguyên tắc 22).
@@ -34,20 +34,20 @@
 - **Exit:** người chơi mới trải qua "1 ngày của Kẻ Thức Tỉnh" trọn vẹn; playtest nội bộ xác nhận cảm giác *lớn lên từng ngày*.
 
 ### M2 — Vertical Slice ⭐ (milestone quan trọng nhất)
-- Xây: generator gate hạng D (1 phe, 12 phòng), 6 loại quái 1 phe với AI đầy đủ, boss tutorial #1, loot/rarity cơ bản.
+- Xây: đường F→D (1 phe, 12 phòng), 6 loại quái với AI đầy đủ, boss tutorial #1, loot/rarity cơ bản.
 - **Exit:** một vòng core loop 20 phút *vui* — 5/5 playtester muốn chơi lại; benchmark scene chuẩn đạt ngân sách.
 - **Quy tắc:** không sang M3 nếu slice chưa vui. Mọi milestone sau nhân bản từ đây.
 
 ### M3 — Trỗi Dậy
-- Xây: Job Change dungeon + boss Huyết Sắt (3 pha), nghi lễ Arise (cửa sổ 30s, 3 lần thử), storage data-driven, summon/dismiss, 3 lệnh đầu (Hộ Vệ/Săn Lùng/Ẩn Mình), đặt tên.
+- Xây: Job Change dungeon + boss Huyết Sắt (3 pha), nghi lễ Arise (2 phút/đến khi rời Gate, contract `[0,0,1]`), storage data-driven, summon/dismiss không upkeep mana, 3 lệnh đầu (Hộ Vệ/Săn Lùng/Ẩn Mình), đặt tên.
 - **Exit:** kịch bản bot số 3 (18.4) xanh; playtester *tự đặt tên* bóng mà không được nhắc.
 
 ### M4 — Quân Đoàn
-- Xây: formation 5 loại, 8 tính cách, vai trò đầy đủ, tiến hóa + Thử Thách Thăng Cấp, Legion UI 3-click, trang bị bóng.
+- Xây: formation 5 loại, 8 tính cách, vai trò đầy đủ, tiến hóa + Thử Thách Thăng Cấp, Legion UI 3-click, trang bị bóng, garnison/hộ tống vị trí/NPC.
 - **Exit:** trận phòng thủ làng dùng formation có ý nghĩa; playtester kể được khác biệt giữa 2 bóng cùng loài khác tính cách.
 
 ### M5 — Thế Giới Sống
-- Xây: phe 2–4 (mỗi phe 6–8 quái + elite), squad brain nâng cao (flank/focus/retreat), world events cơ bản, Hiệp Hội + rank-up xã hội.
+- Xây: phe 2–4 (mỗi phe 6–8 quái + elite), squad brain nâng cao (flank/focus/retreat/bảo vệ boss), world events cơ bản, Hiệp Hội + rank-up xã hội, Tổ Ấm/family order tối thiểu.
 - **Exit:** overworld "sống" — quái tuần tra, phe đánh nhau; rank-up là một *sự kiện*.
 
 ### M6 — Chiều Sâu Vật Phẩm
@@ -55,8 +55,8 @@
 - **Exit:** simulation economy 10.000 ngày đạt 0.8–0.9; không vật liệu nào "chết" theo thời gian.
 
 ### M7 — Endgame
-- Xây: Red Gate, Break/Field, Vực Tháp + mutator + Ấn Bóng, boss 6–12, phe 5–8, prestige "Vượt Ngôi".
-- **Exit:** clear được tầng 100 ở PB chuẩn bởi 2 build khác nhau trong playtest; Tháp Vô Định mở.
+- Xây: Red Gate, Break/Field, Vực Tháp 1–25 + mutator, boss 1–6, Thăng Giới tầng 1 và Cổng Liên Giới.
+- **Exit:** hai build khác nhau clear được tầng 25/PB chuẩn và quay về Thế Giới Gốc nguyên vẹn; benchmark/Arise regression xanh. Tầng 26–100, boss 7–12, nước/mount/liên kết đồng hành là content phase sau 1.0, không được giả vờ “gần xong”.
 
 ### M8 — Đánh bóng 1.0
 - Xây: balance pass toàn cục (simulation + playtest đợt lớn), performance pass theo ngân sách 17.1, hoàn thiện tài liệu + changelog thiết kế, trang giới thiệu mod.
@@ -78,3 +78,20 @@
 | AI/dungeon phức tạp hơn dự kiến | Vertical slice M2 tồn tại để phát hiện sớm — nếu M2 thổi ngân sách, giảm scope M5 (ít phe hơn lúc 1.0) |
 | Thiếu người làm asset | Art bible cho phép phong cách "Minecraft-native" (khối, ít texture ngoài) — giảm phụ thuộc artist |
 | Burnout | Milestone 6–8 tuần có buffer; không crunch — mod là sản phẩm dài hạn |
+
+---
+
+## 5. Kế hoạch phase phát hành v3.0 — mỗi phase đều test được
+
+| Phase | Bản chơi được | Câu hỏi phải trả lời trước khi sang phase |
+|---|---|---|
+| P0 | Sandbox kỹ thuật: loader, save, combat dummy, profiler | Có giữ 20 TPS, migrate save, remap phím không? |
+| P1 | 20 phút F→D: combat, 1 Gate, boss tutorial | Người mới có thấy sợ rồi học rồi thắng không? |
+| P2 | Job Change + một Shadow + Arise contract | Người chơi có tự đặt tên/lệnh cho bóng và tin việc capture công bằng không? |
+| P3 | Quân đoàn nhỏ + đô thị/Tổ Ấm + phòng thủ | Command/garnison có tạo lựa chọn hay chỉ gây quản lý phiền không? |
+| P4 | 4 phe, items/economy, Red Gate/Break | Build, AI và loop có đa dạng, không meta farm không? |
+| P5 | 1 Stratum, Vực Tháp 1–25, 6 boss | Hậu level 100 có thử thách tự nguyện mà vẫn cho power trip tầng cũ không? |
+| P6 | Beta 1.0: performance, migration, accessibility, modpack matrix | Có thể chơi campaign trọn vẹn ổn định trên máy mục tiêu không? |
+| P7+ | Nội dung mở rộng: nước/mount, Strata tiếp, boss 7–12, liên kết đồng hành | Dữ liệu thật chứng minh người chơi muốn lớp nào trước? |
+
+Mỗi phase có demo world, save regression, benchmark và playtest độc lập; fail một tiêu chí cảm xúc/kỹ thuật thì sửa/cắt scope, không đẩy nó sang phase sau để “đánh bóng”.

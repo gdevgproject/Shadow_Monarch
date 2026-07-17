@@ -50,3 +50,11 @@
 1. **Bản MC mới đổi combat/render lớn?** → Lớp trừu tượng + ít mixin là bảo hiểm; chấp nhận có bản port chậm hơn nếu cần.
 2. **Người chơi đòi Forge/NeoForge?** → Kiến trúc module tách logic khỏi nền tảng giúp port khả thi về sau; 1.0 chỉ Fabric (tập trung chất lượng).
 3. **Modpack muốn nhúng UMBRA?** → Cho phép theo giấy phép ghi rõ; datapack-first giúp modpack tự cân bằng cho pack của họ.
+
+---
+
+## 7. Bổ sung v3.0 — chính sách Fabric, shader và bản phát hành
+
+Mỗi release phát hành trên **một bản Minecraft stable hiện hành đã qua compatibility gate** với Fabric Loader/Fabric API tương ứng; “mới nhất” không được hiểu là cập nhật ngay ngày đầu khi dependency, shader và save migration chưa được test. Bản target được chốt ở M0, cập nhật qua ADR và một nhánh port riêng; không trộn port nền tảng với tính năng gameplay.
+
+Sodium/Iris và shader pack là mục tiêu hỗ trợ chính thức theo nguyên tắc không hook render pipeline, có smoke test cho Gate, Domain, Arise VFX, dungeon nước và HUD ở quality thấp/cao. OptiFine không hỗ trợ. Mod combat khác được phát hiện/cảnh báo theo capability; không crash, không âm thầm ghi đè binding hay damage pipeline. Keybind conflict scan và fallback layout là một phần compatibility test, không chỉ UX.

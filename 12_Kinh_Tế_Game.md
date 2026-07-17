@@ -121,3 +121,11 @@ Dẹp Break ───────────┘
 2. **4 tiền tệ có gây rối?** → UI gom 2 nhóm (tiêu hao / nghi lễ); tooltip luôn nói rõ "kiếm ở đâu".
 3. **"Rác ra vàng" làm ngườichơi chỉ farm rác?** → Giá sàn + diminishing + reward cadence của gate luôn cao hơn hẳn; simulation economy (18.3) đo tỷ lệ thu nhập rác/gate — mục tiêu rác ≤ 25% tổng thu nhập Vàng của ngườichơi chủ động.
 4. **Server multiplayer sau này:** economy được thiết kế module riêng để có thể thêm thị trường ngườI–ngườI (tài liệu 23) — quyết định 1.0 không khóa chặt.
+
+---
+
+## 8. Bổ sung v3.0 — kinh tế phục vụ chiều sâu, không mua sức mạnh rỗng
+
+Nhịp 10 level của trang bị tạo các mục tiêu mua sắm rõ, nhưng cửa hàng chỉ bán bộ nền và nguyên liệu; item định danh, set hoàn chỉnh, rune hiếm và Boss Shadow không mua bằng vàng. Nhờ vậy người chơi nghèo vẫn có hướng nâng cấp, còn combat/khám phá vẫn là nguồn sức mạnh đáng nhớ.
+
+Đô thị có giàu/nghèo và nghề nghiệp để phục vụ quest, giá/nguồn hàng, giao tiếp và xây dựng — không mô phỏng kinh tế vĩ mô vô ích. Phát triển đô thị tiêu Vàng/Công Trạng/vật liệu xây dựng để mở dịch vụ, nơi trú ẩn và hàng mới; không biến dân NPC thành máy sinh tiền. Mọi chi phí liên quan gia đình/đồng hành phải có phương án miễn phí qua quest, tránh biến gắn bó thành paywall grind.

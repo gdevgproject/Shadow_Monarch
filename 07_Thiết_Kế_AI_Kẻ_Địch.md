@@ -252,3 +252,11 @@ Dân làng/Hunter NPC chạy một vòng đờI xã hội giản lược nhưng 
 5. **Uy Áp Chúa Tể làm nội dung cũ nhạt?** → Đó là mục đích (dọn phiền nhiễu); nội dung đúng hạng luôn đầy đủ thử thách; config tắt cho purist.
 6. **Em NPC trở thành gánh nặng cảm xúc (ngườichơi thấy phiền)?** → Mọi tương tác gia đình đều *bật dần theo ý ngườichơi* (bạn phải chủ động xây Tổ Ấm), và Em có chế độ "ít bám" trong config. Không ép attachment.
 7. **Câu hỏi mở:** cho phép bắt cóc/hỏi cung quái Nhân Hình (lore Cửu Vương)? — thú vị nhưng cần đánh giá scope (đưa vào tài liệu 23).
+
+---
+
+## 16. Bổ sung v3.0 — lãnh địa, bảo vệ boss và NPC có phẩm giá
+
+Mỗi phe lớn cần có **lãnh địa** chứ không chỉ spawn table: nơi ở, tuyến tuần tra, kho, người canh cổng, điểm báo động và một lý do tồn tại. Squad Brain ưu tiên bảo vệ boss/healer/caller: tank chặn lối, xạ thủ giữ góc, flank ép người chơi rời khỏi boss; nhưng mọi phản ứng phải có telegraph và luôn để lại ít nhất một đáp án chiến thuật (cắt Caller, đột kích hậu tuyến, dùng địa hình, hoặc lệnh quân đoàn).
+
+Bestiary không được đồng nhất “đẹp = yếu / xấu = ác”. Có cư dân và boss humanoid trưởng thành có tạo hình hấp dẫn, tính cách, tham vọng và khả năng giao tiếp; một số có thể từ trung lập thành đồng minh, đối thủ hoặc romance **khi cả hai là người trưởng thành, có đồng thuận và quest quan hệ riêng**. Họ không là loot, không bị sở hữu hay bị ép đi theo; lựa chọn đồng hành luôn có quyền từ chối/rời nhóm, vai trò chiến đấu giới hạn bởi AI an toàn. Quy tắc này vừa làm thế giới phong phú vừa tránh biến nhân vật thành phần thưởng vô hồn.

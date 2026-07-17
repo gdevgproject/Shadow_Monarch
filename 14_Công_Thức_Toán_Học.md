@@ -70,10 +70,15 @@ Posture damage: `PDMG = DMG_gốc · k_posture(vũ khí)` — đòn nặng k=1.5
 ## 14.5. Tỷ lệ Trỗi Dậy (Arise)
 
 ```
-ΔL      = L − La
-P_base  = 0.35
-P       = clamp( P_base + 0.03·ΔL + 0.15·(UyQuyền / YêuCầu(cấp bóng)) − γ(cấp bóng) − 0.10·lần_thử_thứ , 0.05 , 0.95 )
+ΔL       = L − La
+P_1      = clamp(0.35 + 0.03·ΔL + 0.15·(UyQuyền / YêuCầu(cấp bóng)) − γ(cấp bóng), 0.05, 0.85)
+P_2      = clamp(P_1 + 0.15, 0.20, 0.95)
+P_3      = clamp(P_1 + 0.35, 0.40, 0.99)       (mục tiêu thường/elite)
+P_3_boss = 1.00                                  (boss định danh đủ điều kiện)
+P_hiệp_sĩ_huyết_sắt = [0.00, 0.00, 1.00]         (nghi lễ kịch bản hóa)
 ```
+
+`P_n` là xác suất hiển thị **trước** lần thử n; các lần sau không bị phạt vì thất bại. Mục tiêu không-boss thất bại cả ba lần rơi Mảnh Bóng theo bảng loot; boss có Capture Contract dùng pity lần 3.
 
 | Cấp bóng mục tiêu | γ | Yêu Cầu Uy Quyền |
 |---|---|---|
@@ -87,10 +92,12 @@ P       = clamp( P_base + 0.03·ΔL + 0.15·(UyQuyền / YêuCầu(cấp bóng))
 
 ```
 Sở hữu tối đa   = 10 + ⌊INT·0.8⌋ + UyQuyền·0.5 + Bonus_hạng
-                 Bonus_hạng: E:+0 · D:+5 · C:+10 · B:+20 · A:+35 · S:+60 · QG:+100 · VG:+200
+                 Bonus_hạng: F:+0 · E:+3 · D:+6 · C:+10 · B:+20 · A:+35 · S:+60 · S+:+80 · QG:+100 · VG:+200
 Triệu hồi đồng thờI = clamp( 2 + ⌊L/10⌋ + Bonus_triệu_hồi , 2 , 40 )
-                 Bonus_triệu_hồi: E:+0 · D:+1 · C:+2 · B:+4 · A:+7 · S:+12 · QG:+18 · VG:+26
-Mana duy trì   = Σ(ChiPhí_duy_trì(cấp i)) / giây ; hết mana → bóng tan về (không chết)
+                 Bonus_triệu_hồi: F:+0 · E:+0 · D:+1 · C:+2 · B:+4 · A:+7 · S:+12 · S+:+15 · QG:+18 · VG:+26
+Mana triệu hồi = Σ(ManaGọi(cấp i) · HệSố_đội_hình) một lần khi gọi; không có Mana duy trì/giây.
+                 ManaGọi: Thường 6 · Tinh Nhuệ 10 · Kỵ Sĩ 16 · Tinh Kỵ 24 · Chỉ Huy 34 · Tướng Quân 48 · Nguyên Soái 68
+                 HệSố_đội_hình = 0.75 khi gọi preset đầy đủ, 1.00 khi gọi lẻ; thu hồi/garnison = 0 Mana.
 ```
 
 **Tái sinh bóng (Quân Đoàn Bất Tử, tài liệu 04.7):**
@@ -129,7 +136,7 @@ PB = (STR_e + AGI_e + VIT_e + INT_e + PER_e) · 1.0          (chỉ số hiệu 
    + min(0.6, LegionRatio) · PB · Trạng_thái_quân_đoàn      (quân đoàn, trần 60%)
 ```
 
-`PB_yêu_cầu` của nội dung được gán tay theo hạng: E=20 · D=45 · C=90 · B=180 · A=350 · S=700 · QG=1200 · VG=2000+ (hiệu chỉnh qua simulation).
+`PB_yêu_cầu` của nội dung được gán tay theo hạng: F=12 · E=20 · D=45 · C=90 · B=180 · A=350 · S=700 · S+=950 · QG=1200 · VG=2000+ (hiệu chỉnh qua simulation).
 
 ## 14.10. Prestige (Vượt Ngôi)
 
@@ -220,6 +227,26 @@ TẦNG GIÁ (quy đổi /stack 64, hiệu chỉnh bằng simulation):
    Rất Quý (kim cương, netherite scrap, ngọc ender): 160 vàng
    Loot gate theo rarity: Thường 8 · Tốt 20 · Hiếm 60 · Sử Thi 200 (Huyền Thoại/Thần Thoại: không bán)
 MỤC TIÊU KIỂM CHỨNG (simulation 18.3): thu nhập từ bán rác ≤ 25% tổng thu nhập Vàng của ngườichơi chủ động.
+```
+
+## 14.17. Thăng Giới & Thế Giới Song Song — mới v3.0
+
+```
+Tầng giới W = 0, 1, 2, ...; W=0 là Thế Giới Gốc.
+PB_mục_tiêu(W) = PB_QG · (1 + 0.22·W)      (W ≤ 5), sau đó tăng 0.12/W.
+Tăng số HP/DMG tối đa từ tầng = 35% ngân sách tầng.
+Tối thiểu 65% ngân sách tầng phải là: mutator, đội hình, layout, AI, mục tiêu phụ hoặc reward collection.
+Gate gần người chơi: tier_effective ∈ [tier_player − 2, tier_player + 2] với trọng số 0.85.
+Gate vượt biên: trọng số 0.15, phải có cảnh báo/scout/đường rút.
+Gate hoạt động tối đa mỗi vùng = 2; gate đóng iff objectives_required = complete.
+```
+
+## 14.18. Chỉ số combat có trần cứng đọc được — mới v3.0
+
+```
+Crit chance ≤ 60% · Crit damage ≤ 250% · Move speed bonus ≤ 25% · Dodge i-frame ≤ 0.40s.
+Kháng hiệu dụng ≤ 75%; phần kháng vượt trần đổi thành kháng trạng thái/giảm thời lượng theo tỉ lệ 0.25.
+Điểm chỉ số vượt soft-cap vẫn ghi nhận và tăng ảnh hưởng phụ; không bị mất điểm.
 ```
 
 ---

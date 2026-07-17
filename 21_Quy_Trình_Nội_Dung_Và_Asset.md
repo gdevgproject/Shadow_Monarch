@@ -82,3 +82,13 @@
 1. **Thiếu artist → asset lệch phong cách?** → Ưu tiên dùng lại/pha trộn asset vanilla theo quy tắc palette; asset custom tập trung vào điểm nhận diện cao (bóng, UI, boss).
 2. **Content creator ngoài (cộng đồng) làm sai chuẩn?** → Validator + tài liệu này công khai; nội dung cộng đồng qua kênh datapack (19.2), không qua code.
 3. **Stinger Arise nghe 500 lần có nhàm?** → 4 biến tấu + xác suất biến âm nhẹ; playtest đo "còn nổi da gà không" ở giờ 50.
+
+---
+
+## 6. Bổ sung v3.0 — bible cho nơi chốn, sinh vật và khoảnh khắc quyền lực
+
+Mỗi phe phải có kit asset gồm silhouette quái, nhà cửa/lãnh địa, vật liệu kiến trúc, đạo cụ đời sống, audio ambience, UI icon và một “dấu hiệu từ xa” để người chơi nhận ra trước combat. Dungeon nước có kit riêng: ánh sáng xuyên nước, thực vật, bong bóng, âm thanh bị lọc và đường khí; không tái màu hang thường rồi gọi là nội dung mới.
+
+Nhân vật humanoid đa dạng về giới, tuổi trưởng thành, cơ thể, trang phục và vẻ đẹp; tạo hình không được ngầm nói chủng tộc/boss nào cũng quái dị hay nữ nhân vật chỉ để làm phần thưởng. Asset NPC đồng hành yêu cầu bộ animation giao tiếp, từ chối, làm nghề và chiến đấu an toàn trước khi author romance/quest. Tài liệu concept phải ghi rõ tuổi trưởng thành và vai trò, không chỉ “ngoại hình”.
+
+Khoảnh khắc Arise, Domain, Thăng Giới và quay về Thế Giới Gốc là **hero moments** có VFX/SFX riêng nhưng dùng ngân sách tổng hợp, shader-safe và bản reduced-motion. Mỗi asset mới được review cả ở shader off/on, ánh sáng tối, dưới nước và giới hạn particle của tài liệu 17.

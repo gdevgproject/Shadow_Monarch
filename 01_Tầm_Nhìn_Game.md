@@ -93,3 +93,13 @@ Một thiết kế tốt khi, trong playtest:
 | 200+ entity giết FPS | Trải nghiệm sụp đổ | Ngân sách tick cứng, AI LOD (tài liệu 17) |
 | Người chơi mới choáng ngợp | Bỏ chơi sớm | Hệ Thống tự mở khóa từng module theo nhịp (tài liệu 03) |
 | "Chỉ một build tối ưu" | Meta chết | Cân bằng theo vòng khắc chế mềm, không theo thang số cứng (tài liệu 13) |
+
+---
+
+## 8. Bổ sung v3.0 — kim tự tháp cảm xúc và lời hứa chơi dài hạn
+
+Kim tự tháp cảm xúc không chỉ có quyền lực và gắn kết. UMBRA phải khép được vòng sau ở mọi nhịp chơi: **tò mò** (thấy điều lạ) → **lo sợ có thể đọc được** (nguy cơ thật, đường học rõ) → **tập luyện** (tay người chơi tốt lên) → **vượt qua** (thắng vì quyết định) → **được ghi nhận** (bóng/NPC/thế giới phản ứng) → **mở lựa chọn mới**. Nếu một nội dung không trả lời nó nuôi vòng nào, không được thêm vào chỉ để tăng số lượng.
+
+Mục tiêu thời lượng không phải hứa “một campaign 5 năm” bằng grind. Mục tiêu là một nền tảng có thể sống ít nhất 5 năm nhờ ba lớp: campaign hoàn chỉnh 1.0; hoạt động lặp lại có biến thể và mastery; các bản mở rộng theo dữ liệu/playtest. Người chơi được nghỉ, quay lại và chọn nội dung, không bị daily hay lịch thực tế phạt.
+
+Từ level 100, fantasy đổi từ “mình có đủ mạnh không?” sang “mình muốn chinh phục thực tại nào?”. **Thế Giới Song Song** là phần thưởng tự nguyện: Thế Giới Gốc vẫn lưu nguyên, còn tầng mới cho kẻ địch, Gate và biến thể mạnh hơn. Sự trở về tầng cũ phải cho người chơi thấy rõ chênh lệch — quái yếu nhận Uy Áp, không còn EXP đáng kể — nhưng không biến content cũ thành vô nghĩa vì còn collection, quest, nhà cửa và kỷ niệm.

@@ -106,3 +106,13 @@ Mọi quyết định kiến trúc lớn phải có **Architecture Decision Reco
 2. **Pool dimension dọn dẹp sót dữ liệu?** → Quy trình dọn có checklist + test; vùng "mồ côi" được quét định kỳ.
 3. **Datapack reload giữa chừng khi gate đang mở?** → Definition bất biến trong runtime của instance: gate đang mở giữ snapshot definition tại lúc tạo.
 4. **Câu hỏi mở:** có tách `umbra-client` thành mod riêng để server thuần chạy không cần client code? — quyết định ở M2 (tài liệu 20).
+
+---
+
+## 8. Bổ sung v3.0 — ranh giới cho Thế Giới Song Song và command-safe UX
+
+Thêm module `umbra-strata` nằm trên `world`/`dungeons`, chịu trách nhiệm Cổng Liên Giới, checkpoint, quyền truy cập tầng và snapshot Gate/event. Nó không clone Overworld chunk hay sửa block Thế Giới Gốc; entry/exit là transaction server-authoritative có rollback nếu destination chưa pre-gen xong. Đây là điều kiện bắt buộc để người chơi quay lại tầng cũ an toàn và save không phình vô hạn.
+
+Lệnh bóng dùng `CommandIntent` client → server với target UUID/anchor hợp lệ, phạm vi, quyền sở hữu và expiry rõ ràng. Server xác thực mọi ping, hộ tống, garnison và Exchange; client chỉ dự đoán VFX. Keybind registry phải có bước phát hiện xung đột/chọn binding trống/remap, không hardcode R/G/X/V ở code.
+
+Quan hệ gia đình/đồng hành là service riêng khỏi combat AI: lưu consent, lịch, quyền từ chối và trạng thái an toàn; không để bất cứ API nào đối xử NPC như inventory hay entity thuộc sở hữu người chơi.

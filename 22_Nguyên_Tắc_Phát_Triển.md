@@ -41,8 +41,14 @@ Tính năng yêu thích của một cá nhân vẫn bị cắt nếu dữ liệu
 ## Nguyên tắc 12 — Vòng lặp có điểm tốt nghiệp
 UMBRA có *cái kết* (đánh bại Kiến Trúc Sư) và sau đó là *tự do có chủ đích* (Tháp Vô Định, collection, New Game+). Ta thiết kế để người chơi **muốn** ở lại — không thiết kế để họ **không rời được**. Đó là ranh giới giữa thỏa mãn và bóc lột, và dự án này đứng ở phía nào.
 
+## Nguyên tắc 13 — Agency có thông tin, cam kết có lý do
+Người chơi tự phân điểm, chọn lệnh, chọn thế giới và chọn quan hệ; hệ thống phải cho thấy hậu quả trước khi hỏi cam kết. Chỉ những lựa chọn Tiềm Năng/narrative đã preview đầy đủ mới không hoàn tác. Bất ngờ hay bí mật trong combat/lore là niềm vui; bẫy thông tin về build là lỗi thiết kế.
+
+## Nguyên tắc 14 — Nội dung mới phải đổi quyết định, không chỉ đổi con số
+Thêm boss, Gate, trang bị, Stratum hay NPC chỉ được duyệt nếu nó tạo cách nhìn/đánh/chỉ huy/khám phá khác. Khi cần chơi lâu hơn, ưu tiên mối quan hệ, mastery, mutator, đối thủ mới và quyền lực được thế giới phản chiếu trước khi tăng máu quái, giờ farm hoặc currency.
+
 ---
 
 ### Quy trình áp dụng
-- Review thiết kế mới: đối chiếu 12 nguyên tắc theo thứ tự — vi phạm nguyên tắc cao hơn không được cứu bởi nguyên tắc thấp hơn.
+- Review thiết kế mới: đối chiếu 14 nguyên tắc theo thứ tự — vi phạm nguyên tắc cao hơn không được cứu bởi nguyên tắc thấp hơn.
 - Nguyên tắc có thể *sửa*, bằng đề xuất ADR (16.6) được cả team thông qua — không bao giờ vi phạm âm thầm.

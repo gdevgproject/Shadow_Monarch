@@ -109,3 +109,13 @@ Không sinh thuần ngẫu nhiên (hang ổ vô định) cũng không dựng tay
 2. **Người chơi kéo boss ra khỏi arena để cheese?** → Boss leash mềm: rời arena quá xa → hồi phục + quay về, *nhưng* rơi thêm loot khuyến khích đánh "đúng luật" ở lần sau; không phạt nặng sáng tạo.
 3. **Deadline 7 ngày với người chơi đi xa?** → Timer chỉ chạy khi online; gate xa nhà vẫn Break nhưng hướng về vùng hoang, không phải nhà người chơi.
 4. **Câu hỏi mở:** cho phép người chơi *xây nhà trong dungeon* đã clear? (đáng mơ ước, cần đánh giá save/tech — tài liệu 23).
+
+---
+
+## 9. Bổ sung v3.0 — luật Gate, Thăng Giới và trải nghiệm dưới nước
+
+**Luật vòng đời chuẩn:** Gate có thể bị bỏ quên để tạo Break, nhưng không tự đóng khi người chơi đang xử lý nó. Điều kiện đóng là boss/mục tiêu bắt buộc/đường thoát đã hoàn thành; trong thời gian đó linh hồn, loot chưa nhặt và boss body được giữ đúng luật 04. Mỗi vùng chỉ tối đa hai Gate hoạt động; thuật toán spawn ưu tiên chênh trong ±2 bậc so với sức mạnh hiệu dụng, sau đó mới tung Gate hiếm vượt bậc có cảnh báo hạng, scout room và đường rút.
+
+Sau level 100, Gate có tag `world_stratum`: Thế Giới Gốc hoặc Thế Giới Song Song đã mở. Tầng mới ưu tiên modifier, bố cục, AI và phần thưởng bộ sưu tập trước khi tăng HP; clear checkpoint mới mở tầng cao hơn, quay về tầng cũ tự do. Dữ liệu tầng không dùng để nhân bản nhà/công trình vanilla.
+
+Pool 1.0 phải có **dungeon dưới nước**: kiến trúc ngập, hang khí, dòng chảy, pháo đài thủy tộc, mob cưỡi nước và boss dạy ba chiều. Mọi room dưới nước cần đường không khí/thoát hợp lệ, độ tương phản rõ, phương án không cưỡi vẫn thắng được và test chống mắc kẹt; nó là nội dung khám phá, không phải hình phạt cho người không thích bơi.

@@ -95,3 +95,11 @@ Chín Vương Giả (lore gốc UMBRA) là nội dung sau level 100, mỗi Vươ
 1. **12 boss có đủ cho hàng trăm giờ?** → Boss định danh là "xương sống"; Vực Tháp + boss ngẫu nhiên phe (procedural boss variant) gánh phần lặp lại. Mục tiêu pipeline: 2 boss/năm sau 1.0.
 2. **Boss khôn quá với casual?** → Adaptive difficulty nhẹ (13.6) điều chỉnh tốc độ telegraph, không điều chỉnh cơ chế.
 3. **Pha "Quỳ Gối" của boss 5 bị spoiler bởi wiki?** → Chấp nhận: một phần niềm vui là được kể lại; thiết kế vài lựa chọn ẩn khác tương tự rải rác để luôn còn bí mật.
+
+---
+
+## 8. Bổ sung v3.0 — boss là chiến thắng đáng thu phục
+
+Boss định danh có bảng **Capture Contract** bên cạnh loot table: điều kiện đủ tư cách, xác suất lần 1/2, pity lần 3, tính năng bóng nhận được và lý do nếu không thể Arise. Lần đầu hạ boss không được biến thành cảm giác “vật lộn xong lại tung 5%”: nếu boss có thể thu phục, lần 3 bảo đảm thành công. Hiệp Sĩ Huyết Sắt bắt buộc thất bại theo cốt truyện ở hai lần đầu và thành công ở lần ba; boss corpse/linh hồn tồn tại tới khi Gate kết thúc.
+
+Review boss phải thêm: số lính hộ vệ, vai trò đội hình, điểm báo động, hành vi che chắn boss, sức mạnh quân đoàn dự kiến và counterplay cho người chơi. Các boss có thể cưỡi/điều khiển sinh vật (rồng, gấu, thú nước) phải phân tách rõ phần thưởng: bóng boss, mount shadow hay kỹ năng di chuyển; không dồn cả ba thành tăng sức mạnh bắt buộc. Boss không lấy số lượng bóng để phạt người chơi vô lý; nó buộc họ đổi lệnh, vị trí, đội hình hoặc tự vào combat.
