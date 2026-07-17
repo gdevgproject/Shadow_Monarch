@@ -95,8 +95,9 @@ Ba cam kết bất khả xâm phạm:
 | 27 | **Ma Trận Truy Vết & Sẵn Sàng Code** *(mới v4.0)* | Game/Tech/QA Leads | Kiểm yêu cầu → source → schema/test/phase trước M0 |
 | 28 | **Kiến Trúc Thực Thi Theo Bounded Context** | Technical Director / Gameplay Leads | Ownership, contract, cách làm song song trong một Fabric modular monolith |
 | 29 | **Backlog Thực Thi M0 Đến M2** | Producer / Tech / QA Leads | Ticket nhỏ có dependency, proof và playtest gate |
+| 30 | **Bản Đồ Backlog 1.0 & Cổng Phát Hành** | Producer / Game / Tech / QA Leads | Coverage R01–R24, epic M3–M8 và release gate |
 
-**Thứ tự đọc khuyến nghị cho ngườimới:** 00 → 01 → 02 → 04 → 03 → 14 → 16 → 20 → 27 → 28 → 29. Thêm **24** nếu bạn lo narrative, **07** nếu bạn lo AI. Setup máy phát triển nằm ở `development/ENVIRONMENT_SETUP.md`.
+**Thứ tự đọc khuyến nghị cho ngườimới:** 00 → 01 → 02 → 04 → 03 → 14 → 16 → 20 → 27 → 28 → 29 → 30. Thêm **24** nếu bạn lo narrative, **07** nếu bạn lo AI. Setup máy phát triển nằm ở `development/ENVIRONMENT_SETUP.md`.
 
 ---
 
