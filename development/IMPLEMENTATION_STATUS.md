@@ -4,11 +4,13 @@
 
 - **Ticket:** M1-03 — Player Stat Allocation UI and Respec System
 - **Branch:** `codex/m1-03`
-- **State:** `implemented`
-- **Current commit:** `M1-03: Implement Player Stat Allocation UI, respec system, migration V2 to V3, packets, commands, and tests`
+- **State:** `verified`
+- **Current commit:** `M1-03: Change default keybind to K, resolve screen overlaps, localize controls keys, and fix respec initial cooldown`
 - **Requirements:** M1-03 (R10)
 - **Dependency evidence:** M1-02 is integrated in `master`.
-- **User playtest result:** NONE
+- **User playtest result:** `PASS **M1-03**` (User playtest confirmed PASS)
+- **Next AUTO ticket:** `M1-04` — Combat stance và damage pipeline tối thiểu đánh combat dummy được
+
 
 
 ## Delivered scope
