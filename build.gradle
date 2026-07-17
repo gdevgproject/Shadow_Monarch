@@ -67,10 +67,19 @@ dependencies {
     testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 }
 
+configurations {
+    clientImplementation.extendsFrom implementation
+    clientRuntimeOnly.extendsFrom runtimeOnly
+}
+
 sourceSets {
+    client {
+        compileClasspath = sourceSets.main.output + configurations.clientCompileClasspath
+        runtimeClasspath = sourceSets.main.output + configurations.clientRuntimeClasspath
+    }
     test {
-        compileClasspath += sourceSets.main.compileClasspath
-        runtimeClasspath += sourceSets.main.runtimeClasspath
+        compileClasspath += sourceSets.main.compileClasspath + sourceSets.client.output + configurations.clientCompileClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath + sourceSets.client.output + configurations.clientRuntimeClasspath
     }
 }
 
@@ -138,6 +147,15 @@ tasks.register('localCi') {
     group = 'verification'
     description = 'Alias for the clean-checkout local verification gate.'
     dependsOn(tasks.named('verify'))
+}
+
+tasks.register('printClientClasspath') {
+    doLast {
+        println "--- compileClientJava Classpath ---"
+        tasks.named('compileClientJava').get().classpath.each { println it }
+        println "--- clientCompileClasspath Configuration ---"
+        configurations.clientCompileClasspath.each { println it }
+    }
 }
 
 publishing {

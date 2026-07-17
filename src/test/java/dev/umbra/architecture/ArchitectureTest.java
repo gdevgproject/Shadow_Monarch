@@ -21,6 +21,14 @@ public class ArchitectureTest {
     }
 
     @Test
+    public void testServerSafetyNoClientDependencies() {
+        noClasses().that().resideInAPackage("dev.umbra..")
+            .and().resideOutsideOfPackage("dev.umbra.client..")
+            .should().dependOnClassesThat().resideInAnyPackage("dev.umbra.client..", "net.minecraft.client..")
+            .check(classes);
+    }
+
+    @Test
     public void testGameplayModulesDoNotDependOnCoreImplementationsDirectly() {
         noClasses().that().resideInAnyPackage(
             "dev.umbra.progression..",
