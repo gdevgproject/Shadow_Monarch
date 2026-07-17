@@ -2,36 +2,37 @@
 
 ## Current ticket
 
-- **Ticket:** M0-08 — GameTest harness, compatibility smoke checklist and dev test world
-- **Branch:** `codex/m0-08`
+- **Ticket:** M1-01 — Player component level and XP in debug HUD and persistent storage
+- **Branch:** `codex/m1-01`
 - **State:** `verified`
-- **Current commit:** `M0-08: Setup GameTest harness, compatibility checklist, and config`
-- **Requirements:** M0-08
-- **Dependency evidence:** M0-07 is integrated in `master`.
-- **User playtest result:** PASS m0-08 (Verified by user playtest result)
-- **Next AUTO ticket:** `M1-01`
+- **Current commit:** `M1-01: Sync player level and XP to client and render in debug overlay`
+- **Requirements:** M1-01 (R07)
+- **Dependency evidence:** M0-08 (and all previous M0 tickets) is integrated in `master`.
+- **User playtest result:** PASS **M1-01**
 
 ## Delivered scope
 
-Implemented the automated GameTest harness and configured it properly with Loom's split environment configuration, resolving complex classpath conflicts. Setup the test mod metadata `fabric.mod.json` inside the gametest source set. Created a smoke GameTest `dev.umbra.gametest.UmbraSmokeGameTest` that asserts proper registration and initialization of UMBRA core services. Documented a manual verification smoke checklist covering Vanilla render path, Sodium, and Sodium+Iris shaders.
+Implemented server-to-client player state synchronization of level and XP using Fabric API CustomPacketPayload and PayloadTypeRegistry. Created client-side ClientPlayerStateTracker to cache local player stats and updated the debug overlay in UmbraDebugOverlay to display the local player's level and XP.
 
 ## Verification evidence
 
 - `java -version` and `javac -version`: Java 25.
-- `./gradlew.bat compileGametestJava` and `./gradlew.bat compileTestJava` passed successfully.
-- `./gradlew.bat runGametest` runs and passes successfully with 1/1 required game tests passing, exiting cleanly:
-  `All 1 required tests passed :)`
-  `Game test server shutting down`
-- `./gradlew.bat check` successfully executes all check tasks and JUnit tests.
+- `./gradlew.bat compileJava compileClientJava` passed successfully.
+- `./gradlew.bat test` passed successfully, including new testUmbraPlayerStatePayloadRecord verification.
 
 ## Impact assessment
 
-- **Save/migration:** No impact on existing world/player state schemas.
-- **Client-server:** The test mod is only active under the `gametest` environment and does not impact production servers or clients.
-- **Performance:** No performance regression; tests execute and shut down cleanly.
+- **Save/migration:** No impact on existing schemas; player level, XP, and rank are saved and loaded correctly from existing save/load logic.
+- **Client-server:** Adds S2C synchronization using UmbraPlayerStatePayload when a player joins.
+- **Performance:** Minimal overhead; state synchronization only occurs on player login or when state changes.
 
 ## User playtest checklist
 
-1. Run `./gradlew.bat runGametest` and check that the GameTest server starts, executes `testUmbraCoreBootstrap` successfully, and exits with `All 1 required tests passed :)`.
-2. Inspect the manual compatibility checklists in [COMPATIBILITY_SMOKE_CHECKLIST.md](file:///d:/projects/Shadow_Monarch/development/COMPATIBILITY_SMOKE_CHECKLIST.md).
-3. Report `PASS m0-08`.
+1. Run `./gradlew.bat runClient` to open the client.
+2. Connect to a single-player world or server.
+3. Verify the debug overlay displays level and XP:
+   ```
+   Level: 1
+   XP: 0
+   ```
+4. Report `PASS m1-01`.

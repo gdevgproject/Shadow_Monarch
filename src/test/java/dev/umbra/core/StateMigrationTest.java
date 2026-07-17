@@ -163,4 +163,15 @@ public final class StateMigrationTest {
             }
         }
     }
+
+    @Test
+    public void testUmbraPlayerStatePayloadRecord() {
+        dev.umbra.core.contract.state.UmbraPlayerStatePayload payload =
+            new dev.umbra.core.contract.state.UmbraPlayerStatePayload(5, 1200, "D");
+        assertEquals(5, payload.level());
+        assertEquals(1200, payload.shadowXp());
+        assertEquals("D", payload.rank());
+        assertNotNull(dev.umbra.core.contract.state.UmbraPlayerStatePayload.TYPE);
+        assertNotNull(dev.umbra.core.contract.state.UmbraPlayerStatePayload.CODEC);
+    }
 }

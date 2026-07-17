@@ -61,4 +61,9 @@ public interface StateSaveService {
      * Event triggered when the server stops. Saves all states and cleans up cache.
      */
     void onServerStop(Path worldDir);
+
+    /**
+     * Synchronizes a player's cached state to their client.
+     */
+    void syncPlayerState(net.minecraft.server.level.ServerPlayer player);
 }

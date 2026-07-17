@@ -8,6 +8,7 @@ import com.google.gson.JsonParser;
 import dev.umbra.UmbraMod;
 import dev.umbra.core.contract.state.StateSaveService;
 import dev.umbra.core.contract.state.UmbraPlayerState;
+import dev.umbra.core.contract.state.UmbraPlayerStatePayload;
 import dev.umbra.core.contract.state.UmbraWorldState;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -214,7 +215,18 @@ public final class StateSaveServiceImpl implements StateSaveService {
         activePlayerStates.clear();
     }
 
-    private Path getPlayerFilePath(Path worldDir, UUID playerUuid) {
+    @Override
+    public void syncPlayerState(net.minecraft.server.level.ServerPlayer player) {
+        if (player == null) return;
+        java.util.UUID playerUuid = player.getUUID();
+        UmbraPlayerState state = getOrCreatePlayerState(playerUuid);
+        net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.send(
+            player,
+            new UmbraPlayerStatePayload(state.getLevel(), state.getShadowXp(), state.getRank())
+        );
+    }
+
+    private Path getPlayerFilePath(Path worldDir, java.util.UUID playerUuid) {
         return worldDir.resolve("umbra/players/" + playerUuid.toString() + ".json");
     }
 
