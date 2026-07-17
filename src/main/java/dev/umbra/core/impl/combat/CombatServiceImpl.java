@@ -189,7 +189,7 @@ public final class CombatServiceImpl implements CombatService {
             (float) cooldownScale,
             target.getArmorValue(),
             isCrit,
-            true,
+            target.invulnerableTime <= 10,
             randomVar
         );
 
