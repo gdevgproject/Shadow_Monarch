@@ -19,6 +19,16 @@ public final class UmbraClientMod implements ClientModInitializer {
             .locate(UmbraConfigService.class)
             .orElseThrow(() -> new IllegalStateException("UmbraConfigService not registered in ServiceRegistry"));
 
+        // Register client packet receiver for player state sync
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+            dev.umbra.core.contract.state.UmbraPlayerStatePayload.TYPE,
+            (payload, context) -> {
+                context.client().execute(() -> {
+                    ClientPlayerStateTracker.update(payload.level(), payload.shadowXp(), payload.rank());
+                });
+            }
+        );
+
         // Register the debug overlay HUD element
         HudElementRegistry.addLast(Identifier.fromNamespaceAndPath("umbra", "debug_overlay"), new UmbraDebugOverlay(configService));
     }

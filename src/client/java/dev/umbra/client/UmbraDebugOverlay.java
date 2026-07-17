@@ -37,6 +37,12 @@ public final class UmbraDebugOverlay implements HudElement {
         // Render safe states only using GuiGraphicsExtractor
         drawContext.text(font, "=== UMBRA DEBUG OVERLAY ===", 5, y, 0xFFAA00FF, false);
         y += 10;
+        drawContext.text(font, "Level: " + ClientPlayerStateTracker.getLevel(), 5, y, 0xFF55FFFF, false);
+        y += 10;
+        drawContext.text(font, "XP: " + ClientPlayerStateTracker.getShadowXp(), 5, y, 0xFF55FFFF, false);
+        y += 10;
+        drawContext.text(font, "Rank: " + ClientPlayerStateTracker.getRank(), 5, y, 0xFF55FFFF, false);
+        y += 10;
         drawContext.text(font, "Difficulty: " + configService.getPlayerConfig().getDifficulty(), 5, y, 0xFFFFFFFF, false);
         y += 10;
         drawContext.text(font, "Adaptive: " + configService.getPlayerConfig().isAdaptive(), 5, y, 0xFFFFFFFF, false);

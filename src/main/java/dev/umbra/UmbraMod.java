@@ -47,6 +47,12 @@ public final class UmbraMod implements ModInitializer {
         // Load configuration
         CONFIG_SERVICE.load();
 
+        // Register custom packet payloads S2C
+        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.clientboundPlay().register(
+            dev.umbra.core.contract.state.UmbraPlayerStatePayload.TYPE,
+            dev.umbra.core.contract.state.UmbraPlayerStatePayload.CODEC
+        );
+
         // Register core services
         SERVICE_REGISTRY.register(UmbraEventBus.class, EVENT_BUS);
         SERVICE_REGISTRY.register(TickScheduler.class, SCHEDULER);
@@ -78,6 +84,7 @@ public final class UmbraMod implements ModInitializer {
             UUID uuid = handler.player.getUUID();
             Path worldDir = server.getWorldPath(LevelResource.ROOT);
             STATE_SAVE_SERVICE.onPlayerJoin(uuid, worldDir);
+            STATE_SAVE_SERVICE.syncPlayerState(handler.player);
         });
 
         ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
