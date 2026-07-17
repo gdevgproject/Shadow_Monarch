@@ -76,3 +76,21 @@ Dùng game-test framework của nền tảng: bot thực hiện kịch bản end
 Thêm test vector cho ba lần Arise (xác suất tăng, boss lần 3 = 100%, Hiệp Sĩ Huyết Sắt `[0,0,1]`), timer linh hồn trong/ngoài Gate, Gate không đóng trước objective, và trần hai Gate mỗi vùng. Simulation phải chạy commander/solo/hybrid ở từng rank F→S+ và từng Stratum để chặn power creep quân đoàn.
 
 Kịch bản bot mới: gọi/thu hồi bóng không trừ mana theo giây; đặt garnison hộ tống Em/Mẹ; quay lại Thế Giới Gốc sau tầng song song không đổi block; dungeon nước có đường thở/thoát; AI boss bảo vệ healer/boss mà vẫn có counterplay. Playtest cảm xúc thêm câu hỏi: người chơi có biết vì sao điểm Tiềm Năng không undo không, có thấy boss capture công bằng không, có dám quay lại thế giới cũ để tận hưởng sức mạnh không.
+
+## 10. Bổ sung v4.0 — Gate/compatibility/content gate không được bỏ qua
+
+**Test trạng thái Gate (unit + integration):**
+
+| Tình huống | Kết quả bắt buộc |
+|---|---|
+| Hạ boss nhưng còn lõi/cứu hộ | `IN_PROGRESS`; rời Gate → `OPEN`, không `CLOSED` |
+| Clear hết objective, còn đứng trong Gate | `CLEARED_AWAITING_EXIT`; loot và Arise vẫn dùng được |
+| Clear hết rồi rời Gate | `CLOSED`, sinh Tàn Tích đúng một lần, cleanup pool đúng một lần |
+| Rời dở dang, reload world, quay lại | objective/quái đã chết/loot/Soul Echo còn đúng; boss sống reset đầy HP/pha 1 |
+| Deadline lúc đang trong Gate | `BREAK_PENDING`, không teleport/xóa entity; khi Gate trống mới `BROKEN` |
+| Soul Echo boss/elite/unique | không mất khi rời Gate chưa clear; không bị gộp bởi cap; UI warning trước exit-close |
+| Hai Gate ở Stratum A và hai ở Stratum B | hợp lệ; gate thứ ba cùng Stratum bị queue, không spawn lén |
+
+**Compatibility gate mỗi release:** tạo world mới và world đã migrate; chạy vanilla Fabric, Fabric API bắt buộc, Sodium, Sodium+Iris shader tối thiểu, và không có mod tùy chọn. Kiểm Gate/Domain/Arise/dungeon nước/HUD ở preset thấp-cao; kiểm attach/detach optional integrations; chạy dedicated-server smoke test Java 25. Không gắn nhãn “hỗ trợ” cho tổ hợp chưa chạy qua bảng này.
+
+**Content greenlight:** mỗi faction, boss, skill, item set hoặc mount mới phải qua card 26.6 và test “khác biệt quyết định”: tester phải chỉ ra một lựa chọn combat/đội hình/đường đi mới mà nội dung tạo ra. Nếu chỉ đổi mesh, HP hoặc màu, nó không được tính là content combat mới và không vào milestone chính.

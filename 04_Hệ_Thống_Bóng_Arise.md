@@ -27,7 +27,7 @@ Bốn quyết định nền móng:
 ### 2.1. Điều kiện & cửa sổ thờI gian
 
 - Kẻ địch phải **do ngườichơi hoặc quân đoàn của ngườichơi hạ** (last-hit của phe ngườichơi).
-- **Cửa sổ linh hồn: tối thiểu 2 phút ngoài Gate; trong Gate tồn tại cho đến khi người chơi rời Gate hoặc Gate đóng.** Xác không biến mất ngay — nó "rỉ bóng" (VFX nhận diện từ xa). Không có tình huống một trận hỗn chiến khiến người chơi mất boss vì phải sống sót trước.
+- **Cửa sổ linh hồn:** ngoài Gate là tối thiểu 2 phút; trong Gate, xác vật lý hiện tối thiểu 2 phút rồi chuyển thành **Soul Echo** được lưu trong Gate. Echo tồn tại đến khi Gate `CLOSED` hoặc `BROKEN`, **không mất chỉ vì người chơi rời một Gate chưa clear**. Vì vậy người chơi có thể dọn combat, về chuẩn bị và quay lại thu phục mà không bị ép vội. Khi objective cuối đã xong, UI cảnh báo Echo/loot định danh còn lại trước lần rời Gate sẽ đóng nó (máy trạng thái 08.2.1).
 - Ngườichơi đứng gần, giữ phím Arise → **nghi lễ 2.5 giây** (có thể bị interrupt nếu bị đánh → tạo quyết định chiến thuật: dọn sạch rồi Arise, hay liều Arise giữa combat?).
 
 ### 2.2. Ba lần thử & cái giá của thất bại

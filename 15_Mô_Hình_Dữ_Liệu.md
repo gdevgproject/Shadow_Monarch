@@ -111,11 +111,21 @@ Nguyên tắc: **definition bất biến trong runtime** (reload bằng datapack
   "boss": "umbra:demon_overlord",
   "mutators": ["umbra:mut/mana_drought"],
   "world_stratum": 0,
-  "required_objectives": ["boss", "seal_core"],
+  "required_objectives": [
+    { "id": "boss", "state": "complete" },
+    { "id": "seal_core", "state": "in_progress" }
+  ],
   "active_gate_limit_scope": "active_stratum",
-  "status": "open | cleared | broken | closed"
+  "status": "open | in_progress | cleared_awaiting_exit | break_pending | broken | closed",
+  "valid_participants_inside": ["player-uuid"],
+  "last_exit_after_clear_at": null,
+  "encounter_reset_at": null,
+  "soul_echoes": ["arise-target-id"],
+  "definition_snapshot_version": 4
 }
 ```
+
+**Bất biến Gate:** `status = closed` chỉ được ghi bởi transition `cleared_awaiting_exit → closed` sau `last_valid_exit_after_clear`; không có job timer hay cái chết của boss được quyền ghi `closed`. `open` sau khi rời dở dang phải giữ objective, loot, `soul_echoes` và quái đã hạ; boss/elite còn sống chỉ nhận `encounter_reset_at`. Chi tiết transition là 08.2.1 và predicate là 14.21.
 
 ## 7. Schema — Quest
 
@@ -178,6 +188,6 @@ Nhiệm vụ rèn luyện của UMBRA mô phỏng "bài tập thể chất" bằ
 
 `PlayerState` phải thêm `rank`, `unspent_attribute_points`, `potential_commitments`, `world_strata_unlocked`, `active_stratum`, `family_orders`, `partner_bond` và preset legion/garnison. `potential_commitments` lưu preview version + lựa chọn đã xác nhận để migration/UI luôn giải thích được lựa chọn không hoàn tác.
 
-`AriseTargetState` cần `expires_at`, `attempt_index`, `attempt_chances`, `capture_contract_id` và `gate_id`; ở trong Gate, `expires_at` được gắn với event rời/đóng Gate chứ không timer 30 giây. `BossDefinition` thêm `escort_composition`, `mount_reward`, `capture_contract` và `domain_rules` để designer không phải hardcode encounter.
+`AriseTargetState` cần `fresh_corpse_expires_at`, `echo_state`, `attempt_index`, `attempt_chances`, `capture_contract_id`, `gate_id` và `priority`. Trong Gate, `fresh_corpse_expires_at` chỉ chuyển xác thành `SoulEcho`; `SoulEcho` chỉ hết ở event `Gate.closed`/`Gate.broken`, **không** ở event rời Gate chưa clear. `priority = boss | elite | unique | common` quyết định gộp an toàn khi chạm cap 14.21. `BossDefinition` thêm `escort_composition`, `mount_reward`, `capture_contract` và `domain_rules` để designer không phải hardcode encounter.
 
 `ParallelWorldState` chỉ lưu seed biến thể, tầng, checkpoint, Gate/event snapshot và đường trở về; tuyệt đối không sao chép block save của Thế Giới Gốc. Schema cho quan hệ NPC dùng trạng thái đồng thuận/ràng buộc/đồng hành, không dùng cờ “sở hữu”.

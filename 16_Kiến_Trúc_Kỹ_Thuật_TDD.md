@@ -10,8 +10,9 @@
 | Quyết định | Lựa chọn | Lý do |
 |---|---|---|
 | Loader | **Fabric** | Yêu cầu của dự án; hệ sinh thái hiệu năng mạnh (Lithium, Sodium) |
-| Phiên bản MC | Stable mới nhất tại thời điểm phát triển; thiết kế **port-forward friendly** (lớp trừu tượng registry/render) | Forward compatibility là yêu cầu tầm nhìn |
-| Ngôn ngữ | Java 21+ | Chuẩn MC hiện đại |
+| Phiên bản MC | **26.2.x baseline**; `compat-26.2` là target phát hành đầu tiên, port-forward qua adapter registry/render/network | Không hứa một JAR chạy mọi bản cũ; mỗi bản MC được hỗ trợ là một build + migration đã test (19) |
+| Toolchain | Java **25** cho Gradle/dev, Gradle 9.5.1, Loom 1.17+, Mojang mappings / plugin `net.fabricmc.fabric-loom` | Phù hợp nhánh Fabric 26.2; không kế thừa giả định Yarn/remap của trước 26.1 |
+| Render | Blaze3D/vanilla render abstraction; tuyệt đối không raw OpenGL | 26.2 có backend Vulkan thử nghiệm và OpenGL sẽ bị loại khi Vulkan ổn định |
 | Kiến trúc nội dung | **Data-driven qua datapack + Codec** | Thêm nội dung không cần code (tài liệu 15, 21) |
 | Phụ thuộc bắt buộc | **Chỉ Fabric API** | Tránh ràng buộc người chơi; giảm vỡ khi MC cập nhật |
 | Phụ thuộc mềm | Cloth Config, ModMenu, REI/EMI, Jade (tự động tắt nếu thiếu) | QoL hệ sinh thái, không bắt buộc (tài liệu 19) |
@@ -73,6 +74,8 @@ umbra-core            — hạt nhân: registry, event bus nội bộ, data load
 - Dungeon dùng **pool dimension riêng** theo loại (không tạo dimension mới mỗi gate — tránh phình save): layout đặt theo "ô lưới cách xa nhau" trong pool, dọn dẹp khi gate đóng.
 - Pre-gen chunk async trước khi cho phép vào; fallback: phòng chờ trong gate nếu gen chưa xong (không bao giờ để người chơi rơi vào chunk lỗi).
 - Penalty Zone: pocket dimension đơn giản, tái sử dụng.
+- `GateLifecycleService` là owner duy nhất của transition `OPEN → IN_PROGRESS → CLEARED_AWAITING_EXIT → CLOSED` và `BREAK_PENDING → BROKEN`. Event giết boss, deadline, teleport, disconnect hay reload chỉ gửi **intent**; service kiểm tra predicate 14.21 rồi mới ghi state. Không module/UI/mixin nào được tự dọn layout hoặc tự đóng Gate.
+- Khi rời Gate chưa clear, service serialize objective, enemy-death ledger, loot và `SoulEcho`; layout **không** bị dọn. Khi Gate trống, boss/elite sống được reset encounter theo 14.21. Cleanup pool chỉ chạy sau transaction `CLOSED` hoặc `BROKEN` đã flush state/Tàn Tích/Field Dungeon thành công; nếu transaction lỗi, slot pool được khóa và recovery job chạy ở lần load sau.
 
 ### 3.6. Scheduler & Tick Budget
 

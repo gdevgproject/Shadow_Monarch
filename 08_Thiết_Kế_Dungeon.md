@@ -25,9 +25,32 @@
 1. **Hình thành:** xuất hiện trong bán kính phù hợp với hạng người chơi (không quá gần nhà — tránh grief; không quá xa — tránh bỏ quên). VFX cột sáng nhìn thấy từ xa → kéo người chơi ra khỏi nhà một cách tự nhiên.
 2. **Hạng hiển thị:** F→S+ đo bằng vật phẩm/kỹ năng; Gate gần ưu tiên ±2 bậc sức mạnh hiệu dụng. **5% sai hạng** chỉ áp dụng cho Gate có dấu hiệu scout/cảnh báo rõ — bí ẩn có kiểm soát, không lừa người chơi.
 3. **Deadline 7 ngày trong game:** quá hạn → **Dungeon Break** (mục 4). Đồng hồ đếm nhìn thấy được — áp lực thời gian nhẹ, không FOMO (timer chỉ chạy khi world hoạt động). Không có vật phẩm đóng Gate chưa hoàn thành: lựa chọn là clear, chuẩn bị Break, hoặc chấp nhận Field Dungeon.
-4. **Đóng:** chỉ khi *mọi objective bắt buộc* (boss, lõi niêm phong, cứu hộ nếu có) đã hoàn tất và người chơi rời Gate. Trước đó xác/linh hồn/loot giữ theo luật 04. Gate đóng để lại **Tàn Tích** (đào được tài nguyên đặc thù) — dungeon không biến mất vô nghĩa, nó *trở thành mỏ*.
+4. **Đóng:** chỉ khi *mọi objective bắt buộc* (boss, lõi niêm phong, cứu hộ nếu có) đã hoàn tất **và người chơi rời Gate**. Đánh xong boss không tự đóng Gate; người chơi vẫn được nhặt loot, đọc kết quả và dùng Trỗi Dậy. Nếu rời khi còn objective dang dở, Gate **không đóng**, giữ tiến độ để quay lại. Gate chỉ đóng sau lần rời Gate có điều kiện clear; khi đó để lại **Tàn Tích** (đào được tài nguyên đặc thù) — dungeon không biến mất vô nghĩa, nó *trở thành mỏ*.
 
-> **Lý do:** deadline biến nghề "Shadow Monarch" thành dịch vụ khẩn cấp (đúng tinh thần nguyên tác) nhưng được thiết kế lại để *không bao giờ trừng phạt người chơi offline*: timer chỉ chạy khi chunk tải/người chơi online, và luôn có lựa chọn "đóng gate không đánh" với chi phí vừa phải.
+> **Lý do:** deadline biến nghề "Shadow Monarch" thành dịch vụ khẩn cấp nhưng được thiết kế lại để *không bao giờ trừng phạt người chơi offline*: timer chỉ chạy khi world/Stratum hoạt động. Không có nút, vật phẩm hay phí nào được phép đóng Gate chưa clear; lựa chọn thật là quay lại hoàn tất hoặc để nó thành Break/Field Dungeon.
+
+### 2.1.1. Máy trạng thái Gate — luật triển khai bắt buộc
+
+Đây là nguồn chân lý cho mọi tài liệu, UI, schema và test. `objective` nghĩa là mục tiêu được ghi rõ trên bảng Gate; giết boss **chưa đủ** nếu còn lõi, cứu hộ hoặc mục tiêu bắt buộc khác.
+
+```text
+SPAWNED/OPEN ──vào Gate──> IN_PROGRESS
+     ▲                         │
+     │ rời khi chưa clear       │ hoàn thành toàn bộ objective
+     └─────────────────────────┘
+                               ▼
+                     CLEARED_AWAITING_EXIT
+                               │ rời Gate
+                               ▼
+                         CLOSED → Tàn Tích
+
+OPEN/IN_PROGRESS ──deadline, không còn người bên trong──> BROKEN → Field Dungeon
+```
+
+- **Rời khi chưa clear:** trở về `OPEN`, không hồi sinh quái đã hạ, không reset tiến độ objective, không xóa loot hay *Soul Echo*. Boss/elite còn sống chỉ hồi đầy và quay về pha 1 sau khi Gate trống 10 giây; đây là reset encounter chống "rút ra để bào máu", không phải reset dungeon.
+- **Hoàn tất rồi mới rời:** chuyển sang `CLEARED_AWAITING_EXIT` ngay khi objective cuối hoàn thành. Gate vẫn mở khi người chơi còn bên trong; chỉ lần rời Gate đó mới tạo `CLOSED`. Ở single-player, “người chơi” là chủ Gate; ở co-op tương lai là **người tham gia hợp lệ cuối cùng** rời instance.
+- **Xác, loot và Trỗi Dậy:** xác vật lý được thay bằng `Soul Echo` lưu nhẹ sau 120 giây. Echo đủ điều kiện Trỗi Dậy tồn tại đến `CLOSED` hoặc `BROKEN`, kể cả khi người chơi rời Gate lúc chưa clear. Vì vậy người chơi có thể chuẩn bị, quay lại và thu phục; nhưng UI phải cảnh báo/đòi xác nhận khi rời một Gate đã clear mà còn Echo hoặc loot định danh chưa xử lý.
+- **Deadline/Break:** timer chỉ chạy khi Stratum tương ứng hoạt động. Nếu deadline chạm khi đang có người trong Gate, trạng thái là `BREAK_PENDING`: không teleport hay xóa trận đang diễn ra; khi Gate trống, nó chuyển `BROKEN`. Nếu người chơi hoàn tất objective và rời trước thời điểm commit Break, Gate vẫn `CLOSED`; nếu không, nội dung chuyển thành Field Dungeon. Không trạng thái nào tự nhảy sang `CLOSED` trước điều kiện clear + exit.
 
 ### 2.2. Bên trong một gate: cấu trúc chuẩn
 
@@ -114,7 +137,7 @@ Không sinh thuần ngẫu nhiên (hang ổ vô định) cũng không dựng tay
 
 ## 9. Bổ sung v3.0 — luật Gate, Thăng Giới và trải nghiệm dưới nước
 
-**Luật vòng đời chuẩn:** Gate có thể bị bỏ quên để tạo Break, nhưng không tự đóng khi người chơi đang xử lý nó. Điều kiện đóng là boss/mục tiêu bắt buộc/đường thoát đã hoàn thành; trong thời gian đó linh hồn, loot chưa nhặt và boss body được giữ đúng luật 04. Mỗi **World Stratum đang hoạt động** chỉ tối đa hai Gate; Stratum khác tạm dừng timer/event. Thuật toán spawn ưu tiên chênh trong ±2 bậc so với sức mạnh hiệu dụng, sau đó mới tung Gate hiếm vượt bậc có cảnh báo hạng, scout room và đường rút.
+**Luật vòng đời chuẩn:** dùng máy trạng thái 2.1.1, không diễn giải tắt bằng “giết boss là đóng”. Gate chỉ `CLOSED` sau `objective_complete + exit`; rời sớm giữ Gate `OPEN`, tiến độ và Soul Echo. Mỗi **World Stratum đang hoạt động** chỉ tối đa hai Gate; Stratum khác tạm dừng timer/event. Thuật toán spawn ưu tiên chênh trong ±2 bậc so với sức mạnh hiệu dụng, sau đó mới tung Gate hiếm vượt bậc có cảnh báo hạng, scout room và đường rút.
 
 Sau level 100, Gate có tag `world_stratum`: Thế Giới Gốc hoặc Thế Giới Song Song đã mở. Tầng mới ưu tiên modifier, bố cục, AI và phần thưởng bộ sưu tập trước khi tăng HP; clear checkpoint mới mở tầng cao hơn, quay về tầng cũ tự do. Dữ liệu tầng không dùng để nhân bản nhà/công trình vanilla.
 

@@ -147,7 +147,9 @@ Thiết kế nền cho phép co-op sau này: mỗi ngườichơi có Hệ Thốn
 
 ## 8. Hợp đồng trải nghiệm v3.0
 
-*Gate* là hoạt động có mở đầu và kết thúc: không đóng chỉ vì hết giờ; nó chỉ đóng sau boss/mục tiêu bắt buộc, nên xác và cơ hội Trỗi Dậy không bị mất vì nhịp combat. Trên mỗi **World Stratum đang hoạt động** chỉ có tối đa hai Gate; Stratum không hoạt động tạm dừng timer/event. Các Gate gần người chơi ưu tiên chênh tối đa hai bậc sức mạnh hiệu dụng, nhưng Gate hiếm vượt bậc vẫn có thể xuất hiện với cảnh báo/trinh sát rõ ràng.
+*Gate* là hoạt động có mở đầu và kết thúc, nhưng không phải cửa tự đóng. Luật duy nhất là: **rời khi chưa hoàn tất mọi objective → Gate vẫn OPEN và giữ tiến độ; hoàn tất mọi objective → Gate chờ người chơi rời; rời lúc đó → Gate CLOSED.** Boss chết không thay thế objective còn thiếu và không tự đóng Gate. Soul Echo/loot định danh tồn tại trong Gate đang mở để người chơi có thời gian Trỗi Dậy; chỉ deadline khi Gate trống mới chuyển nó sang Break/Field Dungeon. Máy trạng thái chuẩn ở 08.2.1, schema ở 15.6 và test ở 18.
+
+Trên mỗi **World Stratum đang hoạt động** chỉ có tối đa hai Gate; Stratum không hoạt động tạm dừng timer/event. Các Gate gần người chơi ưu tiên chênh tối đa hai bậc sức mạnh hiệu dụng, nhưng Gate hiếm vượt bậc vẫn có thể xuất hiện với cảnh báo/trinh sát rõ ràng.
 
 Tầng hậu cấp 100 không đổi toàn bộ save thành “quái dày máu hơn”. Người chơi dùng Cổng Liên Giới để chọn **Thế Giới Gốc** hoặc một Thế Giới Song Song đã mở. Mỗi thế giới song song giữ seed/tiến độ Gate/sự kiện riêng, có loot và mutator riêng, nhưng không nhân bản hay phá nhà ở Thế Giới Gốc. Đây là nền kiến trúc cho chơi lâu, thử thách tự chọn và tương lai co-op; 1.0 vẫn offline-first.
 

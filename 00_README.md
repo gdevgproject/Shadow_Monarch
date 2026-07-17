@@ -1,12 +1,12 @@
 # UMBRA: SHADOW MONARCH — BỘ TÀI LIỆU THIẾT KẾ TỔNG THỂ
 
-> **Trạng thái:** Bản thiết kế nền tảng **v3.0** (Design Foundation, rà soát nhất quán trước khi bước vào phát triển mod)
-> **Nền tảng mục tiêu:** Minecraft Java Edition · Fabric Loader · phiên bản stable mới nhất
+> **Trạng thái:** Bản thiết kế nền tảng **v4.0** (Design Foundation, đã rà soát Gate, nội dung, AI và nền tảng kỹ thuật trước khi bước vào phát triển mod)
+> **Nền tảng mục tiêu:** Minecraft Java Edition **26.2.x** · Fabric Loader/Fabric API tương ứng · lớp tương thích cho bản phát hành sau
 > **Bản chất tài liệu:** Bộ hồ sơ thiết kế cấp studio — KHÔNG chứa mã nguồn. Mọi quyết định đều ghi kèm lý do thiết kế.
 
 ---
 
-## 0. Quyết định chuẩn v3.0 — phải ưu tiên hơn mọi mô tả cũ
+## 0. Quyết định chuẩn v4.0 — phải ưu tiên hơn mọi mô tả cũ
 
 Đợt rà soát v3.0 xác nhận bộ v2.0 có nền tốt, nhưng còn các mâu thuẫn về hạng, Job Change, mana quân đoàn và nội dung hậu cấp 100. Các quyết định dưới đây là **hợp đồng liên tài liệu**; nếu một đoạn cũ khác với chúng thì đoạn cũ được xem là lỗi thời.
 
@@ -16,13 +16,16 @@
 | V3-02 | Level 100 mở **Thăng Giới** và các **Thế Giới Song Song**; thế giới cũ luôn quay lại được, không bị ghi đè hay ép nâng độ khó. | Vừa có thử thách dài hạn, vừa có cảm giác mạnh vượt bậc khi trở về. | 01, 02, 03, 08, 10, 13, 15 |
 | V3-03 | Điểm chỉ số cơ bản là do người chơi tự phân bổ; chỉ Tiềm Năng đã xem trước hậu quả mới là cam kết không hoàn tác. Không có lựa chọn mù làm hỏng save. | Tự do build nhưng vẫn công bằng. | 03, 14, 25 |
 | V3-04 | Bóng có HP, XP và vai trò riêng. Mana chỉ trả cho hành động chủ động (triệu hồi, hồi sinh, kỹ năng/Exchange), **không có phí duy trì theo giây**; bóng canh nhà miễn phí. | Chỉ huy sâu thay vì bị thanh mana bóp nghẹt. | 04, 05, 13, 14 |
-| V3-05 | Linh hồn tồn tại ít nhất 2 phút và tồn tại đến khi rời/đóng Gate. Ba lần Trỗi Dậy hiển thị xác suất; boss định danh có pity lần 3 = 100%, Hiệp Sĩ Huyết Sắt là nghi lễ cố định thất bại hai lần đầu. | Boss khó thắng phải trở thành phần thưởng đáng tin cậy. | 04, 09, 14, 25 |
-| V3-06 | Một Gate chỉ đóng khi mọi mục tiêu bắt buộc đã hoàn thành. Mỗi **Thế Giới Song Song đang hoạt động** tối đa 2 Gate hoạt động; hạng sinh theo sức mạnh hiệu dụng trong biên hợp lý, không khóa cứng hạng cao. | Thế giới sống, khó nhưng không lừa người chơi. | 08, 10, 13, 14 |
+| V3-05 | Linh hồn tồn tại ít nhất 2 phút rồi chuyển thành Soul Echo; Echo trong Gate tồn tại đến khi Gate đóng/vỡ. Ba lần Trỗi Dậy hiển thị xác suất; boss định danh có pity lần 3 = 100%, Hiệp Sĩ Huyết Sắt là nghi lễ cố định thất bại hai lần đầu. | Boss khó thắng phải trở thành phần thưởng đáng tin cậy. | 04, 09, 14, 25 |
+| V3-06 | Mỗi **Thế Giới Song Song đang hoạt động** tối đa 2 Gate hoạt động; hạng sinh theo sức mạnh hiệu dụng trong biên hợp lý, không khóa cứng hạng cao. | Thế giới sống, khó nhưng không lừa người chơi. | 08, 10, 13, 14 |
 | V3-07 | Kết thúc truyện là **tốt nghiệp**, không phải game over. Nội dung vô hạn có giới hạn power creep dùng Thăng Giới, Vực Tháp, biến thể, xã hội và bộ sưu tập — không dùng daily/FOMO. | Có thể chơi nhiều năm vì còn muốn chơi. | 01, 20, 23 |
+| **V4-01** | **Gate dùng máy trạng thái:** rời khi chưa clear → `OPEN` và giữ tiến độ; hoàn thành *tất cả* objective → `CLEARED_AWAITING_EXIT`; chỉ khi rời Gate lúc đó → `CLOSED`. Boss chết không tự đóng Gate. Deadline chỉ tạo `BROKEN`/Field Dungeon khi Gate trống. | Luật trực giác, cơ hội Trỗi Dậy/loot không bị cướp mất, vẫn có hậu quả thế giới. | 04, 08, 14–18, 25 |
+| **V4-02** | Nội dung mới phải đi qua **Khung Tham Chiếu & Tích Hợp**: rút nguyên lý từ game/phim, rồi chứng minh fantasy, counterplay, độ khác biệt, AI/hiệu năng, UX và tính hợp pháp trước khi vào backlog. Không sao chép tên, nhân vật, asset, cốt truyện hay moveset đặc trưng. | Mở rộng rất lớn nhưng không thành nồi lẩu ý tưởng hoặc vi phạm IP. | 07, 09, 21, 22, 26 |
+| **V4-03** | 26.2.x là baseline hiện tại; renderer dựa Blaze3D, không raw OpenGL. Phát hành ghi rõ Loader/API/JDK/mod phụ thuộc và ma trận hỗ trợ save; tương thích ngược là **migration đã test**, không hứa JAR chạy trên mọi Minecraft cũ. | Mod bền khi Minecraft/Fabric thay đổi mà người dùng vẫn biết phải cài gì. | 16, 19, 20 |
 
 ### Cách dùng tài liệu tham khảo
 
-`0.5_phan_tich_solo_leveling.md` chỉ là case study để hiểu một fantasy và các bài học thành công/thất bại. UMBRA ưu tiên thiết kế gốc; các tham chiếu action-RPG/open world chỉ được rút thành **nguyên lý**, không sao chép tên gọi, cốt truyện, asset hay cấu trúc nội dung cụ thể.
+`0.5_phan_tich_solo_leveling.md` chỉ là case study để hiểu một fantasy và các bài học thành công/thất bại. UMBRA ưu tiên thiết kế gốc; các tham chiếu action-RPG/open world chỉ được rút thành **nguyên lý**, không sao chép tên gọi, cốt truyện, asset hay cấu trúc nội dung cụ thể. Tài liệu 26 là quy trình bắt buộc để biến cảm hứng thành thiết kế gốc, có thể cân bằng và có thể code.
 
 ---
 
@@ -88,6 +91,7 @@ Ba cam kết bất khả xâm phạm:
 | 23 | **Mở Rộng Tương Lai** | Game Director | Post-1.0, không làm trước hạn |
 | 24 | **Cốt Truyện & Nhiệm Vụ Chính** *(mới v2.0)* | Narrative Designer | Lore, 3 hồi chính, gia đình, 3 kết |
 | 25 | **Giao Diện Hệ Thống & UX** *(mới v2.0)* | UI/UX Designer | HUD, màn hình, accessibility |
+| 26 | **Thư Viện Tham Chiếu & Khung Tích Hợp** *(mới v4.0)* | Design Research / Leads | Sàng lọc cảm hứng, faction/boss/skill bible, tiêu chí greenlight |
 
 **Thứ tự đọc khuyến nghị cho ngườimới:** 00 → 01 → 02 → 04 → 03 → 14 → 16 → 20. Thêm **24** nếu bạn lo narrative, **07** nếu bạn lo AI.
 
