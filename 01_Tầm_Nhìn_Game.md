@@ -56,7 +56,7 @@ Tầng chiến thuật (trận đánh này), tầng chiến dịch (đêm nay đ
 | Theorycrafter | So build, min-max | 5 chỉ số × skill tree × synergy × trang bị |
 | Explorer | Thế giới đáng đi | Gate ngẫu nhiên, dungeon procedural, world events |
 | Vanilla purist | Minecraft vẫn quen thuộc | Mọi cơ chế bám vào vòng lặp survival gốc |
-| Casual | Không bị phạt nặng vì chơi ít | Daily quest 10–15 phút, fail-state rèn luyện thay vì trừng phạt |
+| Casual | Không bị phạt nặng vì chơi ít | Nhiệm vụ rèn luyện tự chọn 10–15 phút; Vùng Thử Luyện chỉ qua Khế Ước/hardcore đã bật |
 
 ---
 
@@ -84,7 +84,7 @@ Một thiết kế tốt khi, trong playtest:
 
 ---
 
-## 7. Rủi ro & Câu hỏi mở
+## 7. Rủi ro & Quyết định vận hành
 
 | Rủi ro | Ảnh hưởng | Đối sách sơ bộ (chi tiết ở tài liệu chuyên môn) |
 |---|---|---|
@@ -96,7 +96,7 @@ Một thiết kế tốt khi, trong playtest:
 
 ---
 
-## 8. Bổ sung v3.0 — kim tự tháp cảm xúc và lời hứa chơi dài hạn
+## 8. Bổ sung v4.0 — kim tự tháp cảm xúc và lời hứa chơi dài hạn
 
 Kim tự tháp cảm xúc không chỉ có quyền lực và gắn kết. UMBRA phải khép được vòng sau ở mọi nhịp chơi: **tò mò** (thấy điều lạ) → **lo sợ có thể đọc được** (nguy cơ thật, đường học rõ) → **tập luyện** (tay người chơi tốt lên) → **vượt qua** (thắng vì quyết định) → **được ghi nhận** (bóng/NPC/thế giới phản ứng) → **mở lựa chọn mới**. Nếu một nội dung không trả lời nó nuôi vòng nào, không được thêm vào chỉ để tăng số lượng.
 

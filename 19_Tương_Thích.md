@@ -60,7 +60,7 @@ Trang release phải có bảng “Bắt buộc / Tùy chọn / Không tương t
 | Optifine | Không hỗ trợ (thay bằng Sodium + Iris) — ghi rõ trên trang mod |
 | Mod thêm mob | Mob ngoài không có definition UMBRA → dùng AI profile "vanilla+" nhẹ, có thể Arise ở cấp thấp (theo phe gán qua tag) |
 
-## 6. Rủi ro & Câu hỏi mở
+## 6. Rủi ro & Quyết định vận hành
 
 1. **Bản MC mới đổi combat/render lớn?** → Lớp trừu tượng + ít mixin là bảo hiểm; chấp nhận có bản port chậm hơn nếu cần.
 2. **Người chơi đòi Forge/NeoForge?** → Kiến trúc module tách logic khỏi nền tảng giúp port khả thi về sau; 1.0 chỉ Fabric (tập trung chất lượng).
@@ -72,4 +72,4 @@ Trang release phải có bảng “Bắt buộc / Tùy chọn / Không tương t
 
 Mỗi release phát hành trên **một bản Minecraft stable hiện hành đã qua compatibility gate** với Fabric Loader/Fabric API tương ứng; “mới nhất” không được hiểu là cập nhật ngay ngày đầu khi dependency, shader và save migration chưa được test. `26.2.x` là baseline v1.0; bản target được chốt ở M0, cập nhật qua ADR và một nhánh port riêng; không trộn port nền tảng với tính năng gameplay. Toolchain 26.2 dùng Java 25, Loom 1.17+ và Gradle 9.5.1; kể từ 26.1 dùng Mojang mappings/plugin Fabric Loom mới thay vì giả định Yarn/remap cũ.
 
-Sodium/Iris và shader pack là mục tiêu hỗ trợ chính thức theo nguyên tắc không hook render pipeline và **render qua Blaze3D, không raw OpenGL**. Có smoke test cho Gate, Domain, Arise VFX, dungeon nước và HUD ở vanilla, Sodium và Sodium+Iris, quality thấp/cao; lỗi shader được phân loại “UMBRA / Iris / pack” trước khi hứa sửa. OptiFine không hỗ trợ. Mod combat khác được phát hiện/cảnh báo theo capability; không crash, không âm thầm ghi đè binding hay damage pipeline. Keybind conflict scan và fallback layout là một phần compatibility test, không chỉ UX.
+Sodium/Iris và shader pack là mục tiêu hỗ trợ chính thức theo nguyên tắc không hook render pipeline và **render qua Blaze3D, không raw OpenGL**. Có smoke test cho Gate, Domain, Arise VFX và HUD ở vanilla, Sodium và Sodium+Iris, quality thấp/cao; dungeon nước được thêm vào ma trận khi P7+ ship. Lỗi shader được phân loại “UMBRA / Iris / pack” trước khi hứa sửa. OptiFine không hỗ trợ. Mod combat khác được phát hiện/cảnh báo theo capability; không crash, không âm thầm ghi đè binding hay damage pipeline. Keybind conflict scan và fallback layout là một phần compatibility test, không chỉ UX.

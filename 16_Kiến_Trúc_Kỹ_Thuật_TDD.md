@@ -24,7 +24,7 @@
 
 ```
 umbra-core            — hạt nhân: registry, event bus nội bộ, data loader, save/migration
- ├─ umbra-system      — Hệ Thống (UI diegetic, quest, store, daily/penalty)
+ ├─ umbra-system      — Hệ Thống (UI diegetic, quest, store, training/optional-contract)
  ├─ umbra-progression — level/stat/rank/class/mastery/prestige
  ├─ umbra-combat      — combat stance, combo, dodge/parry, damage pipeline, posture
  ├─ umbra-shadows     — Arise, quân đoàn, AI bóng, formation, commands
@@ -73,7 +73,7 @@ umbra-core            — hạt nhân: registry, event bus nội bộ, data load
 
 - Dungeon dùng **pool dimension riêng** theo loại (không tạo dimension mới mỗi gate — tránh phình save): layout đặt theo "ô lưới cách xa nhau" trong pool, dọn dẹp khi gate đóng.
 - Pre-gen chunk async trước khi cho phép vào; fallback: phòng chờ trong gate nếu gen chưa xong (không bao giờ để người chơi rơi vào chunk lỗi).
-- Penalty Zone: pocket dimension đơn giản, tái sử dụng.
+- Vùng Thử Luyện (chỉ Khế Ước tự nguyện/hardcore): pocket dimension đơn giản, tái sử dụng; không được gọi do người chơi nghỉ game.
 - `GateLifecycleService` là owner duy nhất của transition `OPEN → IN_PROGRESS → CLEARED_AWAITING_EXIT → CLOSED` và `BREAK_PENDING → BROKEN`. Event giết boss, deadline, teleport, disconnect hay reload chỉ gửi **intent**; service kiểm tra predicate 14.21 rồi mới ghi state. Không module/UI/mixin nào được tự dọn layout hoặc tự đóng Gate.
 - Khi rời Gate chưa clear, service serialize objective, enemy-death ledger, loot và `SoulEcho`; layout **không** bị dọn. Khi Gate trống, boss/elite sống được reset encounter theo 14.21. Cleanup pool chỉ chạy sau transaction `CLOSED` hoặc `BROKEN` đã flush state/Tàn Tích/Field Dungeon thành công; nếu transaction lỗi, slot pool được khóa và recovery job chạy ở lần load sau.
 
@@ -103,16 +103,16 @@ Mọi quyết định kiến trúc lớn phải có **Architecture Decision Reco
 
 ---
 
-## 7. Rủi ro & Câu hỏi mở
+## 7. Rủi ro & Quyết định vận hành
 
 1. **Port-forward khi MC đổi lớn (registry, render)?** → Lớp trừu tượng + ít mixin giảm đau; nhưng phải chấp nhận chi phí duy trì lớp trừu tượng đó.
 2. **Pool dimension dọn dẹp sót dữ liệu?** → Quy trình dọn có checklist + test; vùng "mồ côi" được quét định kỳ.
 3. **Datapack reload giữa chừng khi gate đang mở?** → Definition bất biến trong runtime của instance: gate đang mở giữ snapshot definition tại lúc tạo.
-4. **Câu hỏi mở:** có tách `umbra-client` thành mod riêng để server thuần chạy không cần client code? — quyết định ở M2 (tài liệu 20).
+4. **Client/server packaging:** chốt 1.0 phát hành một JAR `umbra` với entrypoint client/server tách bạch; dedicated server không tải class/render/resource client. Tách thành hai JAR chỉ xem lại sau 1.0 nếu profiling/phân phối chứng minh lợi ích, không đưa rủi ro packaging vào M2.
 
 ---
 
-## 8. Bổ sung v3.0 — ranh giới cho Thế Giới Song Song và command-safe UX
+## 8. Bổ sung v4.0 — ranh giới cho Thế Giới Song Song và command-safe UX
 
 Thêm module `umbra-strata` nằm trên `world`/`dungeons`, chịu trách nhiệm Cổng Liên Giới, checkpoint, quyền truy cập tầng và snapshot Gate/event. Nó không clone Overworld chunk hay sửa block Thế Giới Gốc; entry/exit là transaction server-authoritative có rollback nếu destination chưa pre-gen xong. Đây là điều kiện bắt buộc để người chơi quay lại tầng cũ an toàn và save không phình vô hạn.
 

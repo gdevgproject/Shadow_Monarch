@@ -23,7 +23,7 @@
 | # | Boss | Phe | Nội dung | Bài học | Phần thưởng định danh |
 |---|---|---|---|---|---|
 | 1 | **Kẻ Gác Cổng Đầu Tiên** | Undead | Gate F tutorial sau Thức Tỉnh | Đọc telegraph, dodge cơ bản | Rune: Vọt Tàn Ảnh |
-| 2 | **Chúa Tể Hang Rết** | Côn Trùng | Penalty Zone (lần bị phạt đầu tiên) | Quản lý tài nguyên khi yếu | Trang bị growth: Nanh Rết |
+| 2 | **Chúa Tể Hang Rết** | Côn Trùng | **Vùng Thử Luyện** của Khế Ước Rèn Luyện tự nguyện / hardcore | Quản lý tài nguyên khi yếu | Trang bị growth: Nanh Rết |
 | 3 | **Sói Vương Nanh Thép** | Kiếp Thú | Instant Dungeon đầu | Đánh bầy, ưu tiên mục tiêu | Bóng: Bầy Sói (unique) |
 | 4 | **Nữ Hoàng Độc Nhãn** | Bò Sát | Gate D | Né đòn vùng, dùng địa hình | Rune: Nhịp Máu |
 | 5 | **Hiệp Sĩ Huyết Sắt** | Undead | **Job Change** | Cách biệt đẳng cấp — thắng bằng cơ chế, không bằng trâu | Class + **bóng đầu tiên có tên** |
@@ -92,7 +92,7 @@ Chín Vương Giả (lore gốc UMBRA) là nội dung sau level 100, mỗi Vươ
 
 ---
 
-## 7. Rủi ro & Câu hỏi mở
+## 7. Rủi ro & Quyết định vận hành
 
 1. **12 boss có đủ cho hàng trăm giờ?** → Boss định danh là "xương sống"; Vực Tháp + boss ngẫu nhiên phe (procedural boss variant) gánh phần lặp lại. Mục tiêu pipeline: 2 boss/năm sau 1.0.
 2. **Boss khôn quá với casual?** → Adaptive difficulty nhẹ (13.6) điều chỉnh tốc độ telegraph, không điều chỉnh cơ chế.
@@ -100,8 +100,16 @@ Chín Vương Giả (lore gốc UMBRA) là nội dung sau level 100, mỗi Vươ
 
 ---
 
-## 8. Bổ sung v3.0 — boss là chiến thắng đáng thu phục
+## 8. Bổ sung v4.0 — boss là chiến thắng đáng thu phục
 
 Boss định danh có bảng **Capture Contract** bên cạnh loot table: điều kiện đủ tư cách, xác suất lần 1/2, pity lần 3, tính năng bóng nhận được và lý do nếu không thể Arise. Lần đầu hạ boss không được biến thành cảm giác “vật lộn xong lại tung 5%”: nếu boss có thể thu phục, lần 3 bảo đảm thành công. Hiệp Sĩ Huyết Sắt bắt buộc thất bại theo cốt truyện ở hai lần đầu và thành công ở lần ba; boss corpse/linh hồn tồn tại tới khi Gate kết thúc.
 
 Review boss phải thêm: số lính hộ vệ, vai trò đội hình, điểm báo động, hành vi che chắn boss, sức mạnh quân đoàn dự kiến và counterplay cho người chơi. Các boss có thể cưỡi/điều khiển sinh vật (rồng, gấu, thú nước) phải phân tách rõ phần thưởng: bóng boss, mount shadow hay kỹ năng di chuyển; không dồn cả ba thành tăng sức mạnh bắt buộc. Boss không lấy số lượng bóng để phạt người chơi vô lý; nó buộc họ đổi lệnh, vị trí, đội hình hoặc tự vào combat.
+
+---
+
+## 9. Bổ sung v4.0 — Boss Teaching Card và roster không lặp
+
+Mười hai boss trong bảng là **roster đường dài**, không phải danh sách asset được copy từ bất cứ tác phẩm nào. Trước khi author một boss mới hoặc sửa lớn boss cũ, team phải hoàn thành Boss Teaching Card 26.6.2: fantasy, bài học một câu, telegraph hình/âm/không gian, hai counterplay trong trận, hai chuẩn bị ngoài trận, failure feedback, escort protocol, arena Minecraft, PB/TTK và reward tách nhánh.
+
+Không hai boss liên tiếp được trùng cả `archetype chính + failure mode + counter chính + reward`. Boss khó “chịu” được phép tạo áp lực bằng hẹp không gian, squad protection, hạn tài nguyên hoặc luật objective; không được dựa vào sát thương vô dấu, stun-lock, shield bất tử hay HP sponge. Boss 2 nằm trong **Vùng Thử Luyện tự nguyện**: không một người chơi casual/offline nào bị buộc bỏ nhiệm vụ để gặp boss hay mất tiến trình.

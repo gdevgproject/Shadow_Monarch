@@ -26,20 +26,20 @@
 ## 2. Chi tiết & exit criteria
 
 ### M0 — Bộ khung
-- Xây: module skeleton (16.2), data loader + codec validation, world/player state + migration v1, config 3 tầng, event bus, central scheduler.
-- **Exit:** load 1.000 JSON definition mẫu không lỗi; save/reload bảo toàn state; benchmark scheduler đo được mspt.
+- Xây: module skeleton (16.2), baseline `compat-26.2` (Java 25/Fabric 26.2), data loader + codec validation, world/player state + migration v1, config 3 tầng, event bus, central scheduler, validator cho Reference Intake Card/Faction/Boss/Skill Contract.
+- **Exit:** load 1.000 JSON definition mẫu không lỗi; save/reload bảo toàn state; benchmark scheduler đo được mspt; smoke test Fabric API/Sodium/Iris theo 19; card lỗi/thiếu không qua CI; ô “M0 code proof” của ma trận 27 xanh.
 
 ### M1 — Kẻ Thức Tỉnh
-- Xây: Hệ Thống UI (stats/quest), level 1–20, 5 chỉ số + phân bổ, nhiệm vụ rèn luyện + Khế Ước Penalty Zone tùy chọn, combat stance + dodge cơ bản.
+- Xây: Hệ Thống UI (stats/quest), level 1–20, 5 chỉ số + phân bổ, nhiệm vụ rèn luyện + Khế Ước Vùng Thử Luyện tùy chọn, combat stance + dodge cơ bản.
 - **Exit:** người chơi mới trải qua "1 ngày của Kẻ Thức Tỉnh" trọn vẹn; playtest nội bộ xác nhận cảm giác *lớn lên từng ngày*.
 
 ### M2 — Vertical Slice ⭐ (milestone quan trọng nhất)
-- Xây: đường F→D (1 phe, 12 phòng), 6 loại quái với AI đầy đủ, boss tutorial #1, loot/rarity cơ bản.
-- **Exit:** một vòng core loop 20 phút *vui* — 5/5 playtester muốn chơi lại; benchmark scene chuẩn đạt ngân sách.
+- Xây: đường F→D (1 faction đã qua Bible 26.5, 12 phòng), 6 loại quái với AI đầy đủ, boss tutorial #1 đã qua Teaching Card, loot/rarity cơ bản, Gate lifecycle `leave early → OPEN / clear + exit → CLOSED`.
+- **Exit:** một vòng core loop 20 phút *vui* — 5/5 playtester muốn chơi lại; benchmark scene chuẩn đạt ngân sách; bot chứng minh Gate không đóng khi boss chết/còn objective và không mất tiến độ khi quay lại.
 - **Quy tắc:** không sang M3 nếu slice chưa vui. Mọi milestone sau nhân bản từ đây.
 
 ### M3 — Trỗi Dậy
-- Xây: Job Change dungeon + boss Huyết Sắt (3 pha), nghi lễ Arise (2 phút/đến khi rời Gate, contract `[0,0,1]`), storage data-driven, summon/dismiss không upkeep mana, 3 lệnh đầu (Hộ Vệ/Săn Lùng/Ẩn Mình), đặt tên.
+- Xây: Job Change dungeon + boss Huyết Sắt (3 pha), nghi lễ Arise (xác 2 phút → Soul Echo tới Gate đóng/vỡ, contract `[0,0,1]`), storage data-driven, summon/dismiss không upkeep mana, 3 lệnh đầu (Hộ Vệ/Săn Lùng/Ẩn Mình), đặt tên.
 - **Exit:** kịch bản bot số 3 (18.4) xanh; playtester *tự đặt tên* bóng mà không được nhắc.
 
 ### M4 — Quân Đoàn
@@ -47,7 +47,7 @@
 - **Exit:** trận phòng thủ làng dùng formation có ý nghĩa; playtester kể được khác biệt giữa 2 bóng cùng loài khác tính cách.
 
 ### M5 — Thế Giới Sống
-- Xây: phe 2–4 (mỗi phe 6–8 quái + elite), squad brain nâng cao (flank/focus/retreat/bảo vệ boss), world events cơ bản, Hiệp Hội + rank-up xã hội, Tổ Ấm/family order tối thiểu, một Cưỡi Bóng mặt đất có giới hạn arena/performance.
+- Xây: faction 2–4 (mỗi faction qua Bible: role thường/elite/ambient/leader, territory/room/AI LOD), squad brain nâng cao (flank/focus/retreat/bảo vệ boss), world events cơ bản, Hiệp Hội + rank-up xã hội, Tổ Ấm/family order tối thiểu, một Cưỡi Bóng mặt đất có giới hạn arena/performance.
 - **Exit:** overworld "sống" — quái tuần tra, phe đánh nhau; rank-up là một *sự kiện*.
 
 ### M6 — Chiều Sâu Vật Phẩm
@@ -56,7 +56,7 @@
 
 ### M7 — Endgame
 - Xây: Red Gate, Break/Field, Vực Tháp 1–25 + mutator, boss 1–6, Thăng Giới tầng 1 và Cổng Liên Giới.
-- **Exit:** hai build khác nhau clear được tầng 25/PB chuẩn và quay về Thế Giới Gốc nguyên vẹn; benchmark/Arise regression xanh. Tầng 26–100, boss 7–12, nước/mount/liên kết đồng hành là content phase sau 1.0, không được giả vờ “gần xong”.
+- **Exit:** hai build khác nhau clear được tầng 25/PB chuẩn và quay về Thế Giới Gốc nguyên vẹn; benchmark/Arise/Gate regression xanh. Tầng 26–100, boss 7–12, thủy tộc/dungeon nước/mount bay/liên kết đồng hành là content phase sau 1.0, không được giả vờ “gần xong”.
 
 ### M8 — Đánh bóng 1.0
 - Xây: balance pass toàn cục (simulation + playtest đợt lớn), performance pass theo ngân sách 17.1, hoàn thiện tài liệu + changelog thiết kế, trang giới thiệu mod.
@@ -81,7 +81,7 @@
 
 ---
 
-## 5. Kế hoạch phase phát hành v3.0 — mỗi phase đều test được
+## 5. Kế hoạch phase phát hành v4.0 — mỗi phase đều test được
 
 | Phase | Bản chơi được | Câu hỏi phải trả lời trước khi sang phase |
 |---|---|---|

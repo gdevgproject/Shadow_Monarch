@@ -38,6 +38,7 @@ Ngân sách được **giám sát runtime**: vượt ngân sách → scheduler t
 
 - Bóng trong storage **không tồn tại entity** (tài liệu 15) — 200 bóng sở hữu chi phí ≈ 0 tick.
 - Trần triệu hồi đồng thời (thiết kế 04.6.1, tối đa 40) chính là đòn bẩy hiệu năng — thiết kế game và hiệu năng ở đây là một.
+- Xác trong Gate chỉ là entity/VFX trong 120 giây; sau đó chuyển thành **Soul Echo** serialized, không tick/pathfind/render như mob. Trần 128 Echo/Gate của 14.21, tối đa 2 Gate/Stratum, là ngân sách cứng; boss/elite/unique được bảo lưu trước, common target gộp thành Mảnh Bóng bảo lưu có thông báo.
 
 ### 2.4. Client-side
 
@@ -65,7 +66,7 @@ Ngân sách được **giám sát runtime**: vượt ngân sách → scheduler t
 4. Không hook vào render pipeline của mod khác.
 5. Không tính lại thứ có thể cache theo "dirty flag".
 
-## 5. Rủi ro & Câu hỏi mở
+## 5. Rủi ro & Quyết định vận hành
 
 1. **Server yếu (host rẻ tiền)?** → Config hạ trần entity/tần suất gate; AI LOD có thêm tầng "siết".
 2. **Mod khác cũng nặng AI?** → Ngân sách của ta tự co lại khi mspt tổng cao (nhượng bộ lịch sự) — nhưng log cảnh báo để người chơi biết.
@@ -73,8 +74,8 @@ Ngân sách được **giám sát runtime**: vượt ngân sách → scheduler t
 
 ---
 
-## 6. Bổ sung v3.0 — ngân sách vùng, đô thị và nước
+## 6. Bổ sung v4.0 — ngân sách vùng, đô thị và nước
 
 Ngân sách entity là **theo vùng combat**, không phải lời hứa “càng nhiều càng hay”: mặc định tối đa 40 bóng vật thể hóa, 80 địch full AI; người chơi có thể sở hữu nhiều hơn mà không mất tick. Khi boss có hộ vệ hoặc phòng thủ đô thị, Director phân đợt để không đẩy quá ngân sách; giảm số entity phải đổi bằng AI/role/telegraph thú vị hơn, không chỉ xóa quân.
 
-Đô thị dùng NPC proxy ngoài tầm, schedule theo event và animation LOD; hàng người xếp giám định là presentation cục bộ, không simulation pathfinding cho toàn bộ cư dân. Water dungeon dùng mesh/particle giới hạn theo phòng, không quét fluid mỗi tick; mount có collision/pathing profile riêng và fallback an toàn nếu chunk/không khí chưa sẵn sàng.
+Đô thị dùng NPC proxy ngoài tầm, schedule theo event và animation LOD; hàng người xếp giám định là presentation cục bộ, không simulation pathfinding cho toàn bộ cư dân. **Từ P7+**, water dungeon dùng mesh/particle giới hạn theo phòng, không quét fluid mỗi tick; mount có collision/pathing profile riêng và fallback an toàn nếu chunk/không khí chưa sẵn sàng.

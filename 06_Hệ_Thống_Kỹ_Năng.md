@@ -84,13 +84,13 @@ Thiết kế theo cặp/bộ ba có *tên gọi* (dễ nhớ, dễ lan truyền 
 
 ## 6. Ngân sách thiết kế (chống bành trướng)
 
-- Tổng active skill người chơi: **≤ 24** (4 ô + 1 class cùng lúc → chọn 5/24 là quyết định build hằng ngày).
+- Tổng active skill người chơi: **≤ 24** (4 ô + 1 class cùng lúc → chọn 5/24 là quyết định mỗi lần chuẩn bị build).
 - Passive node: ~180. Keystone: 9. Rune: ~40 loại lúc 1.0.
 - Mọi skill mới phải trả lời: *"Nó thay combo/rotation nào? Nó khắc build nào? Build nào khắc nó?"* — không trả lời được 3 câu → không vào game.
 
 ---
 
-## 7. Rủi ro & Câu hỏi mở
+## 7. Rủi ro & Quyết định vận hành
 
 1. **Rune RNG gây cay cú?** → Bột Rune + rune định hướng (chọn phe) giảm; theo dõi tỷ lệ "20 giờ không ra rune mục tiêu" trong test.
 2. **Skill tree 180 nút có quá tải người mới?** → Gốc chung chỉ 6 nút bắt buộc hiểu; cây mở dần theo hạng.
@@ -98,8 +98,16 @@ Thiết kế theo cặp/bộ ba có *tên gọi* (dễ nhớ, dễ lan truyền 
 
 ---
 
-## 8. Bổ sung v3.0 — bộ kỹ năng chiến đấu sâu nhưng đọc được
+## 8. Bổ sung v4.0 — bộ kỹ năng chiến đấu sâu nhưng đọc được
 
 Năm ô trang bị (4 active + 1 class) là trần thao tác đồng thời; thư viện kỹ năng có thể lớn hơn nhưng mỗi skill phải thuộc một trong bốn vai trò: mở giao tranh, né/phản đòn, kiểm soát không gian, hoặc payoff combo. Một skill mới thay thế được một quyết định cũ mới xứng đáng vào pool.
 
 Thêm ba mẫu bắt buộc cho 1.0: **Bước Hư Ảnh** (chuỗi dash/không thể bị chọn trong khoảnh khắc, nhưng không gây sát thương miễn phí), **Nhãn Giới Tĩnh Lặng** (làm chậm cục bộ, xem 05.11), và **Cưỡi Bóng** (mount skill theo chủng loài). Chúng dùng ý tưởng action-RPG chung nhưng có animation, luật, tên gọi và counterplay gốc UMBRA. Monarch's Domain được chuẩn hóa: aura tròn, 12 giây cơ bản, phạm vi/hiệu ứng/đồng hồ hiển thị rõ; bóng trong vùng nhận buff theo vai trò, kẻ địch không bị xóa cơ chế.
+
+---
+
+## 9. Bổ sung v4.0 — Skill Contract và thư viện có kỷ luật
+
+Mọi active/rune/keystone mới phải có **Skill Contract** theo 26.8.1 trước khi có tên/asset cuối: fantasy–input–target–vai trò–cost/window–counterplay–clarity–AI/Minecraft–scaling–test. Đây là cách mượn bài học “năng lực có điều kiện và cái giá” nhưng biến thành terminology/lore/animation gốc UMBRA, không sao chép hệ năng lực của truyện/phim nào.
+
+Trần loadout vẫn là **4 active + 1 class**. Một kỹ năng chỉ được làm tối đa hai vai trò combat; phải có cue VFX/SFX/hitbox và ít nhất một điểm yếu đọc được. Skill mobility/slow/invisibility mạnh không được đồng thời là damage burst, immunity dài và escape không counter. Khi một skill thay đổi tốc độ thời gian, phạm vi chỉ cục bộ, duration/cooldown đọc được, AI vẫn có hành vi phản hồi và mọi cap 14.18/14.19 vẫn áp dụng.

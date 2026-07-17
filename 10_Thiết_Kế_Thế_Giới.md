@@ -2,7 +2,7 @@
 
 > **Chủ sở hữu:** World Designer
 > **Nguyên tắc số 1:** Minecraft vẫn là Minecraft. UMBRA là *lớp đất mới* — mọi cơ chế RPG phải cắm rễ vào sinh tồn, đào đá, xây dựng, làng, Nether, The End. Không hệ thống nào được "đậu" trên thế giới.
-> **v2.0:** thế giới giờ có **xã hội** (Đô Thị Thợ Săn, phân hạng F→S★, kính trọng động) và **trái tim** (Tổ Ấm, gia đình) — hai thứ biến "thế giới" thành "nhà".
+> **Chuẩn v4.0:** thế giới có **xã hội** (Đô Thị Thợ Săn, phân hạng NPC F→Quốc Gia, kính trọng động) và **trái tim** (Tổ Ấm, gia đình) — hai thứ biến "thế giới" thành "nhà".
 
 ---
 
@@ -15,7 +15,7 @@
 | Xây dựng | Khối mới từ Tàn Tích gate; **Cờ Lãnh Thổ** — bóng garnison bảo vệ công trình; Tổ Ấm nâng cấp được |
 | Phù phép / Lò luyện | INT tăng hiệu quả enchant; hệ Rune chạy *song song* enchant, không thay thế |
 | Nông trại / chăn nuôi | VIT giảm hunger; một số bóng có năng lực "canh đồng"; vật phẩm nông trại là nguyên liệu cho quest |
-| Làng / dân làng | **Đô Thị Thợ Săn** (mục 2): làng 4x, Hiệp Hội, phân hạng F→S★, kính trọng động, thuê Hunter |
+| Làng / dân làng | **Đô Thị Thợ Săn** (mục 2): làng 4x, Hiệp Hội, phân hạng NPC F→Quốc Gia, kính trọng động, thuê Hunter |
 | Ngủ / giường | **Reset Thể Lực** (tài liệu 05.3) — giường trở thành trục nhịp sinh tồn |
 | Nether | Lãnh địa phe Ác Ma — gate Nether hạng cao, quặng Hắc Diệm, boss phe Demon |
 | The End | Đảo End chứa **Vết Nứt Cổ Đại** hiếm; Ender Dragon được re-design thành boss có Arise |
@@ -26,18 +26,18 @@
 
 ---
 
-## 2. ĐÔ THỊ THỢ SĂN — xã hội thu nhỏ có phân hạng (v2.0)
+## 2. ĐÔ THỊ THỢ SĂN — xã hội thu nhỏ có phân hạng (v4.0)
 
 ### 2.1. Từ làng vanilla đến Đô Thị
 
-- Khi một làng đạt điều kiện (dân số + công trình, hoặc ngườichơi chủ động đầu tư phát triển), nó thăng cấp thành **Đô Thị Thợ Săn**: diện tích ~4 lần làng vanilla, có **quy hoạch khu vực**:
+- Khi một làng đạt điều kiện (dân số + công trình, hoặc người chơi chủ động đầu tư phát triển), nó thăng cấp thành **Đô Thị Thợ Săn**: diện tích ~4 lần làng vanilla, có **quy hoạch khu vực**:
   - **Khu Dân Cư** — nhà dân thường (hạng F–E, không thức tỉnh).
   - **Khu Thương Mại** — cửa hàng NPC có *chủ*, có tài sản, có giờ mở cửa.
   - **Khu Hiệp Hội** — trụ sở Hunter Association: đo hạng, bảng quest, cửa hàng Công Trạng, bản đồ gate.
   - **Khu Huấn Luyện** — hunter tập luyện, bãi đấu, quest huấn luyện.
 - Sinh tồn song song với làng vanilla thường (không phải làng nào cũng thành Đô Thị) — thế giới có *đô thị trung tâm* và *nông thôn*, đúng cấu trúc xã hội Solo Leveling.
 
-### 2.2. Thang phân hạng NPC: F → S★ (khác với thang ngườichơi)
+### 2.2. Thang phân hạng NPC: F → Quốc Gia (khác với thang người chơi)
 
 | Hạng NPC | Ý nghĩa xã hội | Tỷ lệ dân số thức tỉnh |
 |---|---|---|
@@ -45,29 +45,29 @@
 | **E** | Lực lượng nền, làm gate thấp theo đội | ~30% |
 | **D–C** | Trung lưu nghề hunter | ~20% |
 | **B–A** | Ngôi sao địa phương, có tên tuổi | ~8% |
-| **S** | Trấn Thủ đô thị — tài sản chiến lược | 1–2 ngườI/đô thị |
-| **S★** | Cấp Quốc Gia — huyền thoại sống, cực hiếm | Vài ngườI/thế giới |
+| **S** | Trấn Thủ đô thị — tài sản chiến lược | 1–2 người/đô thị |
+| **Quốc Gia** | Cấp Quốc Gia — huyền thoại sống, cực hiếm | Vài người/thế giới |
 
-**Luật Giám Định (khóa vĩnh viễn):** khi một NPC được đo hạng bằng **Máy Đo Ma Lực** của Hiệp Hội, hạng đó **khóa vĩnh viễn** — họ không bao giờ lên hạng. Đây là định luật của thế giới, được NPC nhắc đi nhắc lại như một *sự thật hiển nhiên*. **Ngườichơi là ngoại lệ duy nhất**: mỗi lần ngườichơi tái giám định và con số nhảy lên, thiết bị "lỗi", Hiệp Hội chấn động, tin đồn lan ra — *đặc quyền của ngườichơi được thế giới chứng kiến bằng nghi thức xã hội* (Nguyên tắc 4).
+**Luật Giám Định (khóa vĩnh viễn):** khi một NPC được đo hạng bằng **Máy Đo Ma Lực** của Hiệp Hội, hạng đó **khóa vĩnh viễn** — họ không bao giờ lên hạng. Đây là định luật của thế giới, được NPC nhắc đi nhắc lại như một *sự thật hiển nhiên*. **Ngườichơi là ngoại lệ duy nhất**: mỗi lần người chơi tái giám định và con số nhảy lên, thiết bị "lỗi", Hiệp Hội chấn động, tin đồn lan ra — *đặc quyền của người chơi được thế giới chứng kiến bằng nghi thức xã hội* (Nguyên tắc 4).
 
 ### 2.3. Hệ thống Kính Trọng (Respect)
 
-- Mỗi NPC lưu Điểm Kính Trọng với ngườichơi (công thức 14.14): hạng ngườichơi, việc làm được chứng kiến, tin đồn, tương tác trực tiếp.
+- Mỗi NPC lưu Điểm Kính Trọng với người chơi (công thức 14.14): hạng người chơi, việc làm được chứng kiến, tin đồn, tương tác trực tiếp.
 - **Năm bậc thái độ** (AI chi tiết: tài liệu 07.11): Khinh Thường → Thờ Ơ → Tôn Trọng → Kính Nể → Sùng Kính — ảnh hưởng giá cả, quest, bark, hành vi xã hội.
-- **Đầu game đau thật:** hunter hạng cao phớt lờ bạn, thương nhân chặt giá, Hiệp Hội xếp bạn vào hàng chờ. **Không buff số liệu** — chỉ là thái độ, nhưng thái độ là thứ ngườI chơi nhớ nhất.
-- **Payoff dài:** khi bạn lên hạng, thế giới *từ từ cúi đầu*. Kẻ từng khinh bạn phải chào bạn. Không cutscene — chỉ là hành vi thay đổi, và ngườichơi tự nhận ra.
+- **Đầu game đau thật:** hunter hạng cao phớt lờ bạn, thương nhân chặt giá, Hiệp Hội xếp bạn vào hàng chờ. **Không buff số liệu** — chỉ là thái độ, nhưng thái độ là thứ người chơi nhớ nhất.
+- **Payoff dài:** khi bạn lên hạng, thế giới *từ từ cúi đầu*. Kẻ từng khinh bạn phải chào bạn. Không cutscene — chỉ là hành vi thay đổi, và người chơi tự nhận ra.
 
 ### 2.4. Trấn Thủ — "trần nhà" của mỗi đô thị
 
-- Mỗi Đô Thị có ít nhất một **Trấn Thủ hạng S** (thủ đô có S★): mạnh hơn ngườichơi ở giai đoạn đầu–giữa, coi thường ngườichơi một cách có phong thái (không thô lỗ — *bề trên đàng hoàng*).
+- Mỗi Đô Thị có ít nhất một **Trấn Thủ hạng S** (thủ đô có Quốc Gia): mạnh hơn người chơi ở giai đoạn đầu–giữa, coi thường người chơi một cách có phong thái (không thô lỗ — *bề trên đàng hoàng*).
 - Trấn Thủ có questline công nhận riêng (tài liệu 24.6): từ phớt lờ → tò mò → thừa nhận → chào. Đây là trục "đối thủ xã hội" chạy song song trục sức mạnh.
-- Trấn Thủ **không bao giờ** trở thành địch của ngườichơi — họ là thước đo sống, không phải boss.
+- Trấn Thủ **không bao giờ** trở thành địch của người chơi — họ là thước đo sống, không phải boss.
 
 ### 2.5. Thuê Hunter & đồng hành NPC
 
-- Ngườichơi có thể **thuê hunter NPC** (hạng ≤ hạng ngườichơi −1) đồng hành một gate: trả Vàng trước + **chia loot** (tỷ lệ theo hạng họ, 14.15).
+- Ngườichơi có thể **thuê hunter NPC** (hạng ≤ hạng người chơi −1) đồng hành một gate: trả Vàng trước + **chia loot** (tỷ lệ theo hạng họ, 14.15).
 - Hunter thuê chạy AI vai trò chuẩn (tài liệu 07), có giới hạn: không vào Red Gate, không vào Vực Tháp, từ chối nội dung vượt hạng họ.
-- **Ý nghĩa thiết kế:** (a) solo player có trải nghiệm "party" an toàn; (b) là sink Vàng tự nhiên; (c) tạo *đồng nghiệp* — NPC quen thuộc ngườichơi thuê nhiều lần có thêm bark/quan hệ; (d) late-game ngườichơi vượt xa họ — vị ngọt buồn của kẻ lớn nhanh hơn thế giới.
+- **Ý nghĩa thiết kế:** (a) solo player có trải nghiệm "party" an toàn; (b) là sink Vàng tự nhiên; (c) tạo *đồng nghiệp* — NPC quen thuộc người chơi thuê nhiều lần có thêm bark/quan hệ; (d) late-game người chơi vượt xa họ — vị ngọt buồn của kẻ lớn nhanh hơn thế giới.
 
 ### 2.6. Cư dân, tài sản và lời mời tự nguyện
 
@@ -77,7 +77,7 @@
 
 ---
 
-## 3. TỔ ẤM — căn nhà là một hệ thống (v2.0)
+## 3. TỔ ẤM — căn nhà là một hệ thống (v4.0)
 
 ### 3.1. Tổ Ấm là gì
 
@@ -87,12 +87,12 @@
 ### 3.2. Gia đình (khung hệ thống — chi tiết narrative: tài liệu 24)
 
 - **Mẹ** — mắc **Giấc Ngủ Hư Không** sau sự kiện mở đầu (NPC tĩnh + mốc phản ứng). Lý do tồn tại của chuỗi nhiệm vụ chính.
-- **Em** — NPC động với AI cảm xúc (tài liệu 07.10): đờI sống riêng, phản ứng với hành trình ngườichơi, cần được bảo vệ trong Dungeon Break.
+- **Em** — NPC động với AI cảm xúc (tài liệu 07.10): đời sống riêng, phản ứng với hành trình người chơi, cần được bảo vệ trong Dungeon Break.
 - Gia đình **không bao giờ chết vĩnh viễn** — nỗi sợ là động cơ, không phải mất mát thật. (Nguyên tắc đạo đức attachment, 07.10.2.)
 
 ### 3.3. Phòng thủ Tổ Ấm
 
-- Dungeon Break và sự kiện Xâm Lược có thể nhắm vào vùng Tổ Ấm → trận phòng thủ kết hợp: tường/bẫy ngườichơi xây + garnison bóng + Em hỗ trợ hậu cần + dân làng trú ẩn.
+- Dungeon Break và sự kiện Xâm Lược có thể nhắm vào vùng Tổ Ấm → trận phòng thủ kết hợp: tường/bẫy người chơi xây + garnison bóng + Em hỗ trợ hậu cần + dân làng trú ẩn.
 - Báo trước rõ ràng (không đánh lén vào nhà), không phá khối vĩnh viễn công trình (config), thất bại = thiệt hại tạm (dân thương, tài nguyên mất), **không mất nhà**.
 - Chủ động: bóng garnison + Cờ Lãnh Thổ biến phòng thủ thành *build*, không phải gánh nặng.
 
@@ -105,12 +105,12 @@
 | **Đợt Nứt** (Gate Surge) | 3–5 ngày game | Hai Gate của Stratum được thay mới nhanh hơn và có thưởng đa dạng phe — "mùa săn", không phá trần 2 Gate |
 | **Huyết Nguyệt** | 7 ngày game | Quái +1 hạng, bầy đêm tấn công, loot tăng |
 | **Dungeon Break** | Do bỏ quên gate | Xem tài liệu 08.4 |
-| **Xâm Lược Vương Giả** | Sau hạng Quốc Gia | Đạo quân Cửu Vương đánh vào vùng ngườichơi — phòng thủ nhiều đợt cùng quân đoàn + bóng garnison |
+| **Xâm Lược Vương Giả** | Sau hạng Quốc Gia | Đạo quân Cửu Vương đánh vào vùng người chơi — phòng thủ nhiều đợt cùng quân đoàn + bóng garnison |
 | **Thương Nhân Hắc Ảnh** | Ngẫu nhiên | NPC bí ẩn bán hàng hiếm bằng Mảnh Bóng |
 | **Bóng Lưu Lạc** | Ngẫu nhiên | Bóng hoang xuất hiện trong thế giới (tài liệu 08.6) |
-| **Giám Định Công Khai** | Định kỳ tại Đô Thị | Lễ đo hạng NPC mới — sự kiện xã hội, cơ hội tái giám định của ngườichơi (payoff narrative) |
+| **Giám Định Công Khai** | Định kỳ tại Đô Thị | Lễ đo hạng NPC mới — sự kiện xã hội, cơ hội tái giám định của người chơi (payoff narrative) |
 
-Nguyên tắc: sự kiện **không bao giờ hủy công trình ngườichơi** (không phá khối vĩnh viễn trừ khi ngườichơi cho phép trong config). Thế giới thay đổi, nhà bạn vẫn là nhà bạn.
+Nguyên tắc: sự kiện **không bao giờ hủy công trình người chơi** (không phá khối vĩnh viễn trừ khi người chơi cho phép trong config). Thế giới thay đổi, nhà bạn vẫn là nhà bạn.
 
 ---
 
@@ -134,21 +134,21 @@ UMBRA không có cutscene dài; lore nằm ở:
 | Nether | Lãnh địa Ác Ma: gate hạng cao, nguyên liệu endgame — "tiền tuyến" |
 | The End | Bí ẩn cổ đại, Vết Nứt Cổ Đại, lore Kiến Trúc Sư — "cánh cửa sau" |
 
-Không thêm dimension mới ở 1.0 (trừ pocket dimension của dungeon/Penalty Zone) — mở rộng dimension là nội dung tương lai (tài liệu 23), ưu tiên làm sâu 3 dimension có sẵn.
+Không thêm dimension mới ở 1.0 (trừ pocket dimension của dungeon/Vùng Thử Luyện tự nguyện) — mở rộng dimension là nội dung tương lai (tài liệu 23), ưu tiên làm sâu 3 dimension có sẵn.
 
 ---
 
-## 7. Rủi ro & Câu hỏi mở
+## 7. Rủi ro & Quyết định vận hành
 
 1. **World event làm phiền builder?** → Config tắt từng loại sự kiện; sự kiện tấn công luôn *báo trước* và không phá khối.
 2. **NPC hunter hạng cố định có bị "vượt mặt" rồI vô nghĩa?** → NPC có questline riêng và vai trò xã hội (trade, thông tin, thuê đồng hành), không tồn tại để so sức.
 3. **Máy farm vanilla phá kinh tế EXP?** → Quái chết bởi sát thương môi trường/máy farm không rơi EXP đầy đủ, không cho Arise; chi tiết 12.5.
 4. **Đô Thị 4x làm nặng worldgen/hiệu năng?** → Đô Thị là *cấu trúc nâng cấp có điều kiện*, số lượng giới hạn mỗi vùng; NPC dùng social AI LOD (07.14).
-5. **Ngườichơi bỏ quên gia đình?** → Cho phép chơi không xây Tổ Ấm (nội dung gia đình mở theo ý ngườichơi), nhưng chuỗi chính khuyến khích mạnh bằng phần thưởng định danh — tự do vẫn được tôn trọng.
+5. **Ngườichơi bỏ quên gia đình?** → Cho phép chơi không xây Tổ Ấm (nội dung gia đình mở theo ý người chơi), nhưng chuỗi chính khuyến khích mạnh bằng phần thưởng định danh — tự do vẫn được tôn trọng.
 
 ---
 
-## 8. Bổ sung v3.0 — đô thị sống, gia đình an toàn và thế giới nhiều lớp
+## 8. Bổ sung v4.0 — đô thị sống, gia đình an toàn và thế giới nhiều lớp
 
 Mỗi “làng” quan trọng trong fantasy Hunter được xử lý như một **Đô Thị quy mô nhỏ**, không phải một NPC đứng cạnh máy đo. Máy Giám Định là một nghi thức công khai: cư dân đến xếp hàng theo lịch, người hạng thấp phản ứng bằng tò mò/vỗ tay/kính nể khi thấy kết quả bất thường, hunter và thương nhân có bark khác nhau. Mật độ NPC, lịch và animation phải LOD theo tài liệu 17; sự sống động không được trả giá bằng TPS.
 

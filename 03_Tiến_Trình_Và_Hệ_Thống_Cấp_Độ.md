@@ -30,7 +30,7 @@ UMBRA tách sức mạnh thành **hai trục song song**:
 |---|---|---|
 | Giết quái trong gate/dungeon | 45% | Nguồn chính; quái mạnh hơn level → thưởng chênh lệch |
 | Boss / mini-boss | 20% | Bonus lần giết đầu mỗi loại |
-| Quest Hệ Thống | 15% | Nhiệm vụ rèn luyện theo ngày game (tùy chọn) + chuỗi chính + ẩn |
+| Quest Hệ Thống | 15% | Nhiệm vụ rèn luyện theo chu kỳ chơi (tùy chọn, không streak) + chuỗi chính + ẩn |
 | Trỗi Dậy thành công | 10% | Thu phục cũng là chiến thắng |
 | Hoạt động vanilla (đào quặng hiếm, khám phá cấu trúc, nông trại lớn) | 10% | Neo mod vào sandbox; chống AFK bằng diminishing returns/giờ |
 
@@ -64,7 +64,7 @@ Không phải mọi thông tin địch được “cho miễn phí”, nhưng ng
 
 Kháng độc, chảy máu, lạnh, cháy và khống chế là *phòng thủ thứ cấp*, không phải 5 stat mới gây bloat. VIT tạo nền kháng/tự giải độc; trang bị, set và node Tiềm Năng tạo khác biệt build. Có trần hiệu dụng và counterplay (bình, nghỉ, skill, mount/biome phù hợp), nên không trang bị nào biến trạng thái thành vô nghĩa.
 
-### Quy tắc phân bổ v3.0
+### Quy tắc phân bổ v4.0
 
 - Mỗi level nhận **5 Điểm Thuộc Tính tự do, không có +1 tự động**. Người chơi thật sự sở hữu build của mình; UI luôn hiển thị trước ảnh hưởng tức thời và mốc mở khóa kế tiếp.
 - **Respec thuộc tính:** mở sau Job Change, tốn Tinh Hoa và bị giới hạn 1 lần/3 ngày game. Nó cứu một build thiếu hiểu biết nhưng không phải nút đổi build giữa mỗi boss.
@@ -75,7 +75,7 @@ Kháng độc, chảy máu, lạnh, cháy và khống chế là *phòng thủ th
 
 ---
 
-## 4. Hệ thống Hạng (Rank E → Vương Giả)
+## 4. Hệ thống Hạng (Rank F → Vương Giả)
 
 ### 4.1. Thang hạng của người chơi
 
@@ -185,8 +185,8 @@ Sau khi đánh bại Kiến Trúc Sư (nội dung tốt nghiệp):
 
 ---
 
-## 9. Rủi ro & Câu hỏi mở
+## 9. Rủi ro & Quyết định vận hành
 
 1. **5 chỉ số có bị "2 chỉ số thật + 3 chỉ số trang trí"?** → Theo dõi qua telemetry playtest; nếu một chỉ số <10% lượt gán điểm, thiết kế lại ảnh hưởng phụ của nó.
-2. **Potential ẩn có gây cảm giác bất công?** → Cân nhắc hiển thị potential dưới dạng "thiên hướng" mô tả (không số) để giữ bí ẩn nhưng không bí mật.
+2. **Potential có gây cảm giác bất công?** → Đã chốt: không có Potential ẩn. Thiên hướng có thể dùng flavor text, nhưng node, điều kiện, cost, mốc mở khóa và hệ quả số đều preview trước lần xác nhận không hoàn tác (03.6.2, 25).
 3. **Rank quest có thành gate-keeping gây nản?** → Mọi rank quest có độ khó thích ứng nhẹ (tài liệu 13.6) và không giới hạn số lần thử.

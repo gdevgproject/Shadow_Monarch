@@ -144,7 +144,7 @@ Nguyên tắc: **definition bất biến trong runtime** (reload bằng datapack
 }
 ```
 
-Nhiệm vụ rèn luyện của UMBRA mô phỏng "bài tập thể chất" bằng hoạt động *trong game*: di chuyển X khối, dodge Y lần, gây Z sát thương, đào W khối — gắn với hành vi thật, không phải checklist trừu tượng. Nó sinh theo ngày game và dừng khi offline; bỏ qua không phạt. **Vùng Phạt** chỉ kích hoạt khi người chơi tự nhận Khế Ước Rèn Luyện để đổi lấy thưởng cao hơn hoặc chọn config hardcore.
+Nhiệm vụ rèn luyện của UMBRA mô phỏng "bài tập thể chất" bằng hoạt động *trong game*: di chuyển X khối, dodge Y lần, gây Z sát thương, đào W khối — gắn với hành vi thật, không phải checklist trừu tượng. Nó sinh theo chu kỳ chơi/hành động, dừng khi offline và không có streak; bỏ qua không phạt. **Vùng Thử Luyện** chỉ kích hoạt khi người chơi tự nhận Khế Ước Rèn Luyện để đổi lấy thưởng cao hơn hoặc chọn config hardcore.
 
 ## 8. Schema — Trang bị & Affix
 
@@ -176,7 +176,7 @@ Nhiệm vụ rèn luyện của UMBRA mô phỏng "bài tập thể chất" bằ
 
 ---
 
-## 11. Rủi ro & Câu hỏi mở
+## 11. Rủi ro & Quyết định vận hành
 
 1. **JSON verbose → content author chậm?** → Pipeline có công cụ sinh/kiểm tra (21); chấp nhận verbose đổi lấy an toàn.
 2. **History của bóng phình ra?** → Giới hạn trường history ở số tổng hợp + 1 "trận đáng nhớ nhất" (ghi đè khi có trận đáng nhớ hơn theo điểm kịch tính).
@@ -184,7 +184,7 @@ Nhiệm vụ rèn luyện của UMBRA mô phỏng "bài tập thể chất" bằ
 
 ---
 
-## 12. Bổ sung v3.0 — state mới bắt buộc
+## 12. Bổ sung v4.0 — state mới bắt buộc
 
 `PlayerState` phải thêm `rank`, `unspent_attribute_points`, `potential_commitments`, `world_strata_unlocked`, `active_stratum`, `family_orders`, `partner_bond` và preset legion/garnison. `potential_commitments` lưu preview version + lựa chọn đã xác nhận để migration/UI luôn giải thích được lựa chọn không hoàn tác.
 

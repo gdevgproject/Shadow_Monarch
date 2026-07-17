@@ -47,8 +47,14 @@ Người chơi tự phân điểm, chọn lệnh, chọn thế giới và chọn
 ## Nguyên tắc 14 — Nội dung mới phải đổi quyết định, không chỉ đổi con số
 Thêm boss, Gate, trang bị, Stratum hay NPC chỉ được duyệt nếu nó tạo cách nhìn/đánh/chỉ huy/khám phá khác. Khi cần chơi lâu hơn, ưu tiên mối quan hệ, mastery, mutator, đối thủ mới và quyền lực được thế giới phản chiếu trước khi tăng máu quái, giờ farm hoặc currency.
 
+## Nguyên tắc 15 — Cảm hứng phải được chuyển hóa, không được sao chép
+Ta học từ game/phim/anime vì chúng giải quyết vấn đề thật, nhưng chỉ lấy nguyên lý có thể diễn đạt lại bằng UMBRA. Không dùng tên, lore, nhân vật, asset, silhouette, VFX/SFX, UI hay moveset nhận diện của nguồn. Mọi cảm hứng đi qua Reference Intake Card và review ba bên ở 26/21; “đổi tên/đổi màu” không phải thiết kế gốc.
+
+## Nguyên tắc 16 — Luật thế giới phải là máy trạng thái, không là câu văn mơ hồ
+Những hệ có hậu quả dài hạn như Gate, Arise, Stratum, quan hệ và save migration phải có state, transition, owner và regression test. Ví dụ Gate không “có lẽ đóng khi boss chết”: nó chỉ `CLOSED` khi tất cả objective complete và người chơi rời Gate; rời sớm giữ `OPEN` (08.2.1, 14.21). Câu chữ đẹp không thay thế được logic code được.
+
 ---
 
 ### Quy trình áp dụng
-- Review thiết kế mới: đối chiếu 14 nguyên tắc theo thứ tự — vi phạm nguyên tắc cao hơn không được cứu bởi nguyên tắc thấp hơn.
+- Review thiết kế mới: đối chiếu 16 nguyên tắc theo thứ tự — vi phạm nguyên tắc cao hơn không được cứu bởi nguyên tắc thấp hơn.
 - Nguyên tắc có thể *sửa*, bằng đề xuất ADR (16.6) được cả team thông qua — không bao giờ vi phạm âm thầm.

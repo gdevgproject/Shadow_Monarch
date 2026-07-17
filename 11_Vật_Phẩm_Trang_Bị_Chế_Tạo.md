@@ -30,7 +30,7 @@ Nguyên tắc: **độ hiếm tăng *độ thú vị*, không chỉ tăng số.*
 
 ## 3. Growth Weapon — vũ khí lớn cùng người chơi
 
-- Mỗi lớp vũ khí có **2–3 vũ khí growth** kiếm được từ chuỗi sự kiện (ví dụ *Nanh Rết* từ boss Penalty Zone).
+- Mỗi lớp vũ khí có **2–3 vũ khí growth** kiếm được từ chuỗi sự kiện (ví dụ *Nanh Rết* từ boss Vùng Thử Luyện tự nguyện).
 - Growth weapon **hút EXP vũ khí** khi chiến đấu, mở khóa node riêng (mini skill tree của riêng món đồ) → *bạn và vũ khí cùng lớn* — attachment áp dụng cả cho trang bị.
 - Không bao giờ lỗi thời: ở endgame có thể "thức tỉnh" lên Mythic bằng vật liệu Cửu Vương.
 
@@ -70,13 +70,13 @@ Bóng cấp Kỵ Sĩ+: 2 ô (vũ khí + bùa). Loot pool chung với người ch
 
 ## 6. Cửa hàng Hệ Thống & Hộp Ngẫu Nhiên
 
-- **Cửa hàng Hệ Thống** (mở level 30): xoay vòng hàng theo ngày game, bán vật phẩm tiêu hao, khuôn rune, ô kho — mua bằng Vàng.
+- **Cửa hàng Hệ Thống** (mở level 30): catalog xoay vòng theo **chu kỳ phiêu lưu** để tạo lựa chọn mua, nhưng item không độc quyền, ba danh mục tới được xem trước và luôn quay lại; bỏ qua không mất tiến trình. Bán vật phẩm tiêu hao, khuôn rune, ô kho bằng Vàng.
 - **Hộp Ban Phúc (Blessed Box):** cho món người chơi *đang cần theo build* (hệ thống đọc stat → pity thông minh).
 - **Hộp Bị Nguyền (Cursed Box):** cho món người chơi *sẽ cần* — vật phẩm mở nội dung tương lai (chìa Instant Dungeon, vật triệu hồi boss ẩn). Cursed Box là *kênh phân phối nội dung*, không phải gacha.
 
 ---
 
-## 7. Rủi ro & Câu hỏi mở
+## 7. Rủi ro & Quyết định vận hành
 
 1. **Affix pool quá rộng → loot nhạt?** → Pool nhỏ có chủ đích (~60 affix), mỗi affix phải qua được bài kiểm "ai đó sẽ xây build quanh nó".
 2. **Reforge thành máy xay tài nguyên gây chán?** → Giới hạn số lần reforge/món (vết khắc vĩnh viễn trên đồ) → quyết định có trọng lượng.
@@ -84,8 +84,16 @@ Bóng cấp Kỵ Sĩ+: 2 ô (vũ khí + bùa). Loot pool chung với người ch
 
 ---
 
-## 8. Bổ sung v3.0 — loadout, set và nhịp 10 level
+## 8. Bổ sung v4.0 — loadout, set và nhịp 10 level
 
 Loadout người chơi gồm vũ khí chính, vũ khí phụ hoặc hai tay, mũ, giáp ngực, găng, giày, nhẫn ×2, vòng cổ và bùa. Vũ khí hai tay chiếm cả hai tay nhưng được budget mạnh hơn/đổi combo, không chỉ là số damage cao hơn. Mỗi **10 level** có một bậc trang bị mua/chế tạo cơ bản với yêu cầu level rõ; đồ Gate/boss cùng bậc thêm trait/lore thay vì chỉ thay thế bằng item level.
 
 Set bonus dùng 2/4 mảnh, luôn mở tương tác build (ví dụ parry, mount, Domain, độc, dodge), không cộng số thuần. Một set hoàn chỉnh không được mạnh hơn mọi tổ hợp mixed-affix; mọi bonus có power budget trong 13/14. Bóng Kỵ Sĩ+ dùng loadout rút gọn vũ khí/bùa/giáp, tự tăng chỉ số theo vai trò và XP riêng; người chơi chỉ định ưu tiên phát triển thay vì phải phân 5 stat từng bóng.
+
+---
+
+## 9. Bổ sung v4.0 — Equipment Contract và reward tách nhánh
+
+Mỗi gear/set/mount/relic định danh phải có Equipment Contract theo 26.8: người chơi đổi quyết định nào, điều kiện kích hoạt/giới hạn/counterplay, tương tác skill–AI–Minecraft nào, PB/TTK target nào và đường nâng cấp/tái sử dụng sau mốc 10 level là gì. Không một món “huyền thoại” được ship chỉ vì tên/lore/ngoại hình; nó phải mở hoặc thay đổi một lối chơi cụ thể.
+
+Reward của boss/faction tách thành các nhánh lựa chọn: shadow, mount capability, gear/relic hoặc resource/cosmetic/lore. Một kill không được bắt buộc cho toàn bộ lối chơi và không được dồn đồng thời damage, tốc độ, tank và fast travel vào một reward. Mọi asset/biểu tượng/item text đi qua review nguyên bản 26.1 trước khi công bố.

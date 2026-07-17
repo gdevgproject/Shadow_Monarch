@@ -97,7 +97,7 @@ TTK quá thấp → combat mất đọc/đếm nhịp; quá cao → grind. Hai c
 
 ---
 
-## 9. Rủi ro & Câu hỏi mở
+## 9. Rủi ro & Quyết định vận hành
 
 1. **PB đo được "skill người chơi"?** → Không — PB đo số; skill được bù bằng adaptive difficulty và thiết kế encounter cho phép outplay.
 2. **Người chơi tối ưu hóa PB lệch (full quân đoàn)?** → Trần 60% ở mục 7 + boss khắc quân số.
@@ -105,10 +105,27 @@ TTK quá thấp → combat mất đọc/đếm nhịp; quá cao → grind. Hai c
 
 ---
 
-## 10. Bổ sung v3.0 — cân bằng Thăng Giới và quân đoàn
+## 10. Bổ sung v4.0 — cân bằng Thăng Giới và quân đoàn
 
 **Thăng Giới là lựa chọn độ khó, không là stat check toàn cục.** Mỗi Thế Giới Song Song có PB target, tỷ lệ modifier và bảng loot riêng; Thế Giới Gốc giữ PB ban đầu. Tầng mới tăng thứ tự ưu tiên: encounter/AI/bố cục → mutator → phần thưởng collection → số liệu. Không được dùng “mọi quái +X% HP” làm nội dung vô hạn.
 
 Quân đoàn được cân theo ba ngân sách độc lập: tổng PB đóng góp (tối đa 60%), số entity/đội hình, và mana dùng lúc triệu hồi/hồi sinh. Boss được phép phản ứng với đội đông nhưng phải đánh vào vị trí/lệnh/role chứ không vô hiệu hóa toàn bộ summon. Trong simulation, kiểm tra ba profile: solo-self, commander, hybrid; không profile nào được chênh tỷ lệ thắng >10 điểm phần trăm ở nội dung đúng vai trò.
 
 Arise có pity boss là phần thưởng, nên cân bằng nằm ở điều kiện hạ boss, sức chứa, thời điểm mở slot và moveset bóng thu nhỏ — không nằm ở việc bắt người chơi lặp boss vì RNG. Một boss shadow mạnh phải có điểm yếu, chi phí triệu hồi/revive hoặc cạnh tranh vị trí đội hình rõ ràng.
+
+---
+
+## 11. Bổ sung v4.0 — ngân sách encounter, escort và nội dung mới
+
+Boss có quân hộ vệ phải được cân như **một encounter**, không cộng boss đầy đủ với một đội quân đầy đủ rồi gọi đó là “khó”. Khi PB encounter đúng hạng = `E`, phân bổ khởi điểm để simulation là:
+
+```text
+PB_boss       = 55–75% E
+PB_escort     = 15–30% E
+PB_arena/obj  = 10–20% E
+Tổng          = 100% E (trước modifier được công bố)
+```
+
+`PB_arena/obj` là áp lực có counterplay (hazard telegraph, vị trí, objective phụ), không phải sát thương vô hình. Escort giảm phần PB boss hoặc arena tương ứng; thêm healer/shield/caller phải lấy ngân sách từ đâu đó. Điều này giữ fantasy “boss được bảo vệ” nhưng vẫn để người chơi giải đội hình thay vì gặp tường số.
+
+Mọi faction/boss/skill/set/mount mới phải chứng minh **độ khác biệt quyết định** theo 26: playtest phải chỉ ra động từ thay đổi, counter tactical + strategic, failure feedback và reward không gây snowball bắt buộc. Nếu chỉ khác số/texture, cân nó như variant/modifier nhỏ; không tăng PB target, không chiếm slot content lớn và không dùng để tuyên bố game có thêm chiều sâu.

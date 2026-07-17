@@ -9,11 +9,12 @@
 
 | Gói | Nội dung | Móng đã chuẩn bị ở 1.0 |
 |---|---|---|
-| **1.1 — Cửu Vương** | Mở các Vương thật sự sau 1.0 (1.0 chỉ giới thiệu 3 Sứ Giả/đại diện), mỗi Vương một raid cơ chế | Khung raid boss 09.4 |
-| **1.2 — Lãnh Địa Bóng** | Pocket dimension riêng của người chơi: thủ đô quân đoàn, bóng sống–làm việc–giao tiếp | Bóng = dữ liệu thuần, materialize được |
-| **1.3 — Mùa Săn** | World event theo chu kỳ dài với mutator toàn cục; phần thưởng định danh luân phiên/quay lại, không độc quyền theo thời gian | Hệ world event + mutator |
-| **1.4 — Thức Tỉnh Thứ Hai** | Người chơi thứ hai trong cùng save (hồ sơ riêng) / chế độ co-op 2–4 người: gate scale, chia loot theo đóng góp | Server-authoritative từ đầu (16.3.4) |
-| **1.5 — New Game+ "Chén Tái Sinh"** | Tạo **world/stratum mới tự nguyện**, giữ nguyên save gốc; người chơi mang danh hiệu và một bóng chọn lọc vào thử thách Vương Giả Thuần Túy+, lore phản chiếu lựa chọn cũ | Prestige + Stratum framework (03.7) |
+| **1.1 — Dưới Mặt Nước** | Thủy tộc, dungeon nước, công trình, mount nước và boss ba chiều | Faction/room/AI/mount card 26; P7+ regression |
+| **1.2 — Cửu Vương** | Mở các Vương thật sự sau 1.0 (1.0 chỉ giới thiệu 3 Sứ Giả/đại diện), mỗi Vương một raid cơ chế | Khung raid boss 09.4 + Teaching Card 26.6 |
+| **1.3 — Lãnh Địa Bóng** | Pocket dimension riêng của người chơi: thủ đô quân đoàn, bóng sống–làm việc–giao tiếp | Bóng = dữ liệu thuần, materialize được |
+| **1.4 — Mùa Săn** | World event theo chu kỳ dài với mutator toàn cục; phần thưởng định danh luân phiên/quay lại, không độc quyền theo thời gian | Hệ world event + mutator |
+| **1.5 — Thức Tỉnh Thứ Hai** | Người chơi thứ hai trong cùng save (hồ sơ riêng) / chế độ co-op 2–4 người: gate scale, chia loot theo đóng góp | Server-authoritative từ đầu (16.3.4) |
+| **1.6 — New Game+ "Chén Tái Sinh"** | Tạo **world/stratum mới tự nguyện**, giữ nguyên save gốc; người chơi mang danh hiệu và một bóng chọn lọc vào thử thách Vương Giả Thuần Túy+, lore phản chiếu lựa chọn cũ | Prestige + Stratum framework (03.7) |
 
 > **Triết lý New Game+:** "Chén Tái Sinh" không reset, ghi đè hay tước bất cứ thứ gì ở world gốc. Nó là **một nhánh mới tự nguyện có giá**: thế giới mới khó hơn, nhưng người chơi mang theo *ký ức* (di sản). Thất bại và mất mát vẫn có nghĩa.
 
@@ -53,7 +54,7 @@
 
 ---
 
-## 6. Bổ sung v3.0 — thứ tự mở rộng sau 1.0
+## 6. Bổ sung v4.0 — thứ tự mở rộng sau 1.0
 
 Không coi mọi ý tưởng trong design bible là lời hứa ngày phát hành. Theo dữ liệu P6, các gói mở rộng được ưu tiên theo giá trị trải nghiệm/rủi ro kỹ thuật:
 
@@ -64,3 +65,11 @@ Không coi mọi ý tưởng trong design bible là lời hứa ngày phát hàn
 5. **Cửu Vương hoàn chỉnh:** boss 7–12, Vực Tháp sâu và campaign hậu truyện.
 
 Co-op/online là nhánh kiến trúc có thể mở sau khi single-player ổn định, không phải một mục tiêu tự động. Chỉ triển khai sau threat model, quyền sở hữu Gate/Shadow, packet budget, migration và playtest latency; không dùng mạng để giải quyết bài toán nội dung hoặc giữ chân người chơi.
+
+---
+
+## 7. Bổ sung v4.0 — điều kiện mở rộng, không phải wish-list
+
+Thứ tự 1.1–1.6 ở trên là **queue hiện tại đã chốt** để thống nhất với roadmap P7+; chỉ thay đổi bằng ADR sau dữ liệu P6, không phải vì một ý tưởng vừa được nhắc tới. Mỗi gói vẫn phải pass Reference Intake Card/Faction–Boss–Skill Bible 26, simulation/PB 13–14, performance 17, compatibility matrix 19 và migration 15–18. Gói không qua được chỉ quay về prototype; không đẩy vào release để “đủ lớn”.
+
+Mọi nội dung mở rộng tiếp tục dùng luật Gate chuẩn v4, không tạo hệ closure riêng; thế giới cũ/Stratum cũ luôn còn đường về. Điều này bảo vệ lời hứa chơi dài hạn: thêm chiều sâu và biến thể, không thay đổi luật nền hay biến save người chơi thành vật hy sinh cho expansion.
