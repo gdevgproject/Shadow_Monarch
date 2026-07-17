@@ -1,39 +1,95 @@
-# Gradle
+# ==========================================
+# Gradle & Build Outputs
+# ==========================================
 .gradle/
 build/
+bin/
+out/
 
-# Log files
-*.log
+# ==========================================
+# Java & JVM
+# ==========================================
+*.class
+*.bluej
+*.jar
+*.war
+*.ear
+# Exclude Gradle wrapper jar so wrapper works out of the box
+!gradle/wrapper/gradle-wrapper.jar
 
-# Crash reports
-crash-reports/
-
-# Minecraft run directory (saves, logs, config, etc.)
+# ==========================================
+# Minecraft & Fabric Loom Specific
+# ==========================================
+# Default run directories
 run/
 runClient/
 runServer/
+runGameTestServer/
+# Auto-generated IDE run configurations from Loom and Loom active state
+.run/
+active.json
 
-# IDEs and editors
+# Crash reports and Minecraft logs
+crash-reports/
+logs/
+*.log
+
+# ==========================================
+# IDEs and Editors
+# ==========================================
+# IntelliJ IDEA
 .idea/
 *.iml
 *.ipr
 *.iws
-out/
-.vscode/
+
+# Eclipse
 .classpath
 .project
 .settings/
 .factorypath
+.metadata/
+.recommenders/
 
-# Operating System Files
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# NetBeans
+nbproject/
+nb-configuration.xml
+.nb-gradle/
+
+# ==========================================
+# Operating System & Temporary Files
+# ==========================================
+# Windows
 Thumbs.db
 Desktop.ini
+desktop.ini
+$RECYCLE.BIN/
+
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
 
-# Java / Compilation
-*.class
-*.bluej
-*.jar
+# Linux / Generic
+*~
+*.tmp
+*.bak
+*.swp
 
-# Local configuration / secrets
+# ==========================================
+# Local Configuration & Secrets
+# ==========================================
 local.properties
+.env
+.env.local
+.env.*.local
+
+# ==========================================
+# Agent & Tooling Metadata
+# ==========================================
+.agents/
