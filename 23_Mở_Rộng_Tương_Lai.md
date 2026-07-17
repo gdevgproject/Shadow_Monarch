@@ -9,13 +9,13 @@
 
 | Gói | Nội dung | Móng đã chuẩn bị ở 1.0 |
 |---|---|---|
-| **1.1 — Sáu Vương Còn Lại** | Hoàn thiện Cửu Vương (1.0 có 3), mỗi Vương một raid cơ chế | Khung raid boss 09.4 |
+| **1.1 — Cửu Vương** | Mở các Vương thật sự sau 1.0 (1.0 chỉ giới thiệu 3 Sứ Giả/đại diện), mỗi Vương một raid cơ chế | Khung raid boss 09.4 |
 | **1.2 — Lãnh Địa Bóng** | Pocket dimension riêng của người chơi: thủ đô quân đoàn, bóng sống–làm việc–giao tiếp | Bóng = dữ liệu thuần, materialize được |
-| **1.3 — Mùa Săn** | World event theo chu kỳ dài với mutator toàn cục + phần thưởng định danh giới hạn thời gian *trong game* (không FOMO thật) | Hệ world event + mutator |
+| **1.3 — Mùa Săn** | World event theo chu kỳ dài với mutator toàn cục; phần thưởng định danh luân phiên/quay lại, không độc quyền theo thời gian | Hệ world event + mutator |
 | **1.4 — Thức Tỉnh Thứ Hai** | Người chơi thứ hai trong cùng save (hồ sơ riêng) / chế độ co-op 2–4 người: gate scale, chia loot theo đóng góp | Server-authoritative từ đầu (16.3.4) |
-| **1.5 — New Game+ "Chén Tái Sinh"** | Reset thế giới với di sản: giữ danh hiệu, một bóng chọn lọc, mở độ khó Vương Giả Thuần Túy+, lore phản chiếu lựa chọn cũ | Prestige framework (03.7) |
+| **1.5 — New Game+ "Chén Tái Sinh"** | Tạo **world/stratum mới tự nguyện**, giữ nguyên save gốc; người chơi mang danh hiệu và một bóng chọn lọc vào thử thách Vương Giả Thuần Túy+, lore phản chiếu lựa chọn cũ | Prestige + Stratum framework (03.7) |
 
-> **Triết lý New Game+:** "Chén Tái Sinh" của UMBRA *không xóa hậu quả* như cú save-scumming của nguyên tác — nó là **lựa chọn tự nguyện có giá**: thế giới mới khó hơn, nhưng người chơi mang theo *ký ức* (di sản). Thất bại và mất mát vẫn có nghĩa.
+> **Triết lý New Game+:** "Chén Tái Sinh" không reset, ghi đè hay tước bất cứ thứ gì ở world gốc. Nó là **một nhánh mới tự nguyện có giá**: thế giới mới khó hơn, nhưng người chơi mang theo *ký ức* (di sản). Thất bại và mất mát vẫn có nghĩa.
 
 ---
 
@@ -58,7 +58,7 @@
 Không coi mọi ý tưởng trong design bible là lời hứa ngày phát hành. Theo dữ liệu P6, các gói mở rộng được ưu tiên theo giá trị trải nghiệm/rủi ro kỹ thuật:
 
 1. **Dưới Mặt Nước:** bộ tộc, dungeon, công trình, mount nước và boss ba chiều.
-2. **Kẻ Kỵ Hành:** mount mặt đất/bay giới hạn, route khám phá, boss cưỡi thú.
+2. **Kẻ Kỵ Hành:** mở rộng từ mount mặt đất nền 1.0 sang mount bay giới hạn, route khám phá và boss cưỡi thú.
 3. **Những Thế Giới Song Song:** Strata 2–5, mutator, thành phố/guild quest liên giới.
 4. **Những Ràng Buộc Tự Nguyện:** mở rộng companion/romance giữa NPC trưởng thành đã có quest và AI nền tảng.
 5. **Cửu Vương hoàn chỉnh:** boss 7–12, Vực Tháp sâu và campaign hậu truyện.

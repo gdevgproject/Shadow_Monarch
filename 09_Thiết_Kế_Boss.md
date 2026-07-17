@@ -16,11 +16,13 @@
 
 ---
 
-## 2. Ma trận 12 boss định danh (1.0)
+## 2. Ma trận 12 boss định danh (tầm nhìn nội dung 1.x)
+
+**Phạm vi phát hành:** boss 1–6 là xương sống 1.0; boss 7–12 được author ở phase mở rộng P7+ sau khi nền combat/quân đoàn/Stratum đã chứng minh ổn định. Bảng này là contract nội dung dài hạn, không phải lời hứa nhồi 12 boss vào beta.
 
 | # | Boss | Phe | Nội dung | Bài học | Phần thưởng định danh |
 |---|---|---|---|---|---|
-| 1 | **Kẻ Gác Cổng Đầu Tiên** | Undead | Gate E tutorial sau Thức Tỉnh | Đọc telegraph, dodge cơ bản | Rune: Vọt Tàn Ảnh |
+| 1 | **Kẻ Gác Cổng Đầu Tiên** | Undead | Gate F tutorial sau Thức Tỉnh | Đọc telegraph, dodge cơ bản | Rune: Vọt Tàn Ảnh |
 | 2 | **Chúa Tể Hang Rết** | Côn Trùng | Penalty Zone (lần bị phạt đầu tiên) | Quản lý tài nguyên khi yếu | Trang bị growth: Nanh Rết |
 | 3 | **Sói Vương Nanh Thép** | Kiếp Thú | Instant Dungeon đầu | Đánh bầy, ưu tiên mục tiêu | Bóng: Bầy Sói (unique) |
 | 4 | **Nữ Hoàng Độc Nhãn** | Bò Sát | Gate D | Né đòn vùng, dùng địa hình | Rune: Nhịp Máu |
@@ -28,7 +30,7 @@
 | 6 | **Chúa Trùm Tuyết** | Băng Tộc | Red Gate | Đàm phán? Không — đọc pattern boss khôn, quản lý nhiều mục tiêu | Bóng Kỵ Sĩ + trang bị Băng |
 | 7 | **Đại Pháp Sư Orc** | Nhân Hình | Gate A | Interrupt, chống phép tầm xa | Bóng Pháp Sư (General-tier) |
 | 8 | **Vua Kiến** | Côn Trùng | World Event (đảo) | Tốc độ & sát ý thuần túy — boss nhanh hơn bạn | Bóng Marshal-tier tiềm năng |
-| 9 | **Cự Long Kamish-analog "Diệt Thế"** | Rồng | Gate S đầu tiên | Chống breath, phá posture khổng lồ | Bóng Rồng + thú cưỡi bay |
+| 9 | **Cự Long "Diệt Thế"** | Rồng | Gate S đầu tiên | Chống breath, phá posture khổng lồ | Bóng Rồng + thú cưỡi bay |
 | 10 | **Tượng Thần (Construct Prime)** | Construct | Double Dungeon | Chiến đấu theo "luật" — boss giết theo quy tắc, không theo HP | Chìa khóa Vực Tháp tầng cao |
 | 11 | **Sứ Giả Cửu Vương** (×3) | Đa phe | Gate S+ chuỗi | Raid cơ chế: mỗi sứ giả một trục (quân số / đơn đấu / puzzle-combat) | Mảnh Vương Quyền |
 | 12 | **Kiến Trúc Sư Vô Danh** | — | Vực Tháp tầng 100 | **Tổng ôn mọi bài học** — boss "nhà thiết kế": dùng lại cơ chế của 11 boss trước theo cách xáo trộn | Prestige "Vượt Ngôi" |
@@ -47,7 +49,7 @@
 
 **Pha 3 — "Danh Dự" (40–15%):** boss bỏ khiên, hai tay cầm kiếm: nhanh hơn, đau hơn, nhưng posture dễ vỡ hơn. *Dạy:* risk/reward — phản công đúng lúc kết thúc nhanh hơn là phòng thủ thụ động.
 
-**Pha 4 — "Quỳ Gối" (15%):** boss dừng lại, cắm kiếm xuống đất — **lựa chọn:** giết (Arise ngay, bình thường) hoặc *không đánh nữa trong 10 giây* (boss nhận thua → Arise với tỷ lệ +30% và tính cách **Trung Thành** cố định). 
+**Pha 4 — "Quỳ Gối" (15%):** boss dừng lại, cắm kiếm xuống đất. Sau khi thắng, Capture Contract luôn chạy nghi lễ `[Phong Ấn] → [Phong Ấn] → [Bảo Đảm]`; nếu người chơi *không đánh nữa trong 10 giây* ở pha này, Hiệp Sĩ nhận trait **Trung Thành** cố định. Nếu kết thúc ngay, trait thay bằng **Kỷ Luật**. Đây là lựa chọn về danh tính, không về xác suất giả.
 
 > **Đây là boss dạy bài học quan trọng nhất của UMBRA:** *cách bạn thắng định nghĩa thứ bạn nhận được.* Lựa chọn ẩn này không có trong hướng dẫn — người chơi phát hiện và kể cho nhau (emergent storytelling + cộng đồng).
 

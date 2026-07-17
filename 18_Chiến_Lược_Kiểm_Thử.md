@@ -38,7 +38,7 @@
 
 Dùng game-test framework của nền tảng: bot thực hiện kịch bản end-to-end trong world test:
 
-1. Thức Tỉnh → hoàn thành daily quest → bị phạt → sống sót Penalty Zone.
+1. Thức Tỉnh → hoàn thành nhiệm vụ rèn luyện → tự nhận Khế Ước Rèn Luyện → bỏ lỡ → sống sót Penalty Zone.
 2. Vào gate hạng D → clear boss → gate đóng → Tàn Tích tồn tại.
 3. Job Change hoàn chỉnh → Arise thành công một bóng → bóng tuân lệnh cơ bản.
 4. Dungeon Break kích hoạt → dọn → Field Dungeon không tồn tại; bỏ mặc → Field Dungeon hình thành.

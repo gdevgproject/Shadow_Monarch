@@ -22,7 +22,7 @@ Một câu, ba lời hứa:
 | Mốc | Người chơi nên cảm thấy | Hệ thống gánh cảm xúc đó |
 |---|---|---|
 | Giờ 0–1 | "Mình yếu đuối và thế giới này đáng sợ" | Survival vanilla + sự kiện Thức Tỉnh (survival-horror tutorial) |
-| Giờ 1–5 | "Mình đang lớn lên từng ngày" | Level/EXP, daily quest, 5 chỉ số tự phân bổ |
+| Giờ 1–5 | "Mình đang lớn lên từng ngày" | Level/EXP, nhiệm vụ rèn luyện tùy chọn, 5 chỉ số tự phân bổ |
 | Giờ 5–15 | "Mình vừa có được thứ không ai có" | Class ẩn Shadow Monarch, kỹ năng Trỗi Dậy, bóng đầu tiên |
 | Giờ 15–50 | "Quân đoàn của mình đang thành hình" | Army management, đặt tên, tiến hóa, formation |
 | Giờ 50–150 | "Mình đang thống trị, nhưng thế giới vẫn nguy hiểm" | Gate hạng cao, Red Gate, Dungeon Break, boss Vương Giả |
@@ -35,7 +35,7 @@ Một câu, ba lời hứa:
 
 ### Trụ cột 1 — "Kẻ thua trở thành tài sản"
 Mọi trận đánh đều có khả năng sinh ra *một thứ gì đó vĩnh viễn*: một bóng mới, một rune, một mảnh trang bị. Người chơi phải *thèm* gặp kẻ địch mạnh thay vì né chúng.
-- **Hệ quả bắt buộc:** boss không chỉ là chướng ngại — boss là *cơ hội*. Tỷ lệ Trỗi Dậy trên boss phải đủ cao để "thắng là có hàng", đủ thấp để cú Arise thành công là một khoảnh khắc.
+- **Hệ quả bắt buộc:** boss không chỉ là chướng ngại — boss là *cơ hội*. Boss định danh có Capture Contract minh bạch và pity lần 3 = 100%; nhịp căng thẳng nằm ở trận đánh, nghi lễ và lựa chọn trait/đội hình, không nằm ở việc buộc farm lại vì RNG.
 
 ### Trụ cột 2 — "Minecraft trước, mod sau"
 Mọi hệ thống phải trả lờ được: *"Nó kết nối với đào đá / chế tạo / xây dựng / khám phá vanilla như thế nào?"*

@@ -76,7 +76,7 @@ Thiết kế theo cặp/bộ ba có *tên gọi* (dễ nhớ, dễ lan truyền 
 | **Cất Giữ Bóng** | Job Change | Vô hình, không slot giới hạn trữ (giới hạn triệu hồi) |
 | **Mắt Bóng** | hạng B+ | Nhìn/nghe qua bóng đang Ẩn Mình — do thám xa an toàn |
 | **Shadow Exchange** | hạng S | Đổi chỗ với bóng, cooldown theo khoảng cách |
-| **Monarch's Domain** | hạng S | Aura +50% sức mạnh quân đoàn, 20s, cooldown dài |
+| **Monarch's Domain** | hạng S | Aura 12s; buff theo vai trò, trần tổng PB quân đoàn giữ ở 14.9; cooldown dài |
 | **Gate Creation** | Vương Giả | Tự mở Vết Nứt tới dungeon đã clear (fast travel có chủ đích) |
 | **Thừa Kế** | Vương Giả | Dùng phiên bản yếu của kỹ năng boss đã thu phục (rotating kit — endgame build diversity đỉnh cao) |
 

@@ -97,7 +97,7 @@ Dẹp Break ───────────┘
 | Farm 1 loại gate hiệu quả nhất lặp đi lặp lại | Loot gate có **diminishing returns sau 3 lần/loại/ngày**; thưởng "đa dạng phe" (quest yêu cầu nhiều phe) |
 | AFK farm quái vanilla | Quái chết bởi môi trường/máy farm: không EXP, không Arise, loot giảm 90% |
 | Auto-farm bán rác lấy Vàng | Giá sàn cho vật liệu vô hạn + diminishing theo ngày (2.1) |
-| Farm boss dễ nhất | Boss có lockout nhẹ theo ngày; boss khác nhau rơi Lõi khác nhau (cần đủ bộ) |
+| Farm boss dễ nhất | Bonus lần đầu và diminishing loot sau các lần clear cùng boss; không hard lockout theo ngày. Boss khác nhau rơi Lõi khác nhau (cần đủ bộ) |
 | Mua bán NPC lãi vô hạn | Giá trade NPC động theo số lần trade; Công Trạng không quy đổi ngược |
 
 ---
@@ -106,9 +106,9 @@ Dẹp Break ───────────┘
 
 | Giai đoạn | Cảm giác kinh tế mục tiêu |
 |---|---|
-| E–D | Thiếu vàng nhẹ — mỗi bình hồi mua được là một quyết định; "rác ra vàng" cứu ngày |
-| C–B | Vàng ổn, bắt đầu thiếu Tinh Hoa (reforge mở ra) |
-| A–S | Tinh Hoa căng, Mảnh Bóng căng (tiến hóa bóng) — phải chọn ưu tiên |
+| F–E | Thiếu vàng nhẹ — mỗi bình hồi mua được là một quyết định; "rác ra vàng" cứu ngày |
+| D–B | Vàng ổn, bắt đầu thiếu Tinh Hoa (reforge mở ra) |
+| A–S+ | Tinh Hoa căng, Mảnh Bóng căng (tiến hóa bóng) — phải chọn ưu tiên |
 | Quốc Gia–Vương Giả | Tiền không còn là vấn đề số — vấn đề là *vật liệu định danh* (Lõi, Tinh Hoa Linh Hồn) |
 
 > **Lý do:** áp lực kinh tế phải *di chuyển* theo tiến trình — từ thiếu tiền → thiếu lựa chọn → thiếu vật liệu quý. Nếu một loại áp lực kéo dài mãi → grind vô nghĩa.

@@ -69,6 +69,12 @@
 - Hunter thuê chạy AI vai trò chuẩn (tài liệu 07), có giới hạn: không vào Red Gate, không vào Vực Tháp, từ chối nội dung vượt hạng họ.
 - **Ý nghĩa thiết kế:** (a) solo player có trải nghiệm "party" an toàn; (b) là sink Vàng tự nhiên; (c) tạo *đồng nghiệp* — NPC quen thuộc ngườichơi thuê nhiều lần có thêm bark/quan hệ; (d) late-game ngườichơi vượt xa họ — vị ngọt buồn của kẻ lớn nhanh hơn thế giới.
 
+### 2.6. Cư dân, tài sản và lời mời tự nguyện
+
+- Cư dân có nghề và mức sống (thiếu thốn/ổn định/khá giả), thể hiện qua nhà cửa, hàng hóa, quest và phản ứng trước nguy hiểm — không phải chỉ số chiến đấu ẩn. Phát triển Đô Thị thay đổi dịch vụ/cơ hội sinh kế, không biến dân thành máy in vàng.
+- Người chơi có thể **mời** cư dân trưởng thành có quan hệ đủ tốt tới Tổ Ấm/đô thị của mình làm cư dân, thương nhân, thợ rèn, nông dân hoặc người giữ kho. NPC phải đồng ý, có thể từ chối/rời đi, nhận nơi ở và điều kiện sống; không bị kéo vào Gate như follower vô hạn.
+- Chỉ Hunter đã đồng ý hợp đồng mới đồng hành combat. Trang bị phòng hộ, nhà trú ẩn và garnison tăng an toàn cho dân/mẹ/em; chúng không dùng để tạo đạo quân NPC cạnh tranh với fantasy Shadow Legion.
+
 ---
 
 ## 3. TỔ ẤM — căn nhà là một hệ thống (v2.0)
@@ -96,7 +102,7 @@
 
 | Sự kiện | Nhịp | Nội dung |
 |---|---|---|
-| **Đợt Nứt** (Gate Surge) | 3–5 ngày game | Nhiều gate xuất hiện cùng lúc, thưởng tăng — "mùa săn" |
+| **Đợt Nứt** (Gate Surge) | 3–5 ngày game | Hai Gate của Stratum được thay mới nhanh hơn và có thưởng đa dạng phe — "mùa săn", không phá trần 2 Gate |
 | **Huyết Nguyệt** | 7 ngày game | Quái +1 hạng, bầy đêm tấn công, loot tăng |
 | **Dungeon Break** | Do bỏ quên gate | Xem tài liệu 08.4 |
 | **Xâm Lược Vương Giả** | Sau hạng Quốc Gia | Đạo quân Cửu Vương đánh vào vùng ngườichơi — phòng thủ nhiều đợt cùng quân đoàn + bóng garnison |

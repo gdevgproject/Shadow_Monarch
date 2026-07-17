@@ -34,17 +34,17 @@ Bốn quyết định nền móng:
 
 - Mỗi linh hồn cho **tối đa 3 lần thử**. Tỷ lệ được hiển thị trước từng lần và **không giảm theo thất bại**: lần 2 nhận Resonance bonus, lần 3 nhận bonus lớn. Mục tiêu thường/elite hết lần 3 mới tan biến và rơi **Mảnh Bóng**; người chơi biết chính xác rủi ro trước khi thử.
 - **Boss định danh đủ điều kiện có pity lần 3 = 100%.** Đây là phần thưởng của chiến thắng, không phải gacha trá hình. Riêng **Hiệp Sĩ Huyết Sắt** là bài học nghi lễ: lần 1 và 2 bị phong ấn theo kịch bản, lần 3 chắc chắn thành công; UI nói rõ đây là "Nghi Thức Hoàn Tất", không giả vờ tung xúc xắc.
+- Hai lần **Phong Ấn** của Hiệp Sĩ không tiêu mana/Mảnh Bóng và không tính là thất bại RNG; chi phí Arise chỉ thu ở nghi thức thứ ba bảo đảm. Không được dùng tutorial để tước tài nguyên của người chơi vì một kết quả đã viết sẵn.
 - Mỗi lần thử tốn mana đáng kể → Arise dưới áp lực là quyết định tài nguyên.
 
 > **Lý do:** "3 lần thử" giữ đúng nghi lễ nguyên tác, tạo nhịp căng thẳng–vỡ òa. Nhưng tan biến phải *cho ra tài nguyên* — bài học "hình phạt tốt nhất là hình phạt rèn luyện": thất bại nuôi dưỡng hệ thống khác (Mảnh Bóng dùng cho tiến hóa, cửa hàng).
 
 ### 2.3. Công thức thành công (khái niệm — chi tiết 14.5)
 
-`P = clamp(cơ_bản + α·(Level ngườichơi − Level mục tiêu) + β·(Uy Quyền / Yêu cầu) − γ·Cấp bóng mục tiêu, 5%, 95%)`
+`P_1/P_2/P_3` theo công thức 14.5; P2 và P3 luôn cao hơn P1. Mục tiêu thường/elite không bao giờ 0% hoặc 100%; boss định danh đủ điều kiện dùng Capture Contract với **P3 = 100%**.
 
-- Không bao giờ 0% (luôn có hy vọng — cú Arise 5% thành công là khoảnh khắc kể đờI).
-- Không bao giờ 100% với mục tiêu ≥ cấp Kỵ Sĩ (giữ nghi lễ luôn có nhịp tim).
-- Boss/Elite/Unique có hệ số riêng; boss lần đầu giết có **bonus lớn** ("thắng là có hàng").
+- Cú Arise thấp vẫn có hy vọng, nhưng UI không biến chiến thắng boss thành xổ số.
+- Boss/Elite/Unique có contract/hệ số riêng; mọi ngoại lệ (Construct không Arise, Hiệp Sĩ `[0,0,1]`) phải hiển thị trước lần thử.
 
 ---
 
@@ -110,7 +110,7 @@ Mở dần theo hạng: **Hộ Vệ Vương** (vòng tròn quanh chủ), **Mũi 
 | Thận Trọng | Giữ khoảng cách, rút khi HP thấp, sống lâu |
 | Trung Thành | Luôn ưu tiên bảo vệ chủ nhân kể cả khi không được lệnh |
 | Lãnh Khốc | Ưu tiên kết liễu mục tiêu yếu máu, hiệu quả cao |
-| Hiếu Thắng | Đơn đấu mục tiêu mạnh nhất, đôi khi "lố" lệnh |
+| Hiếu Thắng | Ưu tiên thách thức mục tiêu mạnh nhất khi lệnh không chỉ định; lệnh trực tiếp của chủ nhân luôn ưu tiên |
 | Hộ Chủ | Ưu tiên bảo vệ *bóng khác*, đặc biệt bóng yếu hơn |
 | Xảo Quyệt | Đánh lén, kiting, dụ địch vào bẫy/đồng đội |
 | Điềm Tĩnh | Tuân lệnh tuyệt đối, không bao giờ vượt quyền |
@@ -127,7 +127,7 @@ Ngườichơi *chỉ huy chủ động*, không ngồi nhìn (chống auto-play,
 
 | Kỹ năng | Phím | Hạng mở | Hiệu ứng |
 |---|---|---|---|
-| **Đánh Dấu** | X | B | Focus fire một mục tiêu; bóng ưu tiên cao nhất |
+| **Đánh Dấu** | X | D | Focus fire một mục tiêu; bóng ưu tiên cao nhất |
 | **Giữ Trận** | X (giữ) | B | Toàn quân Giữ Vị Trí tại điểm ping |
 | **Xung Phong** | Alt+X | A | Toàn quân +tốc độ, dồn hướng ping 8s |
 | **Triệu Tập** | Alt+G | A | Thu toàn bộ bóng về sát chủ nhân tức thờI (thoát AoE) |

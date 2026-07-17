@@ -10,7 +10,7 @@
 | M | Tên | Trọng tâm | Thời lượng tham chiếu* |
 |---|---|---|---|
 | M0 | **Bộ khung** | Core architecture, data loader, save/migration, config | 4–6 tuần |
-| M1 | **Kẻ Thức Tỉnh** | Hệ Thống UI, level/stat, daily quest/penalty, combat stance | 6–8 tuần |
+| M1 | **Kẻ Thức Tỉnh** | Hệ Thống UI, level/stat, nhiệm vụ rèn luyện/Khế Ước Phạt tùy chọn, combat stance | 6–8 tuần |
 | M2 | **Vertical Slice** | Đường chơi F→D hoàn chỉnh + 1 phe quái + boss tutorial | 6 tuần |
 | M3 | **Trỗi Dậy** | Job Change, Arise, storage, summon, lệnh cơ bản | 8 tuần |
 | M4 | **Quân Đoàn** | Formation, vai trò, tính cách, tiến hóa, Legion UI | 8 tuần |
@@ -30,7 +30,7 @@
 - **Exit:** load 1.000 JSON definition mẫu không lỗi; save/reload bảo toàn state; benchmark scheduler đo được mspt.
 
 ### M1 — Kẻ Thức Tỉnh
-- Xây: Hệ Thống UI (stats/quest), level 1–20, 5 chỉ số + phân bổ, daily quest + Penalty Zone, combat stance + dodge cơ bản.
+- Xây: Hệ Thống UI (stats/quest), level 1–20, 5 chỉ số + phân bổ, nhiệm vụ rèn luyện + Khế Ước Penalty Zone tùy chọn, combat stance + dodge cơ bản.
 - **Exit:** người chơi mới trải qua "1 ngày của Kẻ Thức Tỉnh" trọn vẹn; playtest nội bộ xác nhận cảm giác *lớn lên từng ngày*.
 
 ### M2 — Vertical Slice ⭐ (milestone quan trọng nhất)
@@ -47,7 +47,7 @@
 - **Exit:** trận phòng thủ làng dùng formation có ý nghĩa; playtester kể được khác biệt giữa 2 bóng cùng loài khác tính cách.
 
 ### M5 — Thế Giới Sống
-- Xây: phe 2–4 (mỗi phe 6–8 quái + elite), squad brain nâng cao (flank/focus/retreat/bảo vệ boss), world events cơ bản, Hiệp Hội + rank-up xã hội, Tổ Ấm/family order tối thiểu.
+- Xây: phe 2–4 (mỗi phe 6–8 quái + elite), squad brain nâng cao (flank/focus/retreat/bảo vệ boss), world events cơ bản, Hiệp Hội + rank-up xã hội, Tổ Ấm/family order tối thiểu, một Cưỡi Bóng mặt đất có giới hạn arena/performance.
 - **Exit:** overworld "sống" — quái tuần tra, phe đánh nhau; rank-up là một *sự kiện*.
 
 ### M6 — Chiều Sâu Vật Phẩm
@@ -89,9 +89,9 @@
 | P1 | 20 phút F→D: combat, 1 Gate, boss tutorial | Người mới có thấy sợ rồi học rồi thắng không? |
 | P2 | Job Change + một Shadow + Arise contract | Người chơi có tự đặt tên/lệnh cho bóng và tin việc capture công bằng không? |
 | P3 | Quân đoàn nhỏ + đô thị/Tổ Ấm + phòng thủ | Command/garnison có tạo lựa chọn hay chỉ gây quản lý phiền không? |
-| P4 | 4 phe, items/economy, Red Gate/Break | Build, AI và loop có đa dạng, không meta farm không? |
+| P4 | 4 phe, items/economy, Red Gate/Break, một mount bóng mặt đất | Build, AI và loop có đa dạng, không meta farm; mount có làm khám phá tốt hơn mà không bỏ qua combat không? |
 | P5 | 1 Stratum, Vực Tháp 1–25, 6 boss | Hậu level 100 có thử thách tự nguyện mà vẫn cho power trip tầng cũ không? |
 | P6 | Beta 1.0: performance, migration, accessibility, modpack matrix | Có thể chơi campaign trọn vẹn ổn định trên máy mục tiêu không? |
-| P7+ | Nội dung mở rộng: nước/mount, Strata tiếp, boss 7–12, liên kết đồng hành | Dữ liệu thật chứng minh người chơi muốn lớp nào trước? |
+| P7+ | Nội dung mở rộng: nước/mount bay và chủng loại mới, Strata tiếp, boss 7–12, liên kết đồng hành | Dữ liệu thật chứng minh người chơi muốn lớp nào trước? |
 
 Mỗi phase có demo world, save regression, benchmark và playtest độc lập; fail một tiêu chí cảm xúc/kỹ thuật thì sửa/cắt scope, không đẩy nó sang phase sau để “đánh bóng”.

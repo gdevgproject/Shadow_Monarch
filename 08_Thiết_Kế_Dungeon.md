@@ -9,12 +9,12 @@
 
 | Loại | Cơ chế | Tần suất | Vai trò cảm xúc |
 |---|---|---|---|
-| **Vết Nứt (Gate)** | Cổng xuất hiện ngẫu nhiên trong overworld, hạng E→S, hẹn 7 ngày | Thường xuyên | Nhịp sinh hoạt hằng ngày |
-| **Red Gate** | Khóa lối ra khi bước vào — chỉ mở khi boss chết | Hiếm (5% gate) | Căng thẳng tột độ, risk/reward lớn |
+| **Vết Nứt (Gate)** | Cổng xuất hiện ngẫu nhiên trong overworld, hạng F→S+, deadline Break 7 ngày | Thường xuyên | Nhịp sinh hoạt hằng ngày |
+| **Red Gate** | Khóa lối ra khi bước vào — chỉ mở khi mọi mục tiêu bắt buộc hoàn tất | Hiếm (5% gate) | Căng thẳng tột độ, risk/reward lớn |
 | **Double Dungeon** | Dungeon ẩn bên trong gate khác, độ khó vượt hạng hiển thị | Rất hiếm | Kinh hoàng + khám phá + twist |
 | **Instant Dungeon** | Riêng tư, vào bằng chìa khóa Hệ Thống, không ai làm phiền | Theo vật phẩm | "Phòng tập cá nhân", loot định hướng |
 | **Dungeon Break / Field Dungeon** | Hậu quả gate quá hạn: quái tràn ra, chiếm vùng | Sự kiện | Trách nhiệm, khẩn cấp, thế giới thay đổi |
-| **Vực Tháp (The Spire)** | Tháp 100 tầng, mutator mỗi tầng, boss mỗi 10 | Endgame | Roguelike vô hạn, thước đo build |
+| **Vực Tháp (The Spire)** | Tầm nhìn 100 tầng, mutator mỗi tầng, boss mỗi 10; 1.0 ship tầng 1–25 | Endgame | Roguelike vô hạn, thước đo build |
 
 ---
 
@@ -23,9 +23,9 @@
 ### 2.1. Vòng đời
 
 1. **Hình thành:** xuất hiện trong bán kính phù hợp với hạng người chơi (không quá gần nhà — tránh grief; không quá xa — tránh bỏ quên). VFX cột sáng nhìn thấy từ xa → kéo người chơi ra khỏi nhà một cách tự nhiên.
-2. **Hạng hiển thị:** E→S đo bằng vật phẩm/kỹ năng; **có 5% sai hạng** (thấp hơn hoặc cao hơn thật) — "fear of the unknown", niềm tin vào UI đôi khi bị phản bội một cách có kiểm soát.
-3. **Deadline 7 ngày trong game:** quá hạn → **Dungeon Break** (mục 4). Đồng hồ đếm nhìn thấy được — áp lực thời gian nhẹ, không FOMO (7 ngày game ≈ 2.3 giờ thực; và người chơi có thể đóng gate sớm bằng vật phẩm nếu không muốn đánh).
-4. **Đóng:** boss bị hạ → gate đóng sau ~1 giờ, để lại **Tàn Tích** (đào được tài nguyên đặc thù) — dungeon không biến mất vô nghĩa, nó *trở thành mỏ*.
+2. **Hạng hiển thị:** F→S+ đo bằng vật phẩm/kỹ năng; Gate gần ưu tiên ±2 bậc sức mạnh hiệu dụng. **5% sai hạng** chỉ áp dụng cho Gate có dấu hiệu scout/cảnh báo rõ — bí ẩn có kiểm soát, không lừa người chơi.
+3. **Deadline 7 ngày trong game:** quá hạn → **Dungeon Break** (mục 4). Đồng hồ đếm nhìn thấy được — áp lực thời gian nhẹ, không FOMO (timer chỉ chạy khi world hoạt động). Không có vật phẩm đóng Gate chưa hoàn thành: lựa chọn là clear, chuẩn bị Break, hoặc chấp nhận Field Dungeon.
+4. **Đóng:** chỉ khi *mọi objective bắt buộc* (boss, lõi niêm phong, cứu hộ nếu có) đã hoàn tất và người chơi rời Gate. Trước đó xác/linh hồn/loot giữ theo luật 04. Gate đóng để lại **Tàn Tích** (đào được tài nguyên đặc thù) — dungeon không biến mất vô nghĩa, nó *trở thành mỏ*.
 
 > **Lý do:** deadline biến nghề "Shadow Monarch" thành dịch vụ khẩn cấp (đúng tinh thần nguyên tác) nhưng được thiết kế lại để *không bao giờ trừng phạt người chơi offline*: timer chỉ chạy khi chunk tải/người chơi online, và luôn có lựa chọn "đóng gate không đánh" với chi phí vừa phải.
 
@@ -114,7 +114,7 @@ Không sinh thuần ngẫu nhiên (hang ổ vô định) cũng không dựng tay
 
 ## 9. Bổ sung v3.0 — luật Gate, Thăng Giới và trải nghiệm dưới nước
 
-**Luật vòng đời chuẩn:** Gate có thể bị bỏ quên để tạo Break, nhưng không tự đóng khi người chơi đang xử lý nó. Điều kiện đóng là boss/mục tiêu bắt buộc/đường thoát đã hoàn thành; trong thời gian đó linh hồn, loot chưa nhặt và boss body được giữ đúng luật 04. Mỗi vùng chỉ tối đa hai Gate hoạt động; thuật toán spawn ưu tiên chênh trong ±2 bậc so với sức mạnh hiệu dụng, sau đó mới tung Gate hiếm vượt bậc có cảnh báo hạng, scout room và đường rút.
+**Luật vòng đời chuẩn:** Gate có thể bị bỏ quên để tạo Break, nhưng không tự đóng khi người chơi đang xử lý nó. Điều kiện đóng là boss/mục tiêu bắt buộc/đường thoát đã hoàn thành; trong thời gian đó linh hồn, loot chưa nhặt và boss body được giữ đúng luật 04. Mỗi **World Stratum đang hoạt động** chỉ tối đa hai Gate; Stratum khác tạm dừng timer/event. Thuật toán spawn ưu tiên chênh trong ±2 bậc so với sức mạnh hiệu dụng, sau đó mới tung Gate hiếm vượt bậc có cảnh báo hạng, scout room và đường rút.
 
 Sau level 100, Gate có tag `world_stratum`: Thế Giới Gốc hoặc Thế Giới Song Song đã mở. Tầng mới ưu tiên modifier, bố cục, AI và phần thưởng bộ sưu tập trước khi tăng HP; clear checkpoint mới mở tầng cao hơn, quay về tầng cũ tự do. Dữ liệu tầng không dùng để nhân bản nhà/công trình vanilla.
 

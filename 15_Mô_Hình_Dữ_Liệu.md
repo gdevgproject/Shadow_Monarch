@@ -112,7 +112,7 @@ Nguyên tắc: **definition bất biến trong runtime** (reload bằng datapack
   "mutators": ["umbra:mut/mana_drought"],
   "world_stratum": 0,
   "required_objectives": ["boss", "seal_core"],
-  "active_gate_limit_scope": "region",
+  "active_gate_limit_scope": "active_stratum",
   "status": "open | cleared | broken | closed"
 }
 ```
@@ -121,19 +121,20 @@ Nguyên tắc: **definition bất biến trong runtime** (reload bằng datapack
 
 ```json
 {
-  "id": "umbra:quest/daily_forging",
-  "type": "daily",
+  "id": "umbra:quest/training_forging",
+  "type": "training",
   "objectives": [
     { "kind": "deal_damage", "amount": 2000 },
     { "kind": "dodge_success", "amount": 15 }
   ],
   "rewards": { "xp": 500, "gold": 40, "stat_points": 0 },
-  "penalty_on_fail": "umbra:penalty_zone/standard",
+  "penalty_on_fail": null,
+  "opt_in_contract": "umbra:contract/iron_training",
   "prerequisites": ["umbra:quest/awakening_done"]
 }
 ```
 
-Daily quest của UMBRA mô phỏng "bài tập thể chất" bằng hoạt động *trong game*: di chuyển X khối, dodge Y lần, gây Z sát thương, đào W khối — gắn với hành vi thật, không phải checklist trừu tượng.
+Nhiệm vụ rèn luyện của UMBRA mô phỏng "bài tập thể chất" bằng hoạt động *trong game*: di chuyển X khối, dodge Y lần, gây Z sát thương, đào W khối — gắn với hành vi thật, không phải checklist trừu tượng. Nó sinh theo ngày game và dừng khi offline; bỏ qua không phạt. **Vùng Phạt** chỉ kích hoạt khi người chơi tự nhận Khế Ước Rèn Luyện để đổi lấy thưởng cao hơn hoặc chọn config hardcore.
 
 ## 8. Schema — Trang bị & Affix
 

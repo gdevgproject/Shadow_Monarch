@@ -20,6 +20,8 @@
 | Crit damage | `150% + PER·0.5%`, trần 250% |
 | Tốc độ chạy | `+0.15%/điểm AGI`, trần +25% |
 | i-frame dodge | `0.25s + AGI·0.001s`, trần 0.4s |
+| Kháng trạng thái nền | `Res_base = min(0.35, VIT_e·0.003)`; trang bị/node cộng thêm nhưng trần hiệu dụng 75% |
+| Tự giải độc ngoài combat | `Detox = 1 stack/6s` nếu `VIT_e ≥ 40`; mỗi +30 VIT_e giảm 1s, trần 1 stack/2s |
 
 ## 14.2. Đường cong EXP
 
@@ -76,6 +78,7 @@ P_2      = clamp(P_1 + 0.15, 0.20, 0.95)
 P_3      = clamp(P_1 + 0.35, 0.40, 0.99)       (mục tiêu thường/elite)
 P_3_boss = 1.00                                  (boss định danh đủ điều kiện)
 P_hiệp_sĩ_huyết_sắt = [0.00, 0.00, 1.00]         (nghi lễ kịch bản hóa)
+Mana_hiệp_sĩ_huyết_sắt = [0, 0, ManaArise_tier]  (hai phong ấn không đốt tài nguyên)
 ```
 
 `P_n` là xác suất hiển thị **trước** lần thử n; các lần sau không bị phạt vì thất bại. Mục tiêu không-boss thất bại cả ba lần rơi Mảnh Bóng theo bảng loot; boss có Capture Contract dùng pity lần 3.
@@ -123,17 +126,18 @@ với `DPS_chuẩn(PB) = 8 · PB^1.1` (hiệu chỉnh bằng simulation 18.4). B
 ```
 Giá_mua_lặp(n)   = Giá_gốc · (1 + 0.5·n)            (n = số lần mua cùng mặt hàng trong ngày)
 Phí_reforge      = Phí_cơ_bản(hạng) · (1 + 0.15·số_lần_reforge_món_đó)
-Thuế_tài_sản     : phí rank-up = 1000 · (chỉ_số_hạng)^2 vàng   (E=1 … S=6)
+Thuế_tài_sản     : phí rank-up = 1000 · (chỉ_số_hạng)^2 vàng   (F=1 · E=2 · D=3 · C=4 · B=5 · A=6 · S=7 · S+=8)
 Loot_diminish(k) = Loot_gốc · max(0.25, 1 − 0.25·(k−3))  (k = lần farm cùng loại gate/ngày, k>3)
 ```
 
 ## 14.9. Power Budget (PB)
 
 ```
-PB = (STR_e + AGI_e + VIT_e + INT_e + PER_e) · 1.0          (chỉ số hiệu dụng)
-   + Σ(Điểm_kỹ_năng · Trọng_số_kỹ_năng)                      (keystone trọng số cao)
-   + Σ(GearScore)                                            (theo rarity + affix)
-   + min(0.6, LegionRatio) · PB · Trạng_thái_quân_đoàn      (quân đoàn, trần 60%)
+PB_self = (STR_e + AGI_e + VIT_e + INT_e + PER_e) · 1.0
+        + Σ(Điểm_kỹ_năng · Trọng_số_kỹ_năng)
+        + Σ(GearScore)                                       (keystone/rarity/affix đã chuẩn hóa)
+PB_legion = Σ(ShadowScore_i · trạng_thái_i · role_fit_i)
+PB = PB_self + min(0.60 · PB_self, PB_legion)                (đóng góp quân đoàn có trần, không tự tham chiếu)
 ```
 
 `PB_yêu_cầu` của nội dung được gán tay theo hạng: F=12 · E=20 · D=45 · C=90 · B=180 · A=350 · S=700 · S+=950 · QG=1200 · VG=2000+ (hiệu chỉnh qua simulation).
@@ -194,7 +198,7 @@ Không áp dụng Uy Áp cho: boss, mini-boss, elite, nội dung đúng hạng n
 
 ```
 KínhTrọng(npc) = clamp(
-    10 · (chỉ_số_hạng_ngườichơi − 1)                    (E=0 … VG=7)
+    10 · chỉ_số_hạng_ngườichơi                           (F=0 · E=1 · D=2 · C=3 · B=4 · A=5 · S=6 · S+=7 · QG=8 · VG=9)
   + Σ(điểm_việc_làm_được_chứng_kiến · phân_rã_thờI_gian)  (dẹp Break +30, giết boss gần làng +20, tặng quà +5; phân rã −10%/tuần game)
   + Σ(điểm_tin_đồn · 0.5)                                 (lan truyền chậm, phóng đại ±20%)
   + Điểm_tương_tác_riêng(npc)                             (trade, quest riêng)
@@ -238,7 +242,7 @@ Tăng số HP/DMG tối đa từ tầng = 35% ngân sách tầng.
 Tối thiểu 65% ngân sách tầng phải là: mutator, đội hình, layout, AI, mục tiêu phụ hoặc reward collection.
 Gate gần người chơi: tier_effective ∈ [tier_player − 2, tier_player + 2] với trọng số 0.85.
 Gate vượt biên: trọng số 0.15, phải có cảnh báo/scout/đường rút.
-Gate hoạt động tối đa mỗi vùng = 2; gate đóng iff objectives_required = complete.
+Gate hoạt động tối đa mỗi World Stratum đang hoạt động = 2; Stratum không hoạt động tạm dừng timer/event; gate đóng iff objectives_required = complete.
 ```
 
 ## 14.18. Chỉ số combat có trần cứng đọc được — mới v3.0
@@ -247,6 +251,27 @@ Gate hoạt động tối đa mỗi vùng = 2; gate đóng iff objectives_requir
 Crit chance ≤ 60% · Crit damage ≤ 250% · Move speed bonus ≤ 25% · Dodge i-frame ≤ 0.40s.
 Kháng hiệu dụng ≤ 75%; phần kháng vượt trần đổi thành kháng trạng thái/giảm thời lượng theo tỉ lệ 0.25.
 Điểm chỉ số vượt soft-cap vẫn ghi nhận và tăng ảnh hưởng phụ; không bị mất điểm.
+```
+
+## 14.19. Focus, dodge và Perception Readout — mới v3.0
+
+```
+Focus_max = 100
+Focus_hồi = 18 + min(12, 0.12·AGI_e) / giây ngoài animation khóa;
+            giảm 35% khi đang nhận sát thương liên tục.
+Chi phí: dodge 25 · parry 18 · dash skill theo dữ liệu (20–40).
+Focus không hồi trong 0.35s sau khi tiêu; không bị Fatigue khóa, nhưng Fatigue 85+ tăng chi phí bộc phá theo 14.12.
+PER tiers: 0 = phe + threat icon · 25 = level/role · 60 = weakness/status/telegraph · 100 = resist/trait/escort/true Gate clue.
+```
+
+Mọi giá trị Focus/Readout là config/datapack override được trong giới hạn cap; không skill hay stat nào được giảm dodge xuống 0 Focus hoặc vượt i-frame cap.
+
+## 14.20. Monarch's Domain — mới v3.0
+
+```
+Duration = 12s · Cooldown = 90s · Radius = 12 block (tăng qua node/gear, trần 18).
+Buff theo role trong vùng: Tank +15% posture/guard · DPS +12% damage · Support +20% heal/buff potency.
+Tổng đóng góp quân đoàn vẫn bị cap PB_legion của 14.9; Domain không cộng chồng vô hạn, không biến boss thành mục tiêu đứng yên.
 ```
 
 ---

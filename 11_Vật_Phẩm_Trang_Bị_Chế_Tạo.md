@@ -10,9 +10,9 @@
 | Độ hiếm | Màu | Nguồn chính | Đặc điểm |
 |---|---|---|---|
 | Thường (Common) | Trắng | Chế tạo vanilla + | Nền |
-| Tốt (Uncommon) | Lục | Gate E–D | 1 affix |
-| Hiếm (Rare) | Lam | Gate C–B | 2 affix |
-| Sử Thi (Epic) | Tím | Gate A–S, boss | 3 affix + 1 hiệu ứng đặc biệt |
+| Tốt (Uncommon) | Lục | Gate F–E | 1 affix |
+| Hiếm (Rare) | Lam | Gate D–C | 2 affix |
+| Sử Thi (Epic) | Tím | Gate B–S+ / boss | 3 affix + 1 hiệu ứng đặc biệt |
 | Huyền Thoại (Legendary) | Vàng | Boss định danh, Vực Tháp | **Có tên, có lore, hiệu ứng thay đổi lối chơi** |
 | Thần Thoại (Mythic) | Đỏ–đen | Cửu Vương, tầng 90+ | Growth weapon hoàn chỉnh, 1–2 món/save là đỉnh |
 
