@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.KeyMapping;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.resources.Identifier;
+import dev.umbra.core.contract.combat.UmbraCombatStatePayload;
 
 /**
  * Client-only bootstrap entrypoint; it contains no gameplay authority.
@@ -46,6 +47,22 @@ public final class UmbraClientMod implements ClientModInitializer {
                     );
                 });
             }
+        );
+
+        // Register client packet receiver for combat state sync
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+            UmbraCombatStatePayload.TYPE,
+            (payload, context) -> {
+                context.client().execute(() -> {
+                    ClientCombatStateTracker.update(payload.inCombatStance(), payload.comboCount());
+                });
+            }
+        );
+
+        // Register Combat Dummy entity renderer
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+            UmbraMod.COMBAT_DUMMY,
+            CombatDummyRenderer::new
         );
 
         // Register key binding for stats screen

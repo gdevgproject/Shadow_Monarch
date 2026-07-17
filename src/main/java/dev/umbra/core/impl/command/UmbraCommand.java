@@ -252,6 +252,24 @@ public final class UmbraCommand {
                         )
                     )
                 )
+                .then(literal("dummy")
+                    .then(literal("spawn")
+                        .executes(context -> {
+                            net.minecraft.server.level.ServerLevel level = context.getSource().getLevel();
+                            net.minecraft.world.phys.Vec3 pos = context.getSource().getPosition();
+                            dev.umbra.core.impl.combat.CombatDummyEntity dummy = new dev.umbra.core.impl.combat.CombatDummyEntity(UmbraMod.COMBAT_DUMMY, level);
+                            dummy.setPos(pos.x, pos.y, pos.z);
+                            dummy.setYRot(context.getSource().getRotation().y);
+                            dummy.setXRot(0.0F);
+                            level.addFreshEntity(dummy);
+                            context.getSource().sendSuccess(
+                                () -> Component.literal("Spawned Combat Dummy at " + String.format("%.2f, %.2f, %.2f", pos.x, pos.y, pos.z)),
+                                true
+                            );
+                            return 1;
+                        })
+                    )
+                )
         );
     }
 }

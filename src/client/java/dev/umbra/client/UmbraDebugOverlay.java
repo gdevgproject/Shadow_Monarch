@@ -62,6 +62,13 @@ public final class UmbraDebugOverlay implements HudElement {
         drawContext.text(font, "Effects Enabled: " + configService.getPlayerConfig().isEffectsEnabled(), 5, y, 0xFFFFFFFF, false);
         y += 10;
 
+        boolean inCombat = ClientCombatStateTracker.isInCombatStance();
+        int combo = ClientCombatStateTracker.getComboCount();
+        String combatText = inCombat ? "Stance: COMBAT | Combo: " + combo : "Stance: OUT OF COMBAT";
+        int combatColor = inCombat ? 0xFFFF5555 : 0x88FFFFFF;
+        drawContext.text(font, combatText, 5, y, combatColor, false);
+        y += 10;
+
         if (configService.getDevConfig().isProfilingEnabled()) {
             drawContext.text(font, "Profiling: ACTIVE (Safe HUD: FPS=" + client.getFps() + ")", 5, y, 0xFFFF5555, false);
             y += 10;

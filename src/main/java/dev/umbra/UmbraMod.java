@@ -26,6 +26,9 @@ import net.minecraft.world.level.storage.LevelResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import dev.umbra.core.impl.command.UmbraCommand;
+import dev.umbra.core.contract.combat.CombatService;
+import dev.umbra.core.impl.combat.CombatServiceImpl;
+import dev.umbra.core.impl.combat.CombatDummyEntity;
 
 /**
  * Common bootstrap entrypoint.
@@ -41,6 +44,9 @@ public final class UmbraMod implements ModInitializer {
     private static final StateSaveServiceImpl STATE_SAVE_SERVICE = new StateSaveServiceImpl();
     private static final UmbraConfigServiceImpl CONFIG_SERVICE = new UmbraConfigServiceImpl();
     private static final ProgressionServiceImpl PROGRESSION_SERVICE = new ProgressionServiceImpl();
+    private static final CombatServiceImpl COMBAT_SERVICE = new CombatServiceImpl();
+
+    public static net.minecraft.world.entity.EntityType<CombatDummyEntity> COMBAT_DUMMY;
 
     public static UmbraServiceRegistry getServiceRegistry() {
         return SERVICE_REGISTRY;
@@ -57,6 +63,10 @@ public final class UmbraMod implements ModInitializer {
         net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.clientboundPlay().register(
             dev.umbra.core.contract.state.UmbraPlayerStatePayload.TYPE,
             dev.umbra.core.contract.state.UmbraPlayerStatePayload.CODEC
+        );
+        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.clientboundPlay().register(
+            dev.umbra.core.contract.combat.UmbraCombatStatePayload.TYPE,
+            dev.umbra.core.contract.combat.UmbraCombatStatePayload.CODEC
         );
 
         // Register custom packet payloads C2S
@@ -76,9 +86,31 @@ public final class UmbraMod implements ModInitializer {
         SERVICE_REGISTRY.register(StateSaveService.class, STATE_SAVE_SERVICE);
         SERVICE_REGISTRY.register(UmbraConfigService.class, CONFIG_SERVICE);
         SERVICE_REGISTRY.register(ProgressionService.class, PROGRESSION_SERVICE);
+        SERVICE_REGISTRY.register(CombatService.class, COMBAT_SERVICE);
+
+        // Register entity type dynamically to prevent uninitialized registry crashes in unit tests
+        COMBAT_DUMMY = net.minecraft.core.Registry.register(
+            net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE,
+            net.minecraft.resources.Identifier.fromNamespaceAndPath("umbra", "combat_dummy"),
+            net.minecraft.world.entity.EntityType.Builder.of(CombatDummyEntity::new, net.minecraft.world.entity.MobCategory.MISC)
+                .sized(0.6F, 1.8F)
+                .build(net.minecraft.resources.ResourceKey.create(
+                    net.minecraft.core.registries.Registries.ENTITY_TYPE,
+                    net.minecraft.resources.Identifier.fromNamespaceAndPath("umbra", "combat_dummy")
+                ))
+        );
+
+        // Register entity attributes
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(
+            COMBAT_DUMMY,
+            CombatDummyEntity.createAttributes()
+        );
 
         // Register Server Tick lifecycle hook
-        ServerTickEvents.START_SERVER_TICK.register(server -> SCHEDULER.tick());
+        ServerTickEvents.START_SERVER_TICK.register(server -> {
+            SCHEDULER.tick();
+            COMBAT_SERVICE.tick(server);
+        });
 
         // Register Server Lifecycle save/stop hooks
         ServerLifecycleEvents.SERVER_STARTING.register(server -> {
@@ -101,10 +133,10 @@ public final class UmbraMod implements ModInitializer {
             UUID uuid = handler.player.getUUID();
             Path worldDir = server.getWorldPath(LevelResource.ROOT);
             STATE_SAVE_SERVICE.onPlayerJoin(uuid, worldDir);
-            
+
             // Recalculate and update base HP/attributes on join
             PROGRESSION_SERVICE.updateDerivedAttributes(handler.player);
-            
+
             STATE_SAVE_SERVICE.syncPlayerState(handler.player);
         });
 
@@ -112,6 +144,7 @@ public final class UmbraMod implements ModInitializer {
             UUID uuid = handler.player.getUUID();
             Path worldDir = server.getWorldPath(LevelResource.ROOT);
             STATE_SAVE_SERVICE.onPlayerLeave(uuid, worldDir);
+            COMBAT_SERVICE.clearPlayerState(uuid);
         });
 
         // Register commands
