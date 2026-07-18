@@ -50,6 +50,21 @@ public final class UmbraMod implements ModInitializer {
     private static final CombatServiceImpl COMBAT_SERVICE = new CombatServiceImpl();
     private static final QuestServiceImpl QUEST_SERVICE = new QuestServiceImpl();
 
+    // ---- Explore-distance accumulator (M1-08) ----------------------------------------
+    // Runs on server thread only — no concurrency needed, plain HashMap is safe.
+    // Maps UUID → last known [x, z] position.
+    private static final java.util.Map<java.util.UUID, double[]> PLAYER_LAST_POS =
+            new java.util.HashMap<>();
+    // Maps UUID → fractional blocks accumulated since last integer-progress report.
+    private static final java.util.Map<java.util.UUID, Double> PLAYER_DIST_ACCUM =
+            new java.util.HashMap<>();
+    // Throttle: process distance every DIST_TICK_INTERVAL ticks (8 ticks = 0.4 s).
+    // At sprint speed (~5.6 blocks/s), ~2.2 blocks per interval — fine granularity.
+    private static final int DIST_TICK_INTERVAL = 8;
+    private static int distTickCounter = 0;
+    // Per-check cap: >10 blocks in 8 ticks = teleport / impossible speed. Discard.
+    private static final double DIST_MAX_PER_CHECK = 10.0;
+
     public static net.minecraft.world.entity.EntityType<CombatDummyEntity> COMBAT_DUMMY;
 
     public static UmbraServiceRegistry getServiceRegistry() {
@@ -127,6 +142,38 @@ public final class UmbraMod implements ModInitializer {
         ServerTickEvents.START_SERVER_TICK.register(server -> {
             SCHEDULER.tick();
             COMBAT_SERVICE.tick(server);
+
+            // EXPLORE_DISTANCE accumulator — throttled to every DIST_TICK_INTERVAL ticks.
+            // For each online player: compute horizontal delta from last known position,
+            // discard suspiciously large deltas (teleport/cheat), accumulate fractional
+            // blocks, and fire onObjectiveProgress(EXPLORE_DISTANCE, intBlocks) when ≥1 block.
+            if (++distTickCounter % DIST_TICK_INTERVAL == 0) {
+                for (net.minecraft.server.level.ServerPlayer sp : server.getPlayerList().getPlayers()) {
+                    java.util.UUID uuid = sp.getUUID();
+                    double curX = sp.getX(), curZ = sp.getZ();
+                    double[] last = PLAYER_LAST_POS.get(uuid);
+
+                    if (last != null) {
+                        double dx = curX - last[0];
+                        double dz = curZ - last[1];
+                        double dist = Math.sqrt(dx * dx + dz * dz);
+
+                        if (dist <= DIST_MAX_PER_CHECK) { // discard teleport-scale movement
+                            double accum = PLAYER_DIST_ACCUM.getOrDefault(uuid, 0.0) + dist;
+                            int wholeBlocks = (int) accum;
+                            if (wholeBlocks >= 1) {
+                                QUEST_SERVICE.onObjectiveProgress(sp,
+                                        dev.umbra.core.contract.quest.TrainingQuestDefinition.ObjectiveType.EXPLORE_DISTANCE,
+                                        wholeBlocks);
+                                accum -= wholeBlocks;
+                            }
+                            PLAYER_DIST_ACCUM.put(uuid, accum);
+                        }
+                    }
+
+                    PLAYER_LAST_POS.put(uuid, new double[]{curX, curZ});
+                }
+            }
         });
 
         // Register Server Lifecycle save/stop hooks
@@ -155,6 +202,11 @@ public final class UmbraMod implements ModInitializer {
             PROGRESSION_SERVICE.updateDerivedAttributes(handler.player);
 
             STATE_SAVE_SERVICE.syncPlayerState(handler.player);
+
+            // Initialise distance tracker to current position so the first check
+            // does not produce a spurious large delta (M1-08).
+            PLAYER_LAST_POS.put(uuid, new double[]{handler.player.getX(), handler.player.getZ()});
+            PLAYER_DIST_ACCUM.put(uuid, 0.0);
         });
 
         ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
@@ -162,6 +214,9 @@ public final class UmbraMod implements ModInitializer {
             Path worldDir = server.getWorldPath(LevelResource.ROOT);
             STATE_SAVE_SERVICE.onPlayerLeave(uuid, worldDir);
             COMBAT_SERVICE.clearPlayerState(uuid);
+            // Clean up distance accumulator to prevent memory leak (M1-08)
+            PLAYER_LAST_POS.remove(uuid);
+            PLAYER_DIST_ACCUM.remove(uuid);
         });
 
         net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
@@ -172,11 +227,7 @@ public final class UmbraMod implements ModInitializer {
             STATE_SAVE_SERVICE.syncPlayerState(newPlayer);
         });
 
-        // Register mob-kill hook for quest objective tracking (M1-06)
-        // Fabric ServerLivingEntityEvents.AFTER_DEATH fires on the server thread after a living
-        // entity's death is fully processed. We check if the killer is a ServerPlayer and if the
-        // victim is a hostile mob (MobCategory.MONSTER or UNDEAD that is not tamed), then forward
-        // the KILL_MOB objective to QuestService.
+        // Register mob-kill hook for quest objective tracking (M1-06/M1-07)
         net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents.AFTER_DEATH.register(
             (entity, damageSource) -> {
                 net.minecraft.world.entity.Entity killer = damageSource.getEntity();
@@ -187,6 +238,22 @@ public final class UmbraMod implements ModInitializer {
                 QUEST_SERVICE.onObjectiveProgress(
                     serverPlayer,
                     dev.umbra.core.contract.quest.TrainingQuestDefinition.ObjectiveType.KILL_MOB
+                );
+            }
+        );
+
+        // Register block-break hook for MINE_BLOCK quest objective (M1-08)
+        // Fires on both sides; guard with isClientSide() and ServerPlayer cast.
+        // Counts any non-air block break in survival/adventure mode.
+        // Creative mode intentionally included to allow quest testing via /gamemode.
+        net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents.AFTER.register(
+            (world, player, pos, blockState, blockEntity) -> {
+                if (world.isClientSide()) return;
+                if (!(player instanceof net.minecraft.server.level.ServerPlayer sp)) return;
+                if (blockState.isAir()) return; // safety guard (should not happen post-break)
+                QUEST_SERVICE.onObjectiveProgress(
+                    sp,
+                    dev.umbra.core.contract.quest.TrainingQuestDefinition.ObjectiveType.MINE_BLOCK
                 );
             }
         );

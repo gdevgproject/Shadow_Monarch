@@ -2,9 +2,17 @@
 
 ## Current ticket
 
+- **Ticket:** M1-08 — Quest Objective Diversity: MINE_BLOCK + EXPLORE_DISTANCE
+- **Branch:** `codex/m1-08`
+- **State:** `in-progress`
+- **Requirements:** doc 02, 03, 16, 17, 18 — event hook + tick accumulator + benchmark tick budget.
+- **Dependency evidence:** M1-07 verified and merged to `master` at `561a0a8`.
+
+## Previous ticket
+
 - **Ticket:** M1-07 — Training/Quest Constraints + Catalog Polish
 - **Branch:** `codex/m1-07`
-- **State:** `implemented` — awaiting test + user review
+- **State:** `verified` — merged `master` at `561a0a8`.
 - **Requirements:** doc 01.5 (no FOMO), doc 12 (quest as XP/Essence source), doc 22.7 (no streak), doc 22 principle 7 (respect player time), R16 (no exclusive daily reward).
 - **Dependency evidence:** M1-06 verified and integrated in `master` at `5f620fb`.
 

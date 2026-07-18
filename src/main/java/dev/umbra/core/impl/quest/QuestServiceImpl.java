@@ -54,11 +54,15 @@ public final class QuestServiceImpl implements QuestService {
     //   3 kills = ~3 min Quick Win (Genshin principle); 25 kills = dodge mastery forced.
 
     /** Tier F-I: Kill 3 hostile mobs — Quick Win entry quest. */
-    public static final String QUEST_FIRST_HUNT = "umbra:training/first_hunt";
+    public static final String QUEST_FIRST_HUNT      = "umbra:training/first_hunt";
     /** Tier F-II: Kill 10 hostile mobs — sustained combat, dodge awareness. */
     public static final String QUEST_HUNTER_INITIATE = "umbra:training/hunter_initiate";
     /** Tier E-I: Kill 25 hostile mobs — dodge mastery forced by attrition. */
-    public static final String QUEST_IRON_WILL = "umbra:training/iron_will";
+    public static final String QUEST_IRON_WILL       = "umbra:training/iron_will";
+    /** Tier F-III: Mine 32 vanilla blocks — teaches STR→mining speed link (M1-08). */
+    public static final String QUEST_MINER_SPIRIT    = "umbra:training/miner_spirit";
+    /** Tier F-IV: Travel 500 horizontal blocks — teaches world exploration (M1-08). */
+    public static final String QUEST_FIRST_STEPS     = "umbra:training/first_steps";
 
     private static final Map<String, TrainingQuestDefinition> DEFINITIONS;
 
@@ -97,6 +101,32 @@ public final class QuestServiceImpl implements QuestService {
                 25,    // 25 kills ≈ 20-30 min of active play
                 450,   // 450 XP ≈ 51% of L4→L5 (879 XP) — significant long-session reward
                 3      // 3 Essence — meaningful accumulation
+        ));
+
+        // [Sơ Cấp III] Vanilla mining — 32 blocks, F rank entry-level.
+        // Teaching: STR affects mining speed (doc 03.3). Risk-free vanilla activity.
+        // Reward lower than combat (no risk premium).
+        // Milestone messages every 8 blocks (÷ 4 of required 32).
+        m.put(QUEST_MINER_SPIRIT, new TrainingQuestDefinition(
+                QUEST_MINER_SPIRIT,
+                "[IV] Triệu Thử: Huyết Mạch Thợ Mỏ",
+                ObjectiveType.MINE_BLOCK,
+                32,    // 32 blocks ≈ 2-3 min of casual mining
+                35,    // 35 XP = 41% of L1→L2 (85) — risk-free, lower than combat
+                1      // 1 Essence
+        ));
+
+        // [Sơ Cấp IV] Exploration — 500 horizontal blocks, F rank.
+        // Teaching: world is large, leave spawn, discover terrain variety.
+        // Pure movement, no combat risk. Lowest reward per minute.
+        // Milestone messages every 125 blocks (÷ 4 of required 500).
+        m.put(QUEST_FIRST_STEPS, new TrainingQuestDefinition(
+                QUEST_FIRST_STEPS,
+                "[V] Triệu Thử: Bước Chân Đầu",
+                ObjectiveType.EXPLORE_DISTANCE,
+                500,   // 500 horizontal blocks ≈ 2 min walking; ≤15 min organic play
+                30,    // 30 XP = 35% of L1→L2 (85) — lowest risk, lowest reward
+                1      // 1 Essence
         ));
 
         DEFINITIONS = Collections.unmodifiableMap(m);
@@ -149,7 +179,23 @@ public final class QuestServiceImpl implements QuestService {
 
     @Override
     public void onObjectiveProgress(ServerPlayer player, ObjectiveType type) {
-        if (player == null) return;
+        // Delegate to batch version — avoids code duplication
+        onObjectiveProgress(player, type, 1);
+    }
+
+    /**
+     * Efficient batch override: updates progress in a single pass instead of N iterations.
+     *
+     * <p>Milestone messaging rules:
+     * <ul>
+     *   <li>KILL_MOB: message on every kill (infrequent, high emotional impact).</li>
+     *   <li>MINE_BLOCK, EXPLORE_DISTANCE: message only at 25% milestones and completion
+     *       (prevents chat spam from continuous accumulation).</li>
+     * </ul>
+     */
+    @Override
+    public void onObjectiveProgress(ServerPlayer player, ObjectiveType type, int amount) {
+        if (player == null || amount < 1) return;
         UUID uuid = player.getUUID();
         UmbraPlayerState state = stateSave().getOrCreatePlayerState(uuid);
 
@@ -159,16 +205,23 @@ public final class QuestServiceImpl implements QuestService {
             if (def == null || def.getObjectiveType() != type) continue;
 
             ActiveQuestEntry progress = entry.getValue();
-            int newProgress = progress.addProgress(1);
+            int prevProgress = progress.getCurrentProgress();
+            if (prevProgress >= def.getRequiredCount()) continue; // already at cap, skip
+
+            // Cap delta so we never exceed requiredCount (prevents overflow)
+            int toAdd = Math.min(amount, def.getRequiredCount() - prevProgress);
+            progress.addProgress(toAdd);
+            int newProgress = prevProgress + toAdd;
             anyUpdated = true;
 
             if (newProgress >= def.getRequiredCount()) {
-                // Quest ready to claim — "Hệ Thống" completion voice
+                // Completion — always show, System voice
                 player.sendSystemMessage(Component.literal(
                         "§a§l[Hệ Thống]§r §7Mục Tiêu Hoàn Thành: §f" + def.getDisplayName()
                         + " §8(" + newProgress + "/" + def.getRequiredCount() + ")"
                         + "\n§8  → §7Nhận thưởng: §e/umbra quest claim " + def.getId()));
-            } else {
+            } else if (shouldShowProgress(newProgress, def.getRequiredCount(), type)) {
+                // Milestone progress — show at appropriate intervals
                 player.sendSystemMessage(Component.literal(
                         "§8[Hệ Thống] §7" + def.getDisplayName()
                         + " §8— §a" + newProgress + "§7/§c" + def.getRequiredCount()));
@@ -179,6 +232,23 @@ public final class QuestServiceImpl implements QuestService {
             stateSave().syncPlayerState(player);
         }
     }
+
+    /**
+     * Returns true if a progress message should be shown for the given state.
+     *
+     * <ul>
+     *   <li>KILL_MOB: every kill (infrequent events, each one feels meaningful).</li>
+     *   <li>MINE_BLOCK / EXPLORE_DISTANCE: every 25% milestone only, to avoid chat spam
+     *       from continuous block-by-block or block-accumulation reporting.</li>
+     * </ul>
+     */
+    private static boolean shouldShowProgress(int current, int required, ObjectiveType type) {
+        if (current >= required) return true;                   // always show completion
+        if (type == ObjectiveType.KILL_MOB) return true;       // every kill is meaningful
+        int step = Math.max(1, required / 4);                  // 25% intervals
+        return (current % step == 0);
+    }
+
 
     @Override
     public boolean claimQuest(ServerPlayer player, String questId) {

@@ -179,25 +179,43 @@ class QuestConstraintTest {
         assertEquals(3,   q3.getEssenceReward(), "iron_will: 3 Essence");
     }
 
-    // ---- Constraint 5: Catalog Size Regression Guard ----------------------------
+    // ---- Constraint 5: Catalog Contents (Regression Guard) ---------------------
 
     /**
-     * The M1-07 catalog must contain exactly three quests.
-     * Future quests (M1-08+ MINE_BLOCK / EXPLORE_DISTANCE) must not enter the build
-     * before their event hooks are registered in {@link dev.umbra.UmbraMod}.
+     * The catalog must contain exactly 5 quests after M1-08:
+     * first_hunt, hunter_initiate, iron_will (KILL_MOB) + miner_spirit (MINE_BLOCK)
+     * + first_steps (EXPLORE_DISTANCE).
+     * This guards against accidental catalog mutations between tickets.
      */
     @Test
-    void catalog_containsExactlyThreeQuestsInM107() {
+    void catalog_containsAllExpectedQuests() {
         Collection<TrainingQuestDefinition> all = questService.getAllDefinitions();
-        assertEquals(3, all.size(),
-                "M1-07 catalog must have exactly 3 quests (first_hunt, hunter_initiate, iron_will)");
+        assertEquals(5, all.size(),
+                "M1-08 catalog must have exactly 5 quests");
 
+        // Kill quests (M1-07)
         assertTrue(questService.findDefinition(QuestServiceImpl.QUEST_FIRST_HUNT).isPresent(),
                 "first_hunt must be in catalog");
         assertTrue(questService.findDefinition(QuestServiceImpl.QUEST_HUNTER_INITIATE).isPresent(),
                 "hunter_initiate must be in catalog");
         assertTrue(questService.findDefinition(QuestServiceImpl.QUEST_IRON_WILL).isPresent(),
                 "iron_will must be in catalog");
+
+        // New objective types (M1-08)
+        assertTrue(questService.findDefinition(QuestServiceImpl.QUEST_MINER_SPIRIT).isPresent(),
+                "miner_spirit (MINE_BLOCK) must be in catalog");
+        assertTrue(questService.findDefinition(QuestServiceImpl.QUEST_FIRST_STEPS).isPresent(),
+                "first_steps (EXPLORE_DISTANCE) must be in catalog");
+
+        // Verify objective types are correct
+        assertEquals(TrainingQuestDefinition.ObjectiveType.MINE_BLOCK,
+                questService.findDefinition(QuestServiceImpl.QUEST_MINER_SPIRIT)
+                        .map(TrainingQuestDefinition::getObjectiveType).orElseThrow(),
+                "miner_spirit must use MINE_BLOCK objective");
+        assertEquals(TrainingQuestDefinition.ObjectiveType.EXPLORE_DISTANCE,
+                questService.findDefinition(QuestServiceImpl.QUEST_FIRST_STEPS)
+                        .map(TrainingQuestDefinition::getObjectiveType).orElseThrow(),
+                "first_steps must use EXPLORE_DISTANCE objective");
     }
 
     // ---- Constraint 6: Completed Quest Cannot Be Re-assigned --------------------

@@ -38,12 +38,30 @@ public interface QuestService {
     boolean assignQuest(UUID playerUuid, String questId);
 
     /**
-     * Notifies the service that {@code playerUuid} has performed one unit of
-     * {@code objectiveType} progress (e.g. killed one mob).
-     * The service increments progress for all active quests of the matching type
-     * and auto-completes any quest that reaches its required count.
+     * Notifies the service that {@code player} has performed one unit of
+     * {@code type} progress (e.g. killed one mob, broke one block).
+     * Increments progress for all active quests of the matching type
+     * and notifies the player when a quest reaches its required count.
      */
     void onObjectiveProgress(ServerPlayer player, TrainingQuestDefinition.ObjectiveType type);
+
+    /**
+     * Batch variant of {@link #onObjectiveProgress(ServerPlayer, TrainingQuestDefinition.ObjectiveType)}.
+     * Use this for accumulated types such as {@link TrainingQuestDefinition.ObjectiveType#EXPLORE_DISTANCE}
+     * where the caller accumulates multiple units before reporting.
+     *
+     * <p>Default implementation loops {@code amount} times; implementations should
+     * override for efficiency (e.g. single-pass with {@code addProgress(amount)}).
+     *
+     * @param amount number of units to add; must be &gt;= 1.
+     */
+    default void onObjectiveProgress(ServerPlayer player,
+                                     TrainingQuestDefinition.ObjectiveType type,
+                                     int amount) {
+        for (int i = 0; i < amount; i++) {
+            onObjectiveProgress(player, type);
+        }
+    }
 
     /**
      * Attempts to claim a completed quest for the online {@code player}.
