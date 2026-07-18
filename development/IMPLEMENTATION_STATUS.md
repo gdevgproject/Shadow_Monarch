@@ -2,71 +2,76 @@
 
 ## Current ticket
 
-- **Ticket:** M1-06 — Training/Quest Loop
-- **Branch:** `codex/m1-06`
-- **State:** `implemented` — awaiting user playtest
-- **Commit:** `4410f09` — M1-06: Training quest loop (server-authoritative open/complete/claim)
-- **Requirements:** doc 03.2.2 (15% XP source, no streak), doc 25.3.4 (Rèn Luyện group, no calendar lockout), R16 (no exclusive daily reward).
-- **Dependency evidence:** M1-05 verified and integrated in `master` at `ec2005e`.
+- **Ticket:** M1-07 — Training/Quest Constraints + Catalog Polish
+- **Branch:** `codex/m1-07`
+- **State:** `implemented` — awaiting test + user review
+- **Requirements:** doc 01.5 (no FOMO), doc 12 (quest as XP/Essence source), doc 22.7 (no streak), doc 22 principle 7 (respect player time), R16 (no exclusive daily reward).
+- **Dependency evidence:** M1-06 verified and integrated in `master` at `5f620fb`.
 
 ## Previous ticket
 
-- **Ticket:** M1-05 — Server-authoritative Dodge and Action Input
-- **Branch:** `codex/m1-05`
-- **State:** `verified`
-- **Commit:** `ec2005e` — M1-05: Implement server-authoritative dodge action.
-- **Requirements:** M1-05 (R21); combat continuity for R06.
+- **Ticket:** M1-06 — Training/Quest Loop
+- **Branch:** `codex/m1-06`
+- **State:** `verified` — integrated `master` at `5f620fb`.
+- **User playtest result:** `PASS M1-06` (2026-07-18)
 
-## User playtest history — 2026-07-18
+---
 
-- **M1-05 FAIL (first attempt):** "nếu sang trái hoặc sang phải thì ấn R nó sẽ chạy theo hướng ngược lại khá khó chịu"; "mặc định ấn R nếu đứng yên là tiến tới à? nên là lùi lại"; "nếu tôi chết hồi sinh dậy tôi thấy hình như không R Dodge được nữa".
-- **M1-05 Resolution:** Server world-space right/left basis corrected; all eight local directions and no-input backward deterministic/unit-tested. Respawn clears transient combat locks, recalculates attributes, and resyncs persisted state.
-- **M1-05 PASS (2026-07-18):** User confirmed `USER_PLAYTEST_RESULT: PASS M1-05`. Ticket verified and merged into `master`.
+## M1-07 Delivered scope
 
-## M1-06 Delivered scope
+### Code changes
 
-- **`TrainingQuestDefinition`** — immutable data class (id, displayName, objectiveType, requiredCount, xpReward, essenceReward). No streak/calendar field exists by design.
-- **`ActiveQuestEntry`** — mutable progress tracker (questId, currentProgress). `addProgress(delta)` throws if delta < 1.
-- **`QuestService`** contract — server-authoritative: `assignQuest`, `onObjectiveProgress`, `claimQuest`, `getActiveQuests`, `findDefinition`, `getAllDefinitions`.
-- **`QuestServiceImpl`** — two built-in training quests:
-  - `umbra:training/first_hunt` — kill 5 hostile mobs → +150 XP, +2 Essence
-  - `umbra:training/hunter_initiate` — kill 10 hostile mobs → +300 XP, +4 Essence
-- **`UmbraQuestCompletedEvent`** — fact event published to `PROGRESSION` context after reward grant.
-- **`UmbraQuestClaimPayload`** (C2S) — carries only `questId`; server validates and grants.
-- **`UmbraPlayerState` schema v5** — adds `activeQuests` (Map) + `completedQuestIds` (Set).
-- **`PlayerMigrationV4ToV5`** — additive migration; legacy v4 saves get empty quest arrays.
-- **`StateSaveServiceImpl`** — `TARGET_PLAYER_VERSION = 5`; migration registered; quest fields serialised/deserialised with defensive fallbacks.
-- **`UmbraMod`** — registers `QuestService`, C2S claim packet, Fabric `ServerLivingEntityEvents.AFTER_DEATH` mob-kill hook (`MobCategory.MONSTER` only), quest claim C2S receiver.
-- **`/umbra quest list|assign|claim|progress`** commands (permission level 2).
-- **`QuestServiceTest`** — 13 unit tests (no ServerPlayer, `@AfterEach` registry restore prevents contamination of `ProgressionServiceTest`).
-- **`StateMigrationTest`** — all schema version assertions updated v4→v5; asserts `active_quests`/`completed_quest_ids` arrays in saved JSON.
+- **`TrainingQuestDefinition.ObjectiveType`** — expanded enum: added `MINE_BLOCK`, `EXPLORE_DISTANCE` (reserved for M1-08, not yet hooked). JavaDoc marks which milestone activates each.
+- **`QuestServiceImpl`** — quest catalog updated to 3 balanced quests with "Hệ Thống" (System) voice names:
+  - `umbra:training/first_hunt` → `[I] Triệu Thử: Máu Đầu` — KILL_MOB×3, **40 XP**, 1 Essence
+  - `umbra:training/hunter_initiate` → `[II] Triệu Thử: Tôi Luyện` — KILL_MOB×10, **180 XP**, 2 Essence
+  - `umbra:training/iron_will` *(new)* → `[III] Triệu Thử: Ý Chí Thép` — KILL_MOB×25, **450 XP**, 3 Essence
+- **Progress/completion messages** — rewritten with `[Hệ Thống]` persona (dark/gold colors, Vietnamese, numbered format). Matches Solo Leveling System voice principle without copying IP.
+- **`QuestConstraintTest.java`** *(new)* — 6 unit tests proving R16 invariants.
 
-## Verification evidence (M1-06)
+### Balance rationale (doc 14.2)
 
-- `./gradlew.bat compileJava`: ✅ GREEN (after BOM fix + `MobCategory.UNDEAD` removal).
-- `./gradlew.bat test`: ✅ 65/65 PASS (13 new quest tests + 52 regression).
-- `./gradlew.bat build`: ✅ BUILD SUCCESSFUL — Fabric GameTest (1/1 required PASS).
-- Commit: `4410f09` on branch `codex/m1-06`.
+| Quest | Kills | XP | % of level-up XP | Essence |
+|---|---|---|---|---|
+| first_hunt | 3 | 40 | 47% of L1→L2 (85) | 1 |
+| hunter_initiate | 10 | 180 | 68% of L2→L3 (266) | 2 |
+| iron_will | 25 | 450 | 51% of L4→L5 (879) | 3 |
+| **Total 3 quests** | — | **670** | **~0.56% of L1→L20** | **6** |
 
-## Invariants confirmed
+- Quest contributes toward 15% target (doc 03.2.2). Full 15% achieved when M1-08 adds MINE/EXPLORE.
+- 6 total Essence = 60% of one Respec cost (10 Essence) — slow accumulation, no dead-currency feel.
+- 3 kills = Quick Win (Genshin principle); 25 kills = dodge mastery forced (Monster Hunter principle).
 
-- No streak, no calendar lockout, no exclusive daily reward (R16) — no time-gated field exists in any quest data class.
-- Client sends only `questId` intent; server owns all validation and reward grant.
-- Completed quest cannot be re-assigned or re-claimed (double-claim proof).
-- Progress accumulates without time-based expiry (no-streak unit test).
-- Schema v5 migration is additive; v4 saves upgrade without data loss.
+### Design decisions
 
-## M1-06 User playtest checklist
+- **No Gold reward** — deferred to M6-04 (Economy milestone). Gold without a sink = dead currency = violates doc 22 principle 1.
+- **MINE_BLOCK/EXPLORE_DISTANCE** — enum values added to definition but no event hook yet. Deferred to M1-08 with proper tick budget proof (doc 17).
+- **minRank guardrail** — deferred to M1-09. All 3 quests accessible at default rank E.
 
-1. `/gamemode survival`, run `/umbra quest list` — should list both training quest ids with XP/Essence values.
-2. Run `/umbra quest assign <player> umbra:training/first_hunt` — player receives "[UMBRA] Quest assigned: umbra:training/first_hunt" in chat.
-3. Kill 5 hostile mobs (skeleton/zombie/creeper). Each kill should print `[UMBRA] First Hunt progress: N/5` in chat.
-4. On the 5th kill, chat shows: `[UMBRA] Quest ready: First Hunt (5/5) — use /umbra quest claim umbra:training/first_hunt`.
-5. Run `/umbra quest claim <player> umbra:training/first_hunt` — reward message shows `+150 XP, +2 Essence`.
-6. Run `/umbra query <player>` — Essence increased by 2, XP/level progressed from reward.
-7. Run `/umbra quest progress <player>` — `first_hunt` not listed as active.
-8. Run `/umbra quest assign <player> umbra:training/first_hunt` — fails with "already completed" message.
-9. Save world, relog; run `/umbra quest assign <player> umbra:training/hunter_initiate`, progress partially (kill 2–3 mobs), relog again — progress must persist.
-10. Confirm no streak/lockout: quest can be started and completed at any time; no daily reset occurs.
+### Backlog update
 
-Report `USER_PLAYTEST_RESULT: PASS M1-06` or `USER_PLAYTEST_RESULT: FAIL M1-06: <exact symptom/log>`.
+Added to `game_design/29_Backlog_M0_Đến_M2.md`:
+- **M1-08** — Quest objective diversity: MINE_BLOCK + EXPLORE_DISTANCE hooks
+- **M1-09** — minRank guardrail + rank-aware catalog
+
+M1 gate updated: requires M1-08 and M1-09 before passing.
+
+---
+
+## M1-07 Invariants
+
+- No streak / calendar lockout / exclusive daily reward (R16): no date/timestamp/lockout field in `TrainingQuestDefinition` or `ActiveQuestEntry` — proven by `QuestConstraintTest.noCalendarLockout_*` and `noExclusiveReward_*` tests.
+- XP values derived from doc 14.2 formula — each quest is a meaningful fraction of one level-up, not a replacement for gate farming.
+- Essence total (6) creates slow accumulation toward future sinks (Respec, Job Change) without feeling wasted.
+- 3rd quest (iron_will, 25 kills) implements Monster Hunter "hidden teaching" principle: player must use dodge to survive.
+
+## M1-07 User playtest checklist
+
+1. `/umbra quest list` — must show 3 quests: `[I] Triệu Thử: Máu Đầu`, `[II] Triệu Thử: Tôi Luyện`, `[III] Triệu Thử: Ý Chí Thép`
+2. Assign `first_hunt` → kill 3 mobs → see `[Hệ Thống]` progress messages
+3. On 3rd kill: `§a§l[Hệ Thống]§r §7Mục Tiêu Hoàn Thành: [I] Triệu Thử: Máu Đầu` with claim command hint
+4. Claim → `§6§l[Hệ Thống]§r §fMục Tiêu Đạt: [I] Triệu Thử: Máu Đầu§f! Phần Thưởng: §a+40 Kinh Nghiệm§f, §d+1 Tinh Hoa`
+5. `/umbra query <player>` → Essence = 1, XP increased by 40
+6. Assign `iron_will` → kill 25 mobs — verify player feels combat pressure past 15 kills (dodge becomes important)
+
+Report `USER_PLAYTEST_RESULT: PASS M1-07` or `FAIL M1-07: <symptom>`.

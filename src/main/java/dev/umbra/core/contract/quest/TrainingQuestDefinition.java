@@ -1,18 +1,33 @@
 package dev.umbra.core.contract.quest;
 
 /**
- * Immutable definition of a training quest available in M1-06.
+ * Immutable definition of a training quest.
  *
  * <p>Quests are data-driven and never carry state. Active progress lives in
  * {@link dev.umbra.core.contract.state.UmbraPlayerState}. No streak, calendar
- * lockout or daily-exclusive reward is permitted (R16, doc 22.7).
+ * lockout or daily-exclusive reward is permitted (R16, doc 22.7, doc 22.P7).
+ *
+ * <p>Objective types in M1-07: KILL_MOB.
+ * Objective types planned in M1-08: MINE_BLOCK, EXPLORE_DISTANCE.
  */
 public final class TrainingQuestDefinition {
 
-    /** Supported objective types for M1-06 training quests. */
+    /**
+     * Supported objective types for UMBRA training quests.
+     *
+     * <ul>
+     *   <li>{@link #KILL_MOB} — M1-07: implemented with Fabric AFTER_DEATH hook.</li>
+     *   <li>{@link #MINE_BLOCK} — M1-08: reserved; hook not yet registered.</li>
+     *   <li>{@link #EXPLORE_DISTANCE} — M1-08: reserved; tick accumulator not yet registered.</li>
+     * </ul>
+     */
     public enum ObjectiveType {
-        /** Kill any hostile mob. */
-        KILL_MOB
+        /** Kill any hostile mob (MobCategory.MONSTER). Available from M1-07. */
+        KILL_MOB,
+        /** Break any non-fluid, non-air vanilla block. Reserved for M1-08. */
+        MINE_BLOCK,
+        /** Travel N blocks (Euclidean horizontal distance). Reserved for M1-08. */
+        EXPLORE_DISTANCE
     }
 
     private final String id;

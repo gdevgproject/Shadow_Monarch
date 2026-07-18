@@ -38,33 +38,67 @@ import java.util.UUID;
  */
 public final class QuestServiceImpl implements QuestService {
 
-    // ---- Built-in quest definitions (M1-06 scope) --------------------------------
+    // ---- Built-in quest definitions (M1-07 scope) --------------------------------
+    // Balance rationale (doc 14.2 formula: EXP(L) = floor(60·L^1.85 + 25·L)):
+    //   L1→L2 ≈ 85 XP · L2→L3 ≈ 266 XP · L3→L4 ≈ 532 XP · L4→L5 ≈ 879 XP
+    //   Total L1→L20 ≈ 120,000 XP; quest target = 15% of total (doc 03.2.2).
+    //   Three KILL_MOB quests contribute ~670 XP = ~0.56% of L1→L20 journey.
+    //   Full 15% achieved when M1-08 MINE_BLOCK/EXPLORE quests are added.
+    //
+    // Essence balance: only current sink is Respec (10 Essence, unlocked post-JobChange).
+    //   Three quests yield 6 Essence total = 60% of one future Respec. Player
+    //   accumulates slowly, no dead-inventory feel (doc 22 principle 1).
+    //
+    // Monster Hunter "Hidden Teaching" principle:
+    //   Quest count chosen so player MUST learn dodge or risk dying.
+    //   3 kills = ~3 min Quick Win (Genshin principle); 25 kills = dodge mastery forced.
 
-    /** Kill 5 hostile mobs — introductory training quest. */
+    /** Tier F-I: Kill 3 hostile mobs — Quick Win entry quest. */
     public static final String QUEST_FIRST_HUNT = "umbra:training/first_hunt";
-    /** Kill 10 hostile mobs — follow-up training quest. */
+    /** Tier F-II: Kill 10 hostile mobs — sustained combat, dodge awareness. */
     public static final String QUEST_HUNTER_INITIATE = "umbra:training/hunter_initiate";
+    /** Tier E-I: Kill 25 hostile mobs — dodge mastery forced by attrition. */
+    public static final String QUEST_IRON_WILL = "umbra:training/iron_will";
 
     private static final Map<String, TrainingQuestDefinition> DEFINITIONS;
 
     static {
         Map<String, TrainingQuestDefinition> m = new LinkedHashMap<>();
+
+        // [Sơ Cấp I] Quick Win — 3 kills, ~47% of L1→L2 XP.
+        // Teaching: basic combat. "Hệ Thống" voice: direct, numbered, no fluff.
         m.put(QUEST_FIRST_HUNT, new TrainingQuestDefinition(
                 QUEST_FIRST_HUNT,
-                "First Hunt",
+                "[I] Triệu Thử: Máu Đầu",
                 ObjectiveType.KILL_MOB,
-                5,       // required kills
-                150,     // XP reward  (doc 03.2.2: ~15% of level-up xp at level 1)
-                2        // Essence reward
+                3,     // 3 kills ≈ 3 min
+                40,    // 40 XP = 47% of L1→L2 (85 XP) — meaningful Quick Win
+                1      // 1 Essence — starter token
         ));
+
+        // [Sơ Cấp II] Sustained combat — 10 kills, player should be L2-3.
+        // Teaching: combat rhythm; a player who ignores dodge will take heavy damage.
         m.put(QUEST_HUNTER_INITIATE, new TrainingQuestDefinition(
                 QUEST_HUNTER_INITIATE,
-                "Hunter Initiate",
+                "[II] Triệu Thử: Tôi Luyện",
                 ObjectiveType.KILL_MOB,
-                10,
-                300,
-                4
+                10,    // 10 kills ≈ 8-12 min
+                180,   // 180 XP = 68% of L2→L3 (266 XP) — strong mid-session reward
+                2      // 2 Essence — accumulating toward Respec
         ));
+
+        // [Trung Cấp I] Endurance — 25 kills, player around L3-5, E rank.
+        // Teaching: dodge is NECESSARY. 25 kills means HP will not survive without i-frames.
+        // Deliberately high count to force skill acquisition (Monster Hunter principle).
+        m.put(QUEST_IRON_WILL, new TrainingQuestDefinition(
+                QUEST_IRON_WILL,
+                "[III] Triệu Thử: Ý Chí Thép",
+                ObjectiveType.KILL_MOB,
+                25,    // 25 kills ≈ 20-30 min of active play
+                450,   // 450 XP ≈ 51% of L4→L5 (879 XP) — significant long-session reward
+                3      // 3 Essence — meaningful accumulation
+        ));
+
         DEFINITIONS = Collections.unmodifiableMap(m);
     }
 
@@ -129,15 +163,15 @@ public final class QuestServiceImpl implements QuestService {
             anyUpdated = true;
 
             if (newProgress >= def.getRequiredCount()) {
-                // Auto-notify player that quest is ready to claim
+                // Quest ready to claim — "Hệ Thống" completion voice
                 player.sendSystemMessage(Component.literal(
-                        "§a[UMBRA] Quest ready: §f" + def.getDisplayName()
-                        + " §7(" + newProgress + "/" + def.getRequiredCount() + ")"
-                        + " §a— use /umbra quest claim " + def.getId()));
+                        "§a§l[Hệ Thống]§r §7Mục Tiêu Hoàn Thành: §f" + def.getDisplayName()
+                        + " §8(" + newProgress + "/" + def.getRequiredCount() + ")"
+                        + "\n§8  → §7Nhận thưởng: §e/umbra quest claim " + def.getId()));
             } else {
                 player.sendSystemMessage(Component.literal(
-                        "§e[UMBRA] §f" + def.getDisplayName()
-                        + " §7progress: " + newProgress + "/" + def.getRequiredCount()));
+                        "§8[Hệ Thống] §7" + def.getDisplayName()
+                        + " §8— §a" + newProgress + "§7/§c" + def.getRequiredCount()));
             }
         }
 
@@ -153,27 +187,27 @@ public final class QuestServiceImpl implements QuestService {
 
         TrainingQuestDefinition def = DEFINITIONS.get(questId);
         if (def == null) {
-            player.sendSystemMessage(Component.literal("§c[UMBRA] Unknown quest: " + questId));
+            player.sendSystemMessage(Component.literal("§c§l[Hệ Thống]§r §cMã Nhiệm Vụ Không Hợp Lệ: §7" + questId));
             return false;
         }
 
         UmbraPlayerState state = stateSave().getOrCreatePlayerState(uuid);
 
         if (state.getCompletedQuestIds().contains(questId)) {
-            player.sendSystemMessage(Component.literal("§c[UMBRA] Quest already completed: " + def.getDisplayName()));
+            player.sendSystemMessage(Component.literal("§8[Hệ Thống] §7" + def.getDisplayName() + " §8— §cĐã Hoàn Thành Trước Đó"));
             return false;
         }
 
         ActiveQuestEntry entry = state.getActiveQuests().get(questId);
         if (entry == null) {
-            player.sendSystemMessage(Component.literal("§c[UMBRA] Quest not active: " + def.getDisplayName()));
+            player.sendSystemMessage(Component.literal("§8[Hệ Thống] §7" + def.getDisplayName() + " §8— §cChưa Được Kích Hoạt"));
             return false;
         }
 
         if (entry.getCurrentProgress() < def.getRequiredCount()) {
             player.sendSystemMessage(Component.literal(
-                    "§c[UMBRA] Quest not yet complete: " + def.getDisplayName()
-                    + " (" + entry.getCurrentProgress() + "/" + def.getRequiredCount() + ")"));
+                    "§8[Hệ Thống] §7" + def.getDisplayName()
+                    + " §8— §cTiến Độ Chưa Đủ §8(" + entry.getCurrentProgress() + "/" + def.getRequiredCount() + ")"));
             return false;
         }
 
@@ -190,8 +224,8 @@ public final class QuestServiceImpl implements QuestService {
         stateSave().syncPlayerState(player);
 
         player.sendSystemMessage(Component.literal(
-                "§6[UMBRA] §fQuest complete: §a" + def.getDisplayName()
-                + "§f! Reward: §a+" + xp + " XP§f, §d+" + essence + " Essence"));
+                "§6§l[Hệ Thống]§r §fMục Tiêu Đạt: §a" + def.getDisplayName()
+                + "§f!\n§8  Phần Thưởng: §a+" + xp + " Kinh Nghiệm§f, §d+" + essence + " Tinh Hoa"));
 
         // Publish fact event
         eventBus().publish(new EventEnvelope<>(

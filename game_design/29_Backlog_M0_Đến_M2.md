@@ -32,9 +32,11 @@ Mỗi ticket là một branch/PR/commit có scope riêng. `Depends` là điều 
 | M1-04 | Combat stance và damage pipeline tối thiểu đánh combat dummy được | 05, 14, 16, R06 | M1-01 | deterministic damage tests + playable dummy world |
 | M1-05 | Dodge/action abstraction có remap và không xung đột keybind cơ bản | 05.2, 16.8, 19.7, R21 | M1-04 | input smoke + manual remap proof |
 | M1-06 | Một quest/training loop tối thiểu mở–hoàn thành–nhận reward server-side | 02, 03, 25 | M1-01, M0-04 | GameTest + one-session play proof |
-| M1-07 | Training/quest không có streak, calendar lockout hay reward độc quyền theo ngày | 01.5, 12, 22.7, R16 | M1-06 | unit/GameTest chứng minh nghỉ game không mất nội dung hay reward |
+| M1-07 | Training/quest không có streak, calendar lockout hay reward độc quyền theo ngày; rebalance XP; catalog 3 quests giọng Hệ Thống | 01.5, 12, 22.7, R16 | M1-06 | unit/GameTest + reward balance vector |
+| M1-08 | Quest objective đa dạng: thêm MINE_BLOCK và EXPLORE_DISTANCE với event hook + tick accumulator + benchmark tick budget | 02, 03, 16, 17, 18 | M1-07 | event hook + unit test + mspt không tăng > 0.05ms |
+| M1-09 | Quest catalog có minRank guardrail: assign từ chối rõ ràng nếu player chưa đủ hạng; rank order helper | 03.4, 15 | M1-07 | unit test rank guard + in-game proof E-rank quest chặn hạng F |
 
-**M1 gate:** người chơi mới chơi được một vòng ngắn, thấy level tăng, tự phân stat, đánh/né và hoàn thành một mục tiêu; không cần Gate hay Shadow.
+**M1 gate:** người chơi mới chơi được một vòng ngắn, thấy level tăng, tự phân stat, đánh/né và hoàn thành một mục tiêu với ít nhất 2 loại objective khác nhau; không cần Gate hay Shadow. M1-08 và M1-09 bắt buộc trước gate.
 
 ## 4. M2 — Vertical slice F→D
 
