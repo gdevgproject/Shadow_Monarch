@@ -2,6 +2,14 @@
 
 ## Current ticket
 
+- **Ticket:** M1-06 — Training/Quest Loop
+- **Branch:** `codex/m1-06`
+- **State:** `in_progress` — build green; tests running
+- **Requirements:** doc 03.2.2 (15% XP source, no streak), doc 25.3.4 (Rèn Luyện group), R16 (no calendar lockout/exclusive reward)
+- **Dependency evidence:** M1-05 verified and integrated in `master` at `ec2005e`.
+
+## Previous ticket
+
 - **Ticket:** M1-05 — Server-authoritative Dodge and Action Input
 - **Branch:** `codex/m1-05`
 - **State:** `verified`
@@ -12,40 +20,45 @@
 ## User playtest history — 2026-07-18
 
 - **FAIL (first attempt):** "nếu sang trái hoặc sang phải thì ấn R nó sẽ chạy theo hướng ngược lại khá khó chịu"; "mặc định ấn R nếu đứng yên là tiến tới à? nên là lùi lại"; "nếu tôi chết hồi sinh dậy tôi thấy hình như không R Dodge được nữa".
-- **Resolution applied:** Server world-space right/left basis corrected; all eight local directions and no-input backward deterministic/unit-tested. Respawn clears transient combat locks, recalculates attributes, and resynchronizes persisted state.
+- **Resolution applied:** Server world-space right/left basis corrected; all eight local directions and no-input backward deterministic/unit-tested. Respawn clears transient combat locks, recalculates attributes, and resyncs persisted state.
 - **PASS (second attempt, 2026-07-18):** User confirmed `USER_PLAYTEST_RESULT: PASS M1-05`. Ticket verified and merged into `master`.
 
-## Delivered scope
+## M1-06 scope
 
-- Added a validated C2S `DodgeIntent` and compact S2C dodge/resource state. The client supplies only an eight-direction intent; the combat service owns Focus, Fatigue, Mana, i-frame, collision-preserving horizontal velocity, and hit immunity.
-- Dodge is never rejected for vanilla attack recovery, which implements dodge priority without inventing a client-authoritative animation system.
-- Added the documented seven-tick velocity/action curve separately from the AGI i-frame vector (0.25–0.40s), so the low-AGI i-frame cannot truncate the curve. Also added Focus regeneration/cost, +1 normal-dodge Fatigue, a five-tick input queue, and a two-tick **Né Chuẩn Xác** window. Precision dodge reverts that action's +1 Fatigue, restores `min(2% maximum Mana, 6)` at most once per second, and uses bounded vanilla portal particles/sound.
-- Added first-run key conflict resolution `R → C → Mouse4`; if all three conflict, Dodge is explicitly unbound with a remap message instead of silently appearing broken. Added the permission-gated dev-only command `/umbra combat mana set <player> <amount>` so the capped Precision-Mana reward can be verified from a non-full value.
-- Added PlayerState schema v4 migration/persistence for Mana, Focus, and Fatigue, including level-up Mana/Fatigue refresh. ADR-0002 and reference card RC-001 record the original design decision and limits.
-- Reopened from user FAIL and corrected local direction resolution: `W/S/A/D` plus all four diagonals are server-resolved from yaw, no movement input is backward, and diagonal vectors are normalized. The unobstructed documented curve totals 3.22 blocks; collision may shorten it. Respawn clears only transient combat state and immediately resyncs resources.
+**Delivered so far (codex/m1-06):**
 
-## Verification evidence
+- `TrainingQuestDefinition` — immutable data class (id, objectiveType, requiredCount, xpReward, essenceReward).
+- `ActiveQuestEntry` — mutable progress tracker serialized into `UmbraPlayerState`.
+- `QuestService` contract + `QuestServiceImpl` — server-authoritative: assign, objective tracking, claim/reward grant.
+- Two built-in quests: `umbra:training/first_hunt` (kill 5 hostile mobs) + `umbra:training/hunter_initiate` (kill 10).
+- `UmbraQuestCompletedEvent` — fact event published after reward grant.
+- `UmbraQuestClaimPayload` (C2S) — carries only questId; server validates and grants.
+- `UmbraPlayerState` schema **v5** — adds `activeQuests` + `completedQuestIds`.
+- `PlayerMigrationV4ToV5` — additive migration; legacy saves upgrade without data loss.
+- `StateSaveServiceImpl` — bumped to v5, registers migration, serializes quest fields.
+- `UmbraMod` — registers QuestService, C2S packet, mob-kill Fabric event hook, quest C2S receiver.
+- `/umbra quest list|assign|claim|progress` commands.
+- `QuestServiceTest` — 10 unit tests covering all server-side invariants (no ServerPlayer needed).
+- `StateMigrationTest` — updated to assert v5 schema, quest fields in saved JSON.
 
-- `java -version` and `javac -version`: Java 25.0.3.
-- `./gradlew.bat compileJava compileClientJava compileTestJava`: passed.
-- `./gradlew.bat format test formatCheck build`: passed. The build ran the Fabric GameTest server; all required GameTests passed.
-- `./gradlew.bat test --tests dev.umbra.core.SchedulerBenchmarkTest --info`: passed; scheduler deferral invariant remained valid (one 10ms-budget test tick defers one task, then drains it on the next tick).
-- `./gradlew.bat runClient`: startup smoke passed to visible `Minecraft* 26.2` window. The agent intentionally terminated that long-running client after the smoke check.
-- After the reported failure, `./gradlew.bat format test formatCheck build`: passed. Fabric GameTest passed 1/1.
-- Unit coverage includes dodge i-frame cap, Focus/Fatigue and precision-Mana vectors, invalid direction rejection, all eight local directions/no-input backward, right/left yaw basis, 3.22-block velocity distance, and PlayerState v1→v4 migration/resource persistence.
+**Not in scope (M1-07):** No streak, no calendar lockout, no exclusive daily reward, no UI screen.
 
-## Impact assessment
+## Verification evidence (M1-06)
 
-- **Save/migration:** Player schema v4 adds `current_mana`, `current_focus`, and `fatigue`; v3 saves migrate to full Mana/Focus and zero Fatigue without dropping legacy fields.
-- **Client-server:** Client input is intent-only; server validates action eligibility and damage avoidance. Resource state is synced on join and as a compact combat delta, never accepted from client.
-- **Performance/compatibility:** Only active combat players receive resource recovery work and compact state sync (at most once per 10 ticks); the dodge VFX is capped at 12 vanilla particles. No new dependency, raw OpenGL, or renderer hook.
+- `./gradlew.bat compileJava`: **GREEN** after BOM fix + MobCategory.UNDEAD removal.
+- `./gradlew.bat test`: in progress.
 
-## User playtest checklist
+## M1-06 User playtest checklist
 
-1. Run `./gradlew.bat runClient`, enter a Survival test world, and confirm the UMBRA debug overlay shows Mana, Focus, and Fatigue.
-2. Face a landmark and press Dodge with `W`, `S`, `A`, `D`, `W+A`, `W+D`, `S+A`, and `S+D`; each must move in that exact relative direction. With no movement key held, Dodge must move backward. The four diagonals must not travel farther than a cardinal direction.
-3. Jump while holding `W` or a diagonal, then Dodge. The character must keep ordinary jump/fall vertical motion while getting only the horizontal dodge; no hovering or second jump. Attack a dummy and Dodge during vanilla weapon recovery to confirm dodge priority remains.
-4. With an empty dev inventory, run `/gamerule keepInventory true`, then `/kill @s`. After respawn, wait for the UMBRA HUD state and Dodge again; it must work immediately with the persisted Focus/Mana/Fatigue state.
-5. Run `/umbra combat mana set @s 0`, then perform the existing normal/Precision Dodge test against a zombie. Confirm normal Focus cost/regen, portal feedback for Precision, and no net Fatigue for Precision.
+1. `/gamemode survival`, `/umbra quest list` — should list both training quests.
+2. `/umbra quest assign <player> umbra:training/first_hunt` — player receives "[UMBRA] Quest assigned: umbra:training/first_hunt".
+3. Kill 5 hostile mobs (skeleton/zombie/creeper); each kill prints `[UMBRA] first_hunt progress: N/5`.
+4. On kill 5, chat shows "Quest ready: First Hunt — use /umbra quest claim ...".
+5. `/umbra quest claim <player> umbra:training/first_hunt` — reward message shows "+150 XP, +2 Essence".
+6. `/umbra query <player>` — confirm Essence increased by 2, XP increased by 150 (may have triggered level-up).
+7. `/umbra quest progress <player>` — first_hunt no longer listed as active.
+8. `/umbra quest assign <player> umbra:training/first_hunt` — fails ("already completed").
+9. Save/reload: assign second quest, partially progress it, relog, verify progress persists.
+10. Confirm no streak/lockout mechanic exists; quest can be completed at any in-game time.
 
-Report `USER_PLAYTEST_RESULT: PASS M1-05` or `USER_PLAYTEST_RESULT: FAIL M1-05: <exact symptom/log>`.
+Report `USER_PLAYTEST_RESULT: PASS M1-06` or `USER_PLAYTEST_RESULT: FAIL M1-06: <exact symptom/log>`.

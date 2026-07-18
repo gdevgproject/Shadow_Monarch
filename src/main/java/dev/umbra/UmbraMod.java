@@ -29,6 +29,9 @@ import dev.umbra.core.impl.command.UmbraCommand;
 import dev.umbra.core.contract.combat.CombatService;
 import dev.umbra.core.impl.combat.CombatServiceImpl;
 import dev.umbra.core.impl.combat.CombatDummyEntity;
+import dev.umbra.core.contract.quest.QuestService;
+import dev.umbra.core.contract.quest.UmbraQuestClaimPayload;
+import dev.umbra.core.impl.quest.QuestServiceImpl;
 
 /**
  * Common bootstrap entrypoint.
@@ -45,6 +48,7 @@ public final class UmbraMod implements ModInitializer {
     private static final UmbraConfigServiceImpl CONFIG_SERVICE = new UmbraConfigServiceImpl();
     private static final ProgressionServiceImpl PROGRESSION_SERVICE = new ProgressionServiceImpl();
     private static final CombatServiceImpl COMBAT_SERVICE = new CombatServiceImpl();
+    private static final QuestServiceImpl QUEST_SERVICE = new QuestServiceImpl();
 
     public static net.minecraft.world.entity.EntityType<CombatDummyEntity> COMBAT_DUMMY;
 
@@ -86,6 +90,10 @@ public final class UmbraMod implements ModInitializer {
             dev.umbra.core.contract.combat.UmbraDodgeIntentPayload.TYPE,
             dev.umbra.core.contract.combat.UmbraDodgeIntentPayload.CODEC
         );
+        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.serverboundPlay().register(
+            UmbraQuestClaimPayload.TYPE,
+            UmbraQuestClaimPayload.CODEC
+        );
 
         // Register core services
         SERVICE_REGISTRY.register(UmbraEventBus.class, EVENT_BUS);
@@ -95,6 +103,7 @@ public final class UmbraMod implements ModInitializer {
         SERVICE_REGISTRY.register(UmbraConfigService.class, CONFIG_SERVICE);
         SERVICE_REGISTRY.register(ProgressionService.class, PROGRESSION_SERVICE);
         SERVICE_REGISTRY.register(CombatService.class, COMBAT_SERVICE);
+        SERVICE_REGISTRY.register(QuestService.class, QUEST_SERVICE);
 
         // Register entity type dynamically to prevent uninitialized registry crashes in unit tests
         COMBAT_DUMMY = net.minecraft.core.Registry.register(
@@ -162,6 +171,25 @@ public final class UmbraMod implements ModInitializer {
             PROGRESSION_SERVICE.updateDerivedAttributes(newPlayer);
             STATE_SAVE_SERVICE.syncPlayerState(newPlayer);
         });
+
+        // Register mob-kill hook for quest objective tracking (M1-06)
+        // Fabric ServerLivingEntityEvents.AFTER_DEATH fires on the server thread after a living
+        // entity's death is fully processed. We check if the killer is a ServerPlayer and if the
+        // victim is a hostile mob (MobCategory.MONSTER or UNDEAD that is not tamed), then forward
+        // the KILL_MOB objective to QuestService.
+        net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents.AFTER_DEATH.register(
+            (entity, damageSource) -> {
+                net.minecraft.world.entity.Entity killer = damageSource.getEntity();
+                if (!(killer instanceof net.minecraft.server.level.ServerPlayer serverPlayer)) return;
+                // Only count naturally hostile creatures
+                if (!(entity instanceof net.minecraft.world.entity.Mob mob)) return;
+                if (mob.getType().getCategory() != net.minecraft.world.entity.MobCategory.MONSTER) return;
+                QUEST_SERVICE.onObjectiveProgress(
+                    serverPlayer,
+                    dev.umbra.core.contract.quest.TrainingQuestDefinition.ObjectiveType.KILL_MOB
+                );
+            }
+        );
 
         // Register commands
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
@@ -285,6 +313,16 @@ public final class UmbraMod implements ModInitializer {
                 if (direction != null) {
                     COMBAT_SERVICE.requestDodge(context.player(), direction);
                 }
+            })
+        );
+
+        // C2S: quest claim (M1-06)
+        net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.registerGlobalReceiver(
+            UmbraQuestClaimPayload.TYPE,
+            (payload, context) -> context.server().execute(() -> {
+                net.minecraft.server.level.ServerPlayer player = context.player();
+                if (player == null) return;
+                QUEST_SERVICE.claimQuest(player, payload.questId());
             })
         );
     }

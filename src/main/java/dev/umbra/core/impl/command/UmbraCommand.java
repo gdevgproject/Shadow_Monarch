@@ -14,6 +14,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.permissions.PermissionLevel;
 
+import dev.umbra.core.contract.quest.ActiveQuestEntry;
+import dev.umbra.core.contract.quest.QuestService;
+import dev.umbra.core.contract.quest.TrainingQuestDefinition;
 import static net.minecraft.commands.Commands.argument;
 import static net.minecraft.commands.Commands.literal;
 
@@ -303,6 +306,99 @@ public final class UmbraCommand {
                             );
                             return 1;
                         })
+                    )
+                )
+        .then(literal("quest")
+                    .then(literal("list")
+                        .executes(context -> {
+                            QuestService questService = UmbraMod.getServiceRegistry()
+                                .locate(QuestService.class).orElseThrow();
+                            StringBuilder sb = new StringBuilder("[UMBRA] Training quests:");
+                            for (TrainingQuestDefinition def : questService.getAllDefinitions()) {
+                                sb.append("\n  ").append(def.getId())
+                                  .append(" (").append(def.getObjectiveType()).append(" x")
+                                  .append(def.getRequiredCount()).append(") xp=")
+                                  .append(def.getXpReward()).append(" ess=")
+                                  .append(def.getEssenceReward());
+                            }
+                            final String msg = sb.toString();
+                            context.getSource().sendSuccess(() -> Component.literal(msg), false);
+                            return 1;
+                        })
+                    )
+                    .then(literal("assign")
+                        .then(argument("player", EntityArgument.player())
+                            .then(argument("questId", com.mojang.brigadier.arguments.StringArgumentType.word())
+                                .executes(context -> {
+                                    ServerPlayer player = EntityArgument.getPlayer(context, "player");
+                                    String questId = com.mojang.brigadier.arguments.StringArgumentType.getString(context, "questId");
+                                    QuestService questService = UmbraMod.getServiceRegistry()
+                                        .locate(QuestService.class).orElseThrow();
+                                    boolean ok = questService.assignQuest(player.getUUID(), questId);
+                                    if (ok) {
+                                        StateSaveService stateSaveService = UmbraMod.getServiceRegistry()
+                                            .locate(StateSaveService.class).orElseThrow();
+                                        stateSaveService.syncPlayerState(player);
+                                        player.sendSystemMessage(Component.literal("[UMBRA] Quest assigned: " + questId));
+                                        context.getSource().sendSuccess(
+                                            () -> Component.literal("Assigned '" + questId + "' to " + player.getGameProfile().name()),
+                                            true);
+                                    } else {
+                                        context.getSource().sendSuccess(
+                                            () -> Component.literal("Failed: unknown, already active, or already completed"),
+                                            false);
+                                    }
+                                    return ok ? 1 : 0;
+                                })
+                            )
+                        )
+                    )
+                    .then(literal("claim")
+                        .then(argument("player", EntityArgument.player())
+                            .then(argument("questId", com.mojang.brigadier.arguments.StringArgumentType.word())
+                                .executes(context -> {
+                                    ServerPlayer player = EntityArgument.getPlayer(context, "player");
+                                    String questId = com.mojang.brigadier.arguments.StringArgumentType.getString(context, "questId");
+                                    QuestService questService = UmbraMod.getServiceRegistry()
+                                        .locate(QuestService.class).orElseThrow();
+                                    boolean ok = questService.claimQuest(player, questId);
+                                    context.getSource().sendSuccess(
+                                        () -> Component.literal(ok
+                                            ? "Claimed '" + questId + "' for " + player.getGameProfile().name()
+                                            : "Claim failed - see player chat"),
+                                        true);
+                                    return ok ? 1 : 0;
+                                })
+                            )
+                        )
+                    )
+                    .then(literal("progress")
+                        .then(argument("player", EntityArgument.player())
+                            .executes(context -> {
+                                ServerPlayer player = EntityArgument.getPlayer(context, "player");
+                                QuestService questService = UmbraMod.getServiceRegistry()
+                                    .locate(QuestService.class).orElseThrow();
+                                java.util.Collection<ActiveQuestEntry> active =
+                                    questService.getActiveQuests(player.getUUID());
+                                if (active.isEmpty()) {
+                                    context.getSource().sendSuccess(
+                                        () -> Component.literal(player.getGameProfile().name() + ": no active quests."),
+                                        false);
+                                } else {
+                                    StringBuilder sb = new StringBuilder("[UMBRA] Active quests for " + player.getGameProfile().name() + ":");
+                                    for (ActiveQuestEntry entry : active) {
+                                        TrainingQuestDefinition def = questService.findDefinition(entry.getQuestId()).orElse(null);
+                                        int req = def != null ? def.getRequiredCount() : -1;
+                                        sb.append("\n  ").append(entry.getQuestId())
+                                          .append(" ").append(entry.getCurrentProgress())
+                                          .append("/").append(req);
+                                    }
+                                    final String msg = sb.toString();
+                                    context.getSource().sendSuccess(() -> Component.literal(msg), false);
+                                }
+                                return 1;
+                            })
+                        )
                     )
                 )
         );

@@ -2,10 +2,12 @@ package dev.umbra.core.impl.state;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dev.umbra.UmbraMod;
+import dev.umbra.core.contract.quest.ActiveQuestEntry;
 import dev.umbra.core.contract.state.StateSaveService;
 import dev.umbra.core.contract.state.UmbraPlayerState;
 import dev.umbra.core.contract.state.UmbraPlayerStatePayload;
@@ -22,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Implementation of StateSaveService handling saving, loading, and migration of states.
  */
 public final class StateSaveServiceImpl implements StateSaveService {
-    public static final int TARGET_PLAYER_VERSION = 4;
+    public static final int TARGET_PLAYER_VERSION = 5;
     public static final int TARGET_WORLD_VERSION = 2;
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -38,6 +40,7 @@ public final class StateSaveServiceImpl implements StateSaveService {
         playerMigrationChain.registerMigration(new PlayerMigrationV1ToV2());
         playerMigrationChain.registerMigration(new PlayerMigrationV2ToV3());
         playerMigrationChain.registerMigration(new PlayerMigrationV3ToV4());
+        playerMigrationChain.registerMigration(new PlayerMigrationV4ToV5());
         worldMigrationChain.registerMigration(new WorldMigrationV1ToV2());
     }
 
@@ -74,6 +77,32 @@ public final class StateSaveServiceImpl implements StateSaveService {
         state.setCurrentFocus(migrated.has("current_focus") ? migrated.get("current_focus").getAsDouble() : 100.0);
         state.setFatigue(migrated.has("fatigue") ? migrated.get("fatigue").getAsInt() : 0);
 
+        // Parse active quests (v5+)
+        state.getActiveQuests().clear();
+        if (migrated.has("active_quests") && migrated.get("active_quests").isJsonArray()) {
+            for (JsonElement el : migrated.getAsJsonArray("active_quests")) {
+                if (el.isJsonObject()) {
+                    JsonObject qObj = el.getAsJsonObject();
+                    String qid = qObj.has("quest_id") ? qObj.get("quest_id").getAsString() : null;
+                    int progress = qObj.has("progress") ? qObj.get("progress").getAsInt() : 0;
+                    if (qid != null && !qid.isBlank() && progress >= 0) {
+                        state.getActiveQuests().put(qid, new ActiveQuestEntry(qid, progress));
+                    }
+                }
+            }
+        }
+
+        // Parse completed quest ids (v5+)
+        state.getCompletedQuestIds().clear();
+        if (migrated.has("completed_quest_ids") && migrated.get("completed_quest_ids").isJsonArray()) {
+            for (JsonElement el : migrated.getAsJsonArray("completed_quest_ids")) {
+                String qid = el.getAsString();
+                if (qid != null && !qid.isBlank()) {
+                    state.getCompletedQuestIds().add(qid);
+                }
+            }
+        }
+
         // Parse legacy/unrecognized fields
         state.getLegacyFields().clear();
         for (Map.Entry<String, JsonElement> entry : migrated.entrySet()) {
@@ -85,7 +114,8 @@ public final class StateSaveServiceImpl implements StateSaveService {
                 !key.equals("perception") && !key.equals("stat_points") &&
                 !key.equals("essence") && !key.equals("job_changed") &&
                 !key.equals("last_respec_time") && !key.equals("current_mana") &&
-                !key.equals("current_focus") && !key.equals("fatigue")) {
+                !key.equals("current_focus") && !key.equals("fatigue") &&
+                !key.equals("active_quests") && !key.equals("completed_quest_ids")) {
                 state.getLegacyFields().put(key, entry.getValue());
             }
         }
@@ -138,6 +168,22 @@ public final class StateSaveServiceImpl implements StateSaveService {
         json.addProperty("current_mana", state.getCurrentMana());
         json.addProperty("current_focus", state.getCurrentFocus());
         json.addProperty("fatigue", state.getFatigue());
+
+        // Serialise quest state (v5)
+        JsonArray activeQuestsArr = new JsonArray();
+        for (ActiveQuestEntry entry : state.getActiveQuests().values()) {
+            JsonObject qObj = new JsonObject();
+            qObj.addProperty("quest_id", entry.getQuestId());
+            qObj.addProperty("progress", entry.getCurrentProgress());
+            activeQuestsArr.add(qObj);
+        }
+        json.add("active_quests", activeQuestsArr);
+
+        JsonArray completedArr = new JsonArray();
+        for (String qid : state.getCompletedQuestIds()) {
+            completedArr.add(qid);
+        }
+        json.add("completed_quest_ids", completedArr);
 
         // Merge legacy fields
         for (Map.Entry<String, JsonElement> entry : state.getLegacyFields().entrySet()) {

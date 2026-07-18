@@ -1,11 +1,15 @@
 package dev.umbra.core.contract.state;
 
 import com.google.gson.JsonElement;
+import dev.umbra.core.contract.quest.ActiveQuestEntry;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
- * Represents the persistent state of a player.
+ * Represents the persistent state of a player (schema v5 adds quest progress).
  */
 public final class UmbraPlayerState {
     private int schemaVersion;
@@ -24,10 +28,14 @@ public final class UmbraPlayerState {
     private double currentMana;
     private double currentFocus;
     private int fatigue;
+    /** questId → ActiveQuestEntry; ordered for stable serialisation. */
+    private final Map<String, ActiveQuestEntry> activeQuests = new LinkedHashMap<>();
+    /** Ids of quests already claimed; ordered for stable serialisation. */
+    private final Set<String> completedQuestIds = new LinkedHashSet<>();
     private final Map<String, JsonElement> legacyFields = new HashMap<>();
 
     public UmbraPlayerState() {
-        this.schemaVersion = 4;
+        this.schemaVersion = 5;
         this.level = 1;
         this.shadowXp = 0;
         this.rank = "E";
@@ -175,6 +183,16 @@ public final class UmbraPlayerState {
 
     private static double maximumManaFor(int level, int intelligence) {
         return 20.0 + intelligence * 8.0 + level;
+    }
+
+    /** Returns the live (mutable) map of active quest entries keyed by questId. */
+    public Map<String, ActiveQuestEntry> getActiveQuests() {
+        return activeQuests;
+    }
+
+    /** Returns the live (mutable) set of completed quest ids. */
+    public Set<String> getCompletedQuestIds() {
+        return completedQuestIds;
     }
 
     public Map<String, JsonElement> getLegacyFields() {

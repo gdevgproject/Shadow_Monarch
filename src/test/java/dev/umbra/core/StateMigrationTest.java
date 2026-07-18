@@ -43,7 +43,7 @@ public final class StateMigrationTest {
         saveService.loadPlayerState(testPlayerUuid, v1Json);
 
         UmbraPlayerState state = saveService.getOrCreatePlayerState(testPlayerUuid);
-        assertEquals(4, state.getSchemaVersion());
+        assertEquals(5, state.getSchemaVersion());
         assertEquals(12, state.getLevel());
         assertEquals(3400, state.getShadowXp());
         assertEquals("E", state.getRank());
@@ -59,6 +59,9 @@ public final class StateMigrationTest {
         assertEquals(112.0, state.getCurrentMana());
         assertEquals(100.0, state.getCurrentFocus());
         assertEquals(0, state.getFatigue());
+        // v5 quest fields must be present and empty after migration
+        assertTrue(state.getActiveQuests().isEmpty(), "Active quests must be empty after v1->v5 migration");
+        assertTrue(state.getCompletedQuestIds().isEmpty(), "Completed quest ids must be empty after v1->v5 migration");
         assertTrue(state.getLegacyFields().containsKey("custom_legacy_field"));
         assertEquals("some_value", state.getLegacyFields().get("custom_legacy_field").getAsString());
 
@@ -66,7 +69,7 @@ public final class StateMigrationTest {
         String savedJsonStr = saveService.savePlayerState(testPlayerUuid);
         JsonObject savedJson = JsonParser.parseString(savedJsonStr).getAsJsonObject();
 
-        assertEquals(4, savedJson.get("schema_version").getAsInt());
+        assertEquals(5, savedJson.get("schema_version").getAsInt());
         assertEquals(12, savedJson.get("level").getAsInt());
         assertEquals(3400, savedJson.get("shadow_xp").getAsInt());
         assertEquals("E", savedJson.get("rank").getAsString());
@@ -75,6 +78,11 @@ public final class StateMigrationTest {
         assertEquals(112.0, savedJson.get("current_mana").getAsDouble());
         assertEquals(100.0, savedJson.get("current_focus").getAsDouble());
         assertEquals(0, savedJson.get("fatigue").getAsInt());
+        // v5: quest fields must be present in saved JSON
+        assertTrue(savedJson.has("active_quests"), "Saved JSON must include active_quests array");
+        assertTrue(savedJson.has("completed_quest_ids"), "Saved JSON must include completed_quest_ids array");
+        assertEquals(0, savedJson.getAsJsonArray("active_quests").size());
+        assertEquals(0, savedJson.getAsJsonArray("completed_quest_ids").size());
         assertEquals("some_value", savedJson.get("custom_legacy_field").getAsString());
     }
 
@@ -114,7 +122,7 @@ public final class StateMigrationTest {
         saveService.loadPlayerState(testPlayerUuid, data.toString());
         UmbraPlayerState state = saveService.getOrCreatePlayerState(testPlayerUuid);
 
-        assertEquals(4, state.getSchemaVersion());
+        assertEquals(5, state.getSchemaVersion());
         assertEquals(55, state.getLevel());
         assertEquals(12000, state.getShadowXp());
         assertEquals("S", state.getRank());
@@ -130,7 +138,7 @@ public final class StateMigrationTest {
 
             saveService.onPlayerJoin(testPlayerUuid, tempDir);
             UmbraPlayerState playerState = saveService.getOrCreatePlayerState(testPlayerUuid);
-            assertEquals(4, playerState.getSchemaVersion());
+            assertEquals(5, playerState.getSchemaVersion());
             assertEquals(1, playerState.getLevel());
 
             // Modify state
@@ -158,7 +166,7 @@ public final class StateMigrationTest {
 
             newService.onPlayerJoin(testPlayerUuid, tempDir);
             UmbraPlayerState newPlayerState = newService.getOrCreatePlayerState(testPlayerUuid);
-            assertEquals(4, newPlayerState.getSchemaVersion());
+            assertEquals(5, newPlayerState.getSchemaVersion());
             assertEquals(25, newPlayerState.getLevel());
             assertEquals(500, newPlayerState.getShadowXp());
             assertEquals("D", newPlayerState.getRank());
