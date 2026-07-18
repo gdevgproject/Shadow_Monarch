@@ -238,6 +238,93 @@ class QuestConstraintTest {
         assertFalse(reassigned, "Completed quest must not be re-assignable (no re-farming)");
     }
 
+    // ---- Constraint 7: minRank Guardrail (M1-09) --------------------------------
+
+    /**
+     * {@link TrainingQuestDefinition#rankSufficient(String, String)} must correctly
+     * order all ranks from doc 03.4.1: F < E < D < C < B < A < S < S+ < QG < VG.
+     */
+    @Test
+    void rankSufficient_orderMatchesDoc0341() {
+        // Ascending order: each rank must meet its own requirement
+        String[] ranks = TrainingQuestDefinition.RANK_ORDER;
+        for (int i = 0; i < ranks.length; i++) {
+            assertTrue(TrainingQuestDefinition.rankSufficient(ranks[i], ranks[i]),
+                    "Rank must meet its own minRank: " + ranks[i]);
+        }
+        // Higher rank must meet lower rank requirement
+        for (int i = 1; i < ranks.length; i++) {
+            assertTrue(TrainingQuestDefinition.rankSufficient(ranks[i], ranks[i - 1]),
+                    ranks[i] + " must meet requirement " + ranks[i - 1]);
+        }
+        // Lower rank must NOT meet higher rank requirement
+        for (int i = 0; i < ranks.length - 1; i++) {
+            assertFalse(TrainingQuestDefinition.rankSufficient(ranks[i], ranks[i + 1]),
+                    ranks[i] + " must not meet requirement " + ranks[i + 1]);
+        }
+        // Unknown rank returns false (fail-safe)
+        assertFalse(TrainingQuestDefinition.rankSufficient("Z", "F"),
+                "Unknown player rank must fail");
+        assertFalse(TrainingQuestDefinition.rankSufficient("E", "UNKNOWN"),
+                "Unknown minRank must fail");
+        assertFalse(TrainingQuestDefinition.rankSufficient(null, "E"),
+                "Null player rank must fail");
+    }
+
+    /**
+     * A player at rank E (default after Awakening) must successfully assign
+     * all 5 current training quests (all have minRank=E).
+     * Doc 03.4.1: rank E unlocked after first re-evaluation at level 10.
+     */
+    @Test
+    void rankGuard_rankEPlayerCanTakeAllCurrentQuests() {
+        UUID player = UUID.randomUUID();
+        UmbraPlayerState state = stateSave.getOrCreatePlayerState(player);
+        assertEquals("E", state.getRank(),
+                "Default UmbraPlayerState rank must be E (post-Awakening standard)");
+
+        // All 5 quests must be assignable at rank E
+        assertTrue(questService.assignQuest(player, QuestServiceImpl.QUEST_FIRST_HUNT),
+                "first_hunt (minRank=E) must be assignable at rank E");
+        assertTrue(questService.assignQuest(player, QuestServiceImpl.QUEST_HUNTER_INITIATE),
+                "hunter_initiate (minRank=E) must be assignable at rank E");
+        assertTrue(questService.assignQuest(player, QuestServiceImpl.QUEST_IRON_WILL),
+                "iron_will (minRank=E) must be assignable at rank E");
+        assertTrue(questService.assignQuest(player, QuestServiceImpl.QUEST_MINER_SPIRIT),
+                "miner_spirit (minRank=E) must be assignable at rank E");
+        assertTrue(questService.assignQuest(player, QuestServiceImpl.QUEST_FIRST_STEPS),
+                "first_steps (minRank=E) must be assignable at rank E");
+    }
+
+    /**
+     * A player at rank F (immediately after Awakening, before re-evaluation)
+     * must be BLOCKED from quests that require rank E or higher.
+     * This is the core M1-09 invariant.
+     */
+    @Test
+    void rankGuard_rankFPlayerBlockedFromRankEQuests() {
+        UUID player = UUID.randomUUID();
+        UmbraPlayerState state = stateSave.getOrCreatePlayerState(player);
+        state.setRank("F"); // simulate player who hasn't done re-evaluation yet
+
+        // All current quests require E — must all be rejected for rank F player
+        assertFalse(questService.assignQuest(player, QuestServiceImpl.QUEST_FIRST_HUNT),
+                "Rank F player must not receive E-rank quest first_hunt");
+        assertFalse(questService.assignQuest(player, QuestServiceImpl.QUEST_HUNTER_INITIATE),
+                "Rank F player must not receive E-rank quest hunter_initiate");
+        assertFalse(questService.assignQuest(player, QuestServiceImpl.QUEST_IRON_WILL),
+                "Rank F player must not receive E-rank quest iron_will");
+        assertFalse(questService.assignQuest(player, QuestServiceImpl.QUEST_MINER_SPIRIT),
+                "Rank F player must not receive E-rank quest miner_spirit");
+        assertFalse(questService.assignQuest(player, QuestServiceImpl.QUEST_FIRST_STEPS),
+                "Rank F player must not receive E-rank quest first_steps");
+
+        // After rank-up to E, the same quests must become available
+        state.setRank("E");
+        assertTrue(questService.assignQuest(player, QuestServiceImpl.QUEST_FIRST_HUNT),
+                "After rank-up to E, first_hunt must be assignable");
+    }
+
     // ---- Stubs ------------------------------------------------------------------
 
     static final class StubStateSaveService implements StateSaveService {

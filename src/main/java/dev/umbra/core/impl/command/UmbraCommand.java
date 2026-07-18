@@ -334,16 +334,39 @@ public final class UmbraCommand {
                                     String questId = com.mojang.brigadier.arguments.StringArgumentType.getString(context, "questId");
                                     QuestService questService = UmbraMod.getServiceRegistry()
                                         .locate(QuestService.class).orElseThrow();
+
+                                    // M1-09: check rank requirement before assign to produce a specific message
+                                    dev.umbra.core.contract.quest.TrainingQuestDefinition questDef =
+                                        questService.findDefinition(questId).orElse(null);
+                                    if (questDef != null) {
+                                        dev.umbra.core.contract.state.StateSaveService stateSvc =
+                                            UmbraMod.getServiceRegistry().locate(StateSaveService.class).orElseThrow();
+                                        String playerRank = stateSvc.getOrCreatePlayerState(player.getUUID()).getRank();
+                                        if (!dev.umbra.core.contract.quest.TrainingQuestDefinition
+                                                .rankSufficient(playerRank, questDef.getMinRank())) {
+                                            player.sendSystemMessage(Component.literal(
+                                                "§8[Hệ Thống] §7" + questDef.getDisplayName()
+                                                + " §8— §cYêu Cầu Hạng §f" + questDef.getMinRank()
+                                                + " §c(Hiện Tại: §f" + playerRank + "§c)"));
+                                            return 0;
+                                        }
+                                    }
+
                                     boolean ok = questService.assignQuest(player.getUUID(), questId);
                                     if (ok) {
                                         StateSaveService stateSaveService = UmbraMod.getServiceRegistry()
                                             .locate(StateSaveService.class).orElseThrow();
                                         stateSaveService.syncPlayerState(player);
-                                        player.sendSystemMessage(Component.literal("[UMBRA] Quest assigned: " + questId));
+                                        player.sendSystemMessage(Component.literal(
+                                            "§8[Hệ Thống] §7Nhiệm Vụ Đã Kích Hoạt: §f"
+                                            + (questDef != null ? questDef.getDisplayName() : questId)));
                                         context.getSource().sendSuccess(
                                             () -> Component.literal("Assigned '" + questId + "' to " + player.getGameProfile().name()),
                                             true);
                                     } else {
+                                        player.sendSystemMessage(Component.literal(
+                                            "§8[Hệ Thống] §7" + questId
+                                            + " §8— §cKhông Thể Kích Hoạt §8(không tồn tại, đang chạy, hoặc đã hoàn thành)"));
                                         context.getSource().sendSuccess(
                                             () -> Component.literal("Failed: unknown, already active, or already completed"),
                                             false);

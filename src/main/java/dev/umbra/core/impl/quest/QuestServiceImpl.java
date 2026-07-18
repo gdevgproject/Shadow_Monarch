@@ -173,6 +173,11 @@ public final class QuestServiceImpl implements QuestService {
         if (state.getActiveQuests().containsKey(questId)) return false;
         if (state.getCompletedQuestIds().contains(questId)) return false;
 
+        // M1-09: minRank guardrail — reject if player rank is below quest requirement
+        if (!TrainingQuestDefinition.rankSufficient(state.getRank(), def.getMinRank())) {
+            return false; // caller (UmbraCommand) sends the user-facing message with context
+        }
+
         state.getActiveQuests().put(questId, new ActiveQuestEntry(questId, 0));
         return true;
     }
