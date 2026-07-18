@@ -328,7 +328,7 @@ public final class UmbraCommand {
                     )
                     .then(literal("assign")
                         .then(argument("player", EntityArgument.player())
-                            .then(argument("questId", com.mojang.brigadier.arguments.StringArgumentType.word())
+                            .then(argument("questId", com.mojang.brigadier.arguments.StringArgumentType.greedyString())
                                 .executes(context -> {
                                     ServerPlayer player = EntityArgument.getPlayer(context, "player");
                                     String questId = com.mojang.brigadier.arguments.StringArgumentType.getString(context, "questId");
@@ -355,7 +355,7 @@ public final class UmbraCommand {
                     )
                     .then(literal("claim")
                         .then(argument("player", EntityArgument.player())
-                            .then(argument("questId", com.mojang.brigadier.arguments.StringArgumentType.word())
+                            .then(argument("questId", com.mojang.brigadier.arguments.StringArgumentType.greedyString())
                                 .executes(context -> {
                                     ServerPlayer player = EntityArgument.getPlayer(context, "player");
                                     String questId = com.mojang.brigadier.arguments.StringArgumentType.getString(context, "questId");
